@@ -3,7 +3,7 @@ using ValidationService.Results;
 
 namespace ValidationService.Attributes {
     [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
-    public class StringLengthConstraintAttribute : Attribute, IValidator {
+    public class StringLengthConstraintAttribute : ValidationAttribute {
         public uint Min { get; set; }
         public uint Max { get; set; }
         public string FailureMessage { get; set; } = "Length of a string must satisfy specified constraints";
@@ -13,7 +13,7 @@ namespace ValidationService.Attributes {
             this.Max = max;
         }
 
-        public ElementaryConclusion Validate(object obj) {
+        public override ElementaryConclusion Validate(object obj) {
             int length;
             try {
                 length = obj == null ? 0 : ((string)obj).Length;

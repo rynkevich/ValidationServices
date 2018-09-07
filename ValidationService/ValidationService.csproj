@@ -47,6 +47,7 @@
     <Compile Include="Attributes\RangeConstraintAttribute.cs" />
     <Compile Include="Attributes\RequiredPropertyAttribute.cs" />
     <Compile Include="Attributes\StringLengthConstraintAttribute.cs" />
+    <Compile Include="Attributes\ValidationAttribute.cs" />
     <Compile Include="IValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Results\ElementaryConclusion.cs" />

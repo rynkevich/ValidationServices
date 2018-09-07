@@ -3,7 +3,7 @@ using ValidationService.Results;
 
 namespace ValidationService.Attributes {
     [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
-    class RequiredFieldAttribute : Attribute, IValidator {
+    public class RequiredFieldAttribute : Attribute, IValidator {
         public bool AllowEmptyStrings { get; set; } = false;
         public string IsNullFailureMessage { get; set; } = "Value of required field is null";
 

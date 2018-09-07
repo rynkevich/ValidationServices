@@ -4,7 +4,7 @@ using System.Reflection;
 using ValidationService.Results;
 
 namespace ValidationService {
-    class AttributeBasedValidationService : ValidationService {
+    public class AttributeBasedValidationService : ValidationService {
         private HashSet<int> hashCodeSet;
 
         public AttributeBasedValidationService(bool isRecursiveValidation = true) {

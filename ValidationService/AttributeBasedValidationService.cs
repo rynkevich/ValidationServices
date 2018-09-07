@@ -15,15 +15,15 @@ namespace ValidationService {
             if (this.IsRecursiveValidation) {
                 this.hashCodeSet = new HashSet<int>();
                 this.hashCodeSet.Add(obj.GetHashCode());
-                GeneralConclusion conclusion = this.ValidateProperty(obj, objName);
+                GeneralConclusion conclusion = this.ValidateObject(obj, objName);
                 this.hashCodeSet = null;
                 return conclusion;
             } else {
-                return this.ValidateProperty(obj, objName);
+                return this.ValidateObject(obj, objName);
             }
         }
 
-        private GeneralConclusion ValidateProperty(object obj, string fullName) {
+        private GeneralConclusion ValidateObject(object obj, string fullName) {
             if (obj == null) {
                 return new GeneralConclusion(isValid: true);
             }
@@ -36,7 +36,7 @@ namespace ValidationService {
                         this.hashCodeSet.Add(value.GetHashCode());
                     }
                     if (this.IsRecursiveValidation) {
-                        conclusion += this.ValidateProperty(value, fullName + '.' + prop.Name);
+                        conclusion += this.ValidateObject(value, fullName + '.' + prop.Name);
                     }
                     foreach (Attribute attr in prop.GetCustomAttributes()) {
                         if (attr is IValidator) {

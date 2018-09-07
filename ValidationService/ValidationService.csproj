@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -43,7 +45,7 @@
   <ItemGroup>
     <Compile Include="AttributeBasedValidationService.cs" />
     <Compile Include="Attributes\RangeConstraintAttribute.cs" />
-    <Compile Include="Attributes\RequiredFieldAttribute.cs" />
+    <Compile Include="Attributes\RequiredPropertyAttribute.cs" />
     <Compile Include="Attributes\StringLengthConstraintAttribute.cs" />
     <Compile Include="IValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

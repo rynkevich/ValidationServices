@@ -2,12 +2,11 @@
 using ValidationService.Results;
 
 namespace ValidationService.Attributes {
-    [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
     public class RangeConstraintAttribute : Attribute, IValidator {
         public IComparable Min { get; set; }
         public IComparable Max { get; set; }
-        public string LowerConstraintFailureMessage { get; set; } = "Value of a field is less than its specified lower bound";
-        public string UpperConstraintFailureMessage { get; set; } = "Value of a field is greater than its specified upper bound";
+        public string FailureMessage { get; set; } = "Property value must satisfy specified constraints";
 
         public RangeConstraintAttribute(IComparable min, IComparable max = null) {
             this.Min = min;
@@ -20,17 +19,16 @@ namespace ValidationService.Attributes {
             }
 
             try {
-                if (this.Min != null && this.Min.CompareTo(obj) > 0) {
-                    return new ElementaryConclusion(false, this.LowerConstraintFailureMessage);
-                }
-                if (this.Max != null && this.Max.CompareTo(obj) < 0) {
-                    return new ElementaryConclusion(false, this.UpperConstraintFailureMessage);
+                if ((this.Min != null && this.Min.CompareTo(obj) > 0) || 
+                    (this.Max != null && this.Max.CompareTo(obj) < 0)) 
+                {
+                    return new ElementaryConclusion(isValid: false, this.FailureMessage);
                 }
             } catch {
                 throw new ArgumentException("Range constraints and validated object are not compatible");
             }
 
-            return new ElementaryConclusion(true);
+            return new ElementaryConclusion(isValid: true);
         }
     }
 }

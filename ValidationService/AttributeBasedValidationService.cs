@@ -15,35 +15,35 @@ namespace ValidationService {
             if (this.IsRecursiveValidation) {
                 this.hashCodeSet = new HashSet<int>();
                 this.hashCodeSet.Add(obj.GetHashCode());
-                GeneralConclusion conclusion = this.ValidateField(obj, objName);
+                GeneralConclusion conclusion = this.ValidateProperty(obj, objName);
                 this.hashCodeSet = null;
                 return conclusion;
             } else {
-                return this.ValidateField(obj, objName);
+                return this.ValidateProperty(obj, objName);
             }
         }
 
-        private GeneralConclusion ValidateField(object obj, string fullName) {
+        private GeneralConclusion ValidateProperty(object obj, string fullName) {
             if (obj == null) {
-                return new GeneralConclusion(true);
+                return new GeneralConclusion(isValid: true);
             }
 
-            GeneralConclusion conclusion = new GeneralConclusion(true);
-            foreach (FieldInfo field in obj.GetType().GetFields()) {
-                object value = field.GetValue(obj);
+            GeneralConclusion conclusion = new GeneralConclusion(isValid: true);
+            foreach (PropertyInfo prop in obj.GetType().GetProperties()) {
+                object value = prop.GetValue(obj);
                 if (!this.IsRecursiveValidation || value == null || !this.hashCodeSet.Contains(value.GetHashCode())) {
                     if (value != null) {
                         this.hashCodeSet.Add(value.GetHashCode());
                     }
                     if (this.IsRecursiveValidation) {
-                        conclusion += this.ValidateField(value, fullName + '.' + field.Name);
+                        conclusion += this.ValidateProperty(value, fullName + '.' + prop.Name);
                     }
-                    foreach (Attribute attr in field.GetCustomAttributes()) {
+                    foreach (Attribute attr in prop.GetCustomAttributes()) {
                         if (attr is IValidator) {
                             ElementaryConclusion elemConclusion = (attr as IValidator).Validate(value);
                             conclusion += new ElementaryConclusion(elemConclusion.IsValid,
                                 elemConclusion.Details != null ? (fullName +
-                                '.' + field.Name + ": " + elemConclusion.Details) : null);
+                                '.' + prop.Name + ": " + elemConclusion.Details) : null);
                         }
                     }
                 }

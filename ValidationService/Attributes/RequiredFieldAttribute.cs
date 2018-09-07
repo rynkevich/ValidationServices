@@ -5,11 +5,11 @@ namespace ValidationService.Attributes {
     [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
     public class RequiredFieldAttribute : Attribute, IValidator {
         public bool AllowEmptyStrings { get; set; } = false;
-        public string IsNullFailureMessage { get; set; } = "Value of required field is null";
+        public string IsMissingFailureMessage { get; set; } = "Required field is not initialized with valid value";
 
         public ElementaryConclusion Validate(object obj) {
             if (obj == null) {
-                return new ElementaryConclusion(false, this.IsNullFailureMessage);
+                return new ElementaryConclusion(false, this.IsMissingFailureMessage);
             }
 
             if (!this.AllowEmptyStrings) {

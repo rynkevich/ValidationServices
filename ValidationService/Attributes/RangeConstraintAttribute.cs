@@ -4,19 +4,23 @@ using ValidationService.Results;
 namespace ValidationService.Attributes {
     [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
     public class RangeConstraintAttribute : ValidationAttribute {
-        public IComparable Min { get; set; }
-        public IComparable Max { get; set; }
+        public object Min { get; set; }
+        public object Max { get; set; }
         public string FailureMessage { get; set; } = "Property value must satisfy specified constraints";
 
         public RangeConstraintAttribute() { }
 
         public override ElementaryConclusion Validate(object obj) {
             if (this.Min == null && this.Max == null) {
-                throw new ArgumentNullException("Constraints are not specified");
+                throw new ArgumentNullException("Constraint is not specified");
+            }
+
+            if (obj == null) {
+                return new ElementaryConclusion(isValid: true);
             }
 
             try {
-                if (this.Min != null && this.Max != null && this.Min.CompareTo(this.Max) > 0) {
+                if (this.Min != null && this.Max != null && ((IComparable)this.Min).CompareTo(this.Max) > 0) {
                     throw new ArgumentException("Lower constraint exceeds upper constraint");
                 }
             } catch {
@@ -24,8 +28,8 @@ namespace ValidationService.Attributes {
             }
 
             try {
-                if ((this.Min != null && this.Min.CompareTo(obj) > 0) || 
-                    (this.Max != null && this.Max.CompareTo(obj) < 0)) 
+                if ((this.Min != null && ((IComparable)this.Min).CompareTo(obj) > 0) || 
+                    (this.Max != null && ((IComparable)this.Max).CompareTo(obj) < 0)) 
                 {
                     return new ElementaryConclusion(isValid: false, this.FailureMessage);
                 }

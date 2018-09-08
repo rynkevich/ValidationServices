@@ -21,9 +21,9 @@ namespace ValidationService.Attributes
             if (!this.AllowEmptyStrings)
             {
                 string stringObj = obj as string;
-                if (stringObj != null)
+                if (stringObj != null && stringObj.Trim().Length == 0)
                 {
-                    return new ElementaryConclusion(isValid: stringObj.Trim().Length != 0);
+                    return new ElementaryConclusion(isValid: false, this.FailureMessage);
                 }
             }
 

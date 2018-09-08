@@ -8,14 +8,19 @@ namespace ValidationService.Attributes {
         public IComparable Max { get; set; }
         public string FailureMessage { get; set; } = "Property value must satisfy specified constraints";
 
-        public RangeConstraintAttribute(IComparable min, IComparable max = null) {
-            this.Min = min;
-            this.Max = max;
-        }
+        public RangeConstraintAttribute() { }
 
         public override ElementaryConclusion Validate(object obj) {
             if (this.Min == null && this.Max == null) {
                 throw new ArgumentNullException("Constraints are not specified");
+            }
+
+            try {
+                if (this.Min != null && this.Max != null && this.Min.CompareTo(this.Max) > 0) {
+                    throw new ArgumentException("Lower constraint exceeds upper constraint");
+                }
+            } catch {
+                throw new ArgumentException("Range constraints are not compatible");
             }
 
             try {

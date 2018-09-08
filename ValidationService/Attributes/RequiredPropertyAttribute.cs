@@ -7,6 +7,8 @@ namespace ValidationService.Attributes {
         public bool AllowEmptyStrings { get; set; } = false;
         public string FailureMessage { get; set; } = "Required property must be initialized with valid value";
 
+        public RequiredPropertyAttribute() { }
+
         public override ElementaryConclusion Validate(object obj) {
             if (obj == null) {
                 return new ElementaryConclusion(isValid: false, this.FailureMessage);

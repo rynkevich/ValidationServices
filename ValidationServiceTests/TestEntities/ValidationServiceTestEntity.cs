@@ -16,20 +16,20 @@ namespace ValidationServiceTests.TestEntities
         [RequiredProperty]
         public object RequiredObject { get; set; }
 
-        [RequiredProperty(AllowEmptyStrings = true)]
-        public string NotNullString { get; set; }
+        [RequiredProperty(AllowEmptyStrings = false)]
+        public string NotEmptyString { get; set; }
 
         public object SomeObject { get; set; }
 
         public ValidationServiceTestEntity(int digit, int negativeInteger,
             string oneCharString, object requiredObject,
-            string notNullString, object someObject)
+            string notEmptyString, object someObject)
         {
             this.Digit = digit;
             this.NegativeInteger = negativeInteger;
             this.OneCharString = oneCharString;
             this.RequiredObject = requiredObject;
-            this.NotNullString = notNullString;
+            this.NotEmptyString = notEmptyString;
             this.SomeObject = someObject;
         }
     }

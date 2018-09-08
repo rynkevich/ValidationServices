@@ -15,7 +15,7 @@ namespace ValidationService.Attributes {
 
         public override ElementaryConclusion Validate(object obj) {
             if (this.Min == DEFAULT_MIN && this.Max == DEFAULT_MAX) {
-                throw new ArgumentException("No constraint is specified");
+                throw new ArgumentException("Constraint is not specified");
             }
             if (this.Min > this.Max) {
                 throw new ArgumentException("Lower constraint exceeds upper constraint");

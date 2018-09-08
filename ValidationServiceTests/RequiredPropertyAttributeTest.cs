@@ -5,7 +5,7 @@ using ValidationServiceTests.TestEntities;
 
 namespace ValidationServiceTests {
     public class RequiredPropertyAttributeTest {
-        private readonly RequiredPropertyFoobar obj = new RequiredPropertyFoobar();
+        private readonly RequiredPropertyTestEntity obj = new RequiredPropertyTestEntity();
 
         [Fact]
         public void NotNullObjectIsOk() {
@@ -62,7 +62,7 @@ namespace ValidationServiceTests {
         }
 
         private static RequiredPropertyAttribute GetRequiredPropertyAttribute(string propName) {
-            PropertyInfo info = typeof(RequiredPropertyFoobar).GetProperty(propName);
+            PropertyInfo info = typeof(RequiredPropertyTestEntity).GetProperty(propName);
 
             return (RequiredPropertyAttribute)info.GetCustomAttribute(typeof(RequiredPropertyAttribute));
         }

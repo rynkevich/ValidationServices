@@ -6,7 +6,7 @@ using ValidationServiceTests.TestEntities;
 
 namespace ValidationServiceTests {
     public class RangeConstraintAttributeTest {
-        private readonly RangeConstraintFoobar obj = new RangeConstraintFoobar();
+        private readonly RangeConstraintTestEntity obj = new RangeConstraintTestEntity();
 
         [Fact]
         public void NullObjectIsValid() {
@@ -87,7 +87,7 @@ namespace ValidationServiceTests {
         }
 
         private static RangeConstraintAttribute GetRangeConstraintAttribute(string propName) {
-            PropertyInfo info = typeof(RangeConstraintFoobar).GetProperty(propName);
+            PropertyInfo info = typeof(RangeConstraintTestEntity).GetProperty(propName);
 
             return (RangeConstraintAttribute)info.GetCustomAttribute(typeof(RangeConstraintAttribute));
         }

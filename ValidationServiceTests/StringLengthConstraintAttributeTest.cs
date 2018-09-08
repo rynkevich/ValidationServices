@@ -6,7 +6,7 @@ using ValidationServiceTests.TestEntities;
 
 namespace ValidationServiceTests {
     public class StringLengthConstraintAttributeTest {
-        private readonly StringLengthConstraintFoobar obj = new StringLengthConstraintFoobar();
+        private readonly StringLengthConstraintTestEntity obj = new StringLengthConstraintTestEntity();
 
         [Fact]
         public void NullStringIsOk() {
@@ -81,7 +81,7 @@ namespace ValidationServiceTests {
         }
 
         private static StringLengthConstraintAttribute GetStringLengthConstraintAttribute(string propName) {
-            PropertyInfo info = typeof(StringLengthConstraintFoobar).GetProperty(propName);
+            PropertyInfo info = typeof(StringLengthConstraintTestEntity).GetProperty(propName);
 
             return (StringLengthConstraintAttribute)info.GetCustomAttribute(typeof(StringLengthConstraintAttribute));
         }

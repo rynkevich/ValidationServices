@@ -2,7 +2,7 @@
 using ValidationService.Attributes;
 
 namespace ValidationServiceTests.TestEntities {
-    public class StringLengthConstraintFoobar {
+    public class StringLengthConstraintTestEntity {
         [StringLengthConstraint(Min = 5, Max = 10)]
         public string Ok1 { get; }
 

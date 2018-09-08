@@ -2,7 +2,7 @@
 using ValidationService.Attributes;
 
 namespace ValidationServiceTests.TestEntities {
-    public class RequiredPropertyFoobar {
+    public class RequiredPropertyTestEntity {
         [RequiredProperty]
         public object Ok1 { get; } = new List<int>();
         [RequiredProperty]

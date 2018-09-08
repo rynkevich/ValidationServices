@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using ValidationService.Attributes;
 
 namespace ValidationServiceTests.TestEntities {
-    public class RangeConstraintFoobar {
+    public class RangeConstraintTestEntity {
 
         [RangeConstraint(Min = "AC", Max = "AG")]
         public string Ok1 { get; }

@@ -1,9 +1,7 @@
 using System;
 using System.Reflection;
 using Xunit;
-using ValidationService;
 using ValidationService.Attributes;
-using ValidationService.Results;
 using ValidationServiceTests.TestEntities;
 
 namespace ValidationServiceTests {

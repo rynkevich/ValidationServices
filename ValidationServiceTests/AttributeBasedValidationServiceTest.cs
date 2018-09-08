@@ -104,7 +104,7 @@ namespace ValidationServiceTests
         public void NullIsValid()
         {
             AttributeBasedValidationService service = new AttributeBasedValidationService(true);
-            Assert.True(service.Validate(null).IsValid);
+            Assert.True(service.Validate<ValidationServiceTestEntity>(null).IsValid);
         }
 
         [Fact]

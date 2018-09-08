@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using ValidationService.Results;
+using ValidationService.Attributes;
 
 namespace ValidationService
 {
@@ -14,7 +15,7 @@ namespace ValidationService
             this.IsRecursiveValidation = isRecursiveValidation;
         }
 
-        public override GeneralConclusion Validate(object obj, string objName = "")
+        public override GeneralConclusion Validate<T>(T obj, string objName = "")
         {
             if (obj == null)
             {
@@ -23,8 +24,10 @@ namespace ValidationService
 
             if (this.IsRecursiveValidation)
             {
-                this.hashCodeSet = new HashSet<int>();
-                this.hashCodeSet.Add(obj.GetHashCode());
+                this.hashCodeSet = new HashSet<int>
+                {
+                    obj.GetHashCode()
+                };
                 GeneralConclusion conclusion = this.ValidateObject(obj, objName);
                 this.hashCodeSet = null;
                 return conclusion;
@@ -49,17 +52,14 @@ namespace ValidationService
                         if (this.IsRecursiveValidation && value != null)
                         {
                             this.hashCodeSet.Add(value.GetHashCode());
-                            conclusion += this.ValidateObject(value, fullName + '.' + prop.Name);
+                            conclusion += this.ValidateObject(value, $"{fullName}.{prop.Name}");
                         }
-                        foreach (Attribute attr in prop.GetCustomAttributes())
+                        foreach (ValidationAttribute attr in prop.GetCustomAttributes<ValidationAttribute>())
                         {
-                            if (attr is IValidator)
-                            {
-                                ElementaryConclusion elemConclusion = (attr as IValidator).Validate(value);
-                                conclusion += new ElementaryConclusion(elemConclusion.IsValid,
-                                    elemConclusion.Details != null ? (fullName +
-                                    '.' + prop.Name + ": " + elemConclusion.Details) : null);
-                            }
+                            ElementaryConclusion elemConclusion = attr.Validate(value);
+                            conclusion += new ElementaryConclusion(elemConclusion.IsValid,
+                                elemConclusion.Details != null ?
+                                $"{fullName}.{prop.Name}: {elemConclusion.Details}" : null);
                         }
                     }
                 }

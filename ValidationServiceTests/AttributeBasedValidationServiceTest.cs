@@ -5,10 +5,13 @@ using ValidationService;
 using ValidationService.Attributes;
 using ValidationServiceTests.TestEntities;
 
-namespace ValidationServiceTests {
-    public class AttributeBasedValidationServiceTest {
+namespace ValidationServiceTests
+{
+    public class AttributeBasedValidationServiceTest
+    {
         [Fact]
-        public void ValidObjectNonRecursiveValidation() {
+        public void ValidObjectNonRecursiveValidation()
+        {
             ValidationServiceTestEntity obj = new ValidationServiceTestEntity(
                 digit: 1, negativeInteger: -5, oneCharString: "a",
                 requiredObject: new List<int>(), notNullString: "", someObject: null);
@@ -18,7 +21,8 @@ namespace ValidationServiceTests {
         }
 
         [Fact]
-        public void ValidObjectRecursiveValidation() {
+        public void ValidObjectRecursiveValidation()
+        {
             ValidationServiceTestEntity obj = new ValidationServiceTestEntity(
                 digit: 1, negativeInteger: -5, oneCharString: "a",
                 requiredObject: new List<int>(), notNullString: "", someObject: null);
@@ -31,7 +35,8 @@ namespace ValidationServiceTests {
         }
 
         [Fact]
-        public void ValidObjectWithRecursiveReference() {
+        public void ValidObjectWithRecursiveReference()
+        {
             ValidationServiceTestEntity obj = new ValidationServiceTestEntity(
                digit: 1, negativeInteger: -5, oneCharString: "a",
                requiredObject: null, notNullString: "", someObject: null);
@@ -42,7 +47,8 @@ namespace ValidationServiceTests {
         }
 
         [Fact]
-        public void InvalidObjectNonRecursiveValidation() {
+        public void InvalidObjectNonRecursiveValidation()
+        {
             ValidationServiceTestEntity obj = new ValidationServiceTestEntity(
                 digit: 25, negativeInteger: 5, oneCharString: "abc",
                 requiredObject: null, notNullString: null, someObject: null);
@@ -52,7 +58,8 @@ namespace ValidationServiceTests {
         }
 
         [Fact]
-        public void InvalidObjectRecursiveValidation() {
+        public void InvalidObjectRecursiveValidation()
+        {
             ValidationServiceTestEntity obj = new ValidationServiceTestEntity(
                digit: 1, negativeInteger: -5, oneCharString: "a",
                requiredObject: null, notNullString: "", someObject: null);
@@ -65,7 +72,8 @@ namespace ValidationServiceTests {
         }
 
         [Fact]
-        public void ValidationConclusionHasAllDetailsNonRecursiveValidation() {
+        public void ValidationConclusionHasAllDetailsNonRecursiveValidation()
+        {
             const int ENTRIES_EXPECTED = 5;
 
             ValidationServiceTestEntity obj = new ValidationServiceTestEntity(
@@ -77,7 +85,8 @@ namespace ValidationServiceTests {
         }
 
         [Fact]
-        public void ValidationConclusionHasAllDetailsRecursiveValidation() {
+        public void ValidationConclusionHasAllDetailsRecursiveValidation()
+        {
             const int ENTRIES_EXPECTED = 10;
 
             ValidationServiceTestEntity obj = new ValidationServiceTestEntity(
@@ -92,13 +101,15 @@ namespace ValidationServiceTests {
         }
 
         [Fact]
-        public void NullIsValid() {
+        public void NullIsValid()
+        {
             AttributeBasedValidationService service = new AttributeBasedValidationService(true);
             Assert.True(service.Validate(null).IsValid);
-        } 
+        }
 
         [Fact]
-        public void ObjectWithoutValidationAttributesIsValid() {
+        public void ObjectWithoutValidationAttributesIsValid()
+        {
             AttributeBasedValidationService service = new AttributeBasedValidationService(true);
             Assert.True(service.Validate(new SortedSet<int>()).IsValid);
         }

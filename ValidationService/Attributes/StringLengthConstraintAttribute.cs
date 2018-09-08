@@ -1,9 +1,11 @@
 ﻿using System;
 using ValidationService.Results;
 
-namespace ValidationService.Attributes {
+namespace ValidationService.Attributes
+{
     [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
-    public class StringLengthConstraintAttribute : ValidationAttribute {
+    public class StringLengthConstraintAttribute : ValidationAttribute
+    {
         private static readonly uint DEFAULT_MIN = 0;
         private static readonly uint DEFAULT_MAX = uint.MaxValue;
 
@@ -13,26 +15,34 @@ namespace ValidationService.Attributes {
 
         public StringLengthConstraintAttribute() { }
 
-        public override ElementaryConclusion Validate(object obj) {
-            if (this.Min == DEFAULT_MIN && this.Max == DEFAULT_MAX) {
+        public override ElementaryConclusion Validate(object obj)
+        {
+            if (this.Min == DEFAULT_MIN && this.Max == DEFAULT_MAX)
+            {
                 throw new ArgumentException("Constraint is not specified");
             }
-            if (this.Min > this.Max) {
+            if (this.Min > this.Max)
+            {
                 throw new ArgumentException("Lower constraint exceeds upper constraint");
             }
 
-            if (obj == null) {
+            if (obj == null)
+            {
                 return new ElementaryConclusion(isValid: true);
             }
 
             int length;
-            try {
+            try
+            {
                 length = ((string)obj).Length;
-            } catch {
+            }
+            catch
+            {
                 throw new ArgumentException("Validation argument is not a string");
             }
 
-            if ((length < this.Min) || (this.Max != 0 && length > this.Max)) {
+            if ((length < this.Min) || (this.Max != 0 && length > this.Max))
+            {
                 return new ElementaryConclusion(isValid: false, this.FailureMessage);
             }
 

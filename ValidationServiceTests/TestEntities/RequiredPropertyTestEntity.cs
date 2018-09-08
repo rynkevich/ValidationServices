@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using ValidationService.Attributes;
 
-namespace ValidationServiceTests.TestEntities {
-    public class RequiredPropertyTestEntity {
+namespace ValidationServiceTests.TestEntities
+{
+    public class RequiredPropertyTestEntity
+    {
         [RequiredProperty]
         public object Ok1 { get; } = new List<int>();
         [RequiredProperty]

@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using ValidationService.Attributes;
 
-namespace ValidationServiceTests.TestEntities {
-    public class RangeConstraintTestEntity {
+namespace ValidationServiceTests.TestEntities
+{
+    public class RangeConstraintTestEntity
+    {
 
         [RangeConstraint(Min = "AC", Max = "AG")]
         public string Ok1 { get; }
@@ -27,7 +29,7 @@ namespace ValidationServiceTests.TestEntities {
 
         [RangeConstraint]
         public string NotOk5 { get; }
-        
+
         [RangeConstraint(Min = 13, Max = 0)]
         public int NotOk6 { get; }
 

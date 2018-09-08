@@ -1,7 +1,9 @@
 ﻿using ValidationService.Attributes;
 
-namespace ValidationServiceTests.TestEntities {
-    public class ValidationServiceTestEntity {
+namespace ValidationServiceTests.TestEntities
+{
+    public class ValidationServiceTestEntity
+    {
         [RangeConstraint(Min = 0, Max = 9)]
         public int Digit { get; private set; }
 
@@ -19,9 +21,9 @@ namespace ValidationServiceTests.TestEntities {
 
         public object SomeObject { get; set; }
 
-        public ValidationServiceTestEntity(int digit, int negativeInteger, 
-            string oneCharString, object requiredObject, 
-            string notNullString, object someObject) 
+        public ValidationServiceTestEntity(int digit, int negativeInteger,
+            string oneCharString, object requiredObject,
+            string notNullString, object someObject)
         {
             this.Digit = digit;
             this.NegativeInteger = negativeInteger;

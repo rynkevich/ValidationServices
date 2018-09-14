@@ -10,63 +10,63 @@ namespace ValidationServiceTests
         private readonly RequiredPropertyTestEntity obj = new RequiredPropertyTestEntity();
 
         [Fact]
-        public void NotNullObjectIsOk()
+        public void NotNullObjectIsValidTest()
         {
             RequiredPropertyAttribute attr = GetRequiredPropertyAttribute(nameof(this.obj.Ok1));
             Assert.True(attr.Validate(this.obj.Ok1).IsValid);
         }
 
         [Fact]
-        public void NullObjectIsNotOk()
+        public void NullObjectIsInvalidTest()
         {
             RequiredPropertyAttribute attr = GetRequiredPropertyAttribute(nameof(this.obj.NotOk1));
             Assert.False(attr.Validate(this.obj.NotOk1).IsValid);
         }
 
         [Fact]
-        public void InvalidObjectHasCorrespondingFailureMessage()
+        public void InvalidObjectHasCorrespondingFailureMessageTest()
         {
             RequiredPropertyAttribute attr = GetRequiredPropertyAttribute(nameof(this.obj.NotOk1));
             Assert.Equal(attr.FailureMessage, attr.Validate(this.obj.NotOk1).Details);
         }
 
         [Fact]
-        public void EmptyStringIsOkIfAllowed()
+        public void EmptyStringIsValidIfAllowedTest()
         {
             RequiredPropertyAttribute attr = GetRequiredPropertyAttribute(nameof(this.obj.Ok2));
             Assert.True(attr.Validate(this.obj.Ok2).IsValid);
         }
 
         [Fact]
-        public void EmptyStringIsNotOkByDefault()
+        public void EmptyStringIsInvalidByDefaultTest()
         {
             RequiredPropertyAttribute attr = GetRequiredPropertyAttribute(nameof(this.obj.NotOk2));
             Assert.False(attr.Validate(this.obj.NotOk2).IsValid);
         }
 
         [Fact]
-        public void WhiteSpaceStringIsOkIfAllowed()
+        public void WhiteSpaceStringIsValidIfAllowedTest()
         {
             RequiredPropertyAttribute attr = GetRequiredPropertyAttribute(nameof(this.obj.Ok3));
             Assert.True(attr.Validate(this.obj.Ok3).IsValid);
         }
 
         [Fact]
-        public void WhiteSpaceStringIsNotOkByDefault()
+        public void WhiteSpaceStringIsInvalidByDefaultTest()
         {
             RequiredPropertyAttribute attr = GetRequiredPropertyAttribute(nameof(this.obj.NotOk3));
             Assert.False(attr.Validate(this.obj.NotOk3).IsValid);
         }
 
         [Fact]
-        public void NotNullStringIsOk()
+        public void NotNullStringIsValidTest()
         {
             RequiredPropertyAttribute attr = GetRequiredPropertyAttribute(nameof(this.obj.Ok4));
             Assert.True(attr.Validate(this.obj.Ok4).IsValid);
         }
 
         [Fact]
-        public void NullStringIsOk()
+        public void NullStringIsValidTest()
         {
             RequiredPropertyAttribute attr = GetRequiredPropertyAttribute(nameof(this.obj.NotOk4));
             Assert.False(attr.Validate(this.obj.NotOk4).IsValid);

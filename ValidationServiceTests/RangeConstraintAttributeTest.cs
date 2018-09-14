@@ -11,94 +11,94 @@ namespace ValidationServiceTests
         private readonly RangeConstraintTestEntity obj = new RangeConstraintTestEntity();
 
         [Fact]
-        public void NullObjectIsValid()
-        {
-            RangeConstraintAttribute attr = GetRangeConstraintAttribute(nameof(this.obj.Ok1));
-            Assert.True(attr.Validate(this.obj.Ok1).IsValid);
-        }
-
-        [Fact]
-        public void MinMaxConstraintedObjectIsOk()
-        {
-            RangeConstraintAttribute attr = GetRangeConstraintAttribute(nameof(this.obj.Ok2));
-            Assert.True(attr.Validate(this.obj.Ok2).IsValid);
-        }
-
-        [Fact]
-        public void MinMaxLowerConstraintViolationIsNotOk()
-        {
-            RangeConstraintAttribute attr = GetRangeConstraintAttribute(nameof(this.obj.SmallNotOk2));
-            Assert.False(attr.Validate(this.obj.SmallNotOk2).IsValid);
-        }
-
-        [Fact]
-        public void MinMaxUpperConstraintViolationIsNotOk()
-        {
-            RangeConstraintAttribute attr = GetRangeConstraintAttribute(nameof(this.obj.LargeNotOk2));
-            Assert.False(attr.Validate(this.obj.LargeNotOk2).IsValid);
-        }
-
-        [Fact]
-        public void InvalidObjectHasCorrespondingFailureMessage()
-        {
-            RangeConstraintAttribute attr = GetRangeConstraintAttribute(nameof(this.obj.SmallNotOk2));
-            Assert.Equal(attr.FailureMessage, attr.Validate(this.obj.SmallNotOk2).Details);
-        }
-
-        [Fact]
-        public void MaxConstraintedObjectIsOk()
-        {
-            RangeConstraintAttribute attr = GetRangeConstraintAttribute(nameof(this.obj.Ok3));
-            Assert.True(attr.Validate(this.obj.Ok3).IsValid);
-        }
-
-        [Fact]
-        public void MaxConstraintViolationIsNotOk()
-        {
-            RangeConstraintAttribute attr = GetRangeConstraintAttribute(nameof(this.obj.NotOk3));
-            Assert.False(attr.Validate(this.obj.NotOk3).IsValid);
-        }
-
-        [Fact]
-        public void MinConstraintedObjectIsOk()
-        {
-            RangeConstraintAttribute attr = GetRangeConstraintAttribute(nameof(this.obj.Ok4));
-            Assert.True(attr.Validate(this.obj.Ok4).IsValid);
-        }
-
-        [Fact]
-        public void MinConstraintViolationIsNotOk()
-        {
-            RangeConstraintAttribute attr = GetRangeConstraintAttribute(nameof(this.obj.NotOk4));
-            Assert.False(attr.Validate(this.obj.NotOk4).IsValid);
-        }
-
-        [Fact]
-        public void AtLeastOneConstraintMustBeSpecified()
+        public void OnNoConstraintsThrowsArgumentNullExceptionTest()
         {
             RangeConstraintAttribute attr = GetRangeConstraintAttribute(nameof(this.obj.NotOk5));
             Assert.Throws<ArgumentNullException>(() => { attr.Validate(this.obj.NotOk5); });
         }
 
         [Fact]
-        public void LowerConstraintCanNotExceedUpperConstraint()
+        public void OnLowerConstraintExceedsUpperConstraintThrowsArgumentExceptionTest()
         {
             RangeConstraintAttribute attr = GetRangeConstraintAttribute(nameof(this.obj.NotOk6));
             Assert.Throws<ArgumentException>(() => { attr.Validate(this.obj.NotOk6); });
         }
 
         [Fact]
-        public void ConstraintsMustBeCompatibleToEachOther()
+        public void OnIncompatibleConstraintsThrowsArgumentException()
         {
             RangeConstraintAttribute attr = GetRangeConstraintAttribute(nameof(this.obj.NotOk7));
             Assert.Throws<ArgumentException>(() => { attr.Validate(this.obj.NotOk7); });
         }
 
         [Fact]
-        public void ConstraintsMustBeCompatibleToObject()
+        public void OnIncompatibleConstraintsAndObjectThrowsArgumentException()
         {
             RangeConstraintAttribute attr = GetRangeConstraintAttribute(nameof(this.obj.NotOk8));
             Assert.Throws<ArgumentException>(() => { attr.Validate(this.obj.NotOk8); });
+        }
+
+        [Fact]
+        public void NullObjectIsValidTest()
+        {
+            RangeConstraintAttribute attr = GetRangeConstraintAttribute(nameof(this.obj.Ok1));
+            Assert.True(attr.Validate(this.obj.Ok1).IsValid);
+        }
+
+        [Fact]
+        public void MinMaxConstraintedObjectIsValidTest()
+        {
+            RangeConstraintAttribute attr = GetRangeConstraintAttribute(nameof(this.obj.Ok2));
+            Assert.True(attr.Validate(this.obj.Ok2).IsValid);
+        }
+
+        [Fact]
+        public void MinMaxLowerConstraintViolationIsInvalidTest()
+        {
+            RangeConstraintAttribute attr = GetRangeConstraintAttribute(nameof(this.obj.SmallNotOk2));
+            Assert.False(attr.Validate(this.obj.SmallNotOk2).IsValid);
+        }
+
+        [Fact]
+        public void MinMaxUpperConstraintViolationIsInvalidTest()
+        {
+            RangeConstraintAttribute attr = GetRangeConstraintAttribute(nameof(this.obj.LargeNotOk2));
+            Assert.False(attr.Validate(this.obj.LargeNotOk2).IsValid);
+        }
+
+        [Fact]
+        public void InvalidObjectHasCorrespondingFailureMessageTest()
+        {
+            RangeConstraintAttribute attr = GetRangeConstraintAttribute(nameof(this.obj.SmallNotOk2));
+            Assert.Equal(attr.FailureMessage, attr.Validate(this.obj.SmallNotOk2).Details);
+        }
+
+        [Fact]
+        public void MaxConstraintedObjectIsValidTest()
+        {
+            RangeConstraintAttribute attr = GetRangeConstraintAttribute(nameof(this.obj.Ok3));
+            Assert.True(attr.Validate(this.obj.Ok3).IsValid);
+        }
+
+        [Fact]
+        public void MaxConstraintViolationIsInvalidTest()
+        {
+            RangeConstraintAttribute attr = GetRangeConstraintAttribute(nameof(this.obj.NotOk3));
+            Assert.False(attr.Validate(this.obj.NotOk3).IsValid);
+        }
+
+        [Fact]
+        public void MinConstraintedObjectIsValidTest()
+        {
+            RangeConstraintAttribute attr = GetRangeConstraintAttribute(nameof(this.obj.Ok4));
+            Assert.True(attr.Validate(this.obj.Ok4).IsValid);
+        }
+
+        [Fact]
+        public void MinConstraintViolationIsInvalidTest()
+        {
+            RangeConstraintAttribute attr = GetRangeConstraintAttribute(nameof(this.obj.NotOk4));
+            Assert.False(attr.Validate(this.obj.NotOk4).IsValid);
         }
 
         private static RangeConstraintAttribute GetRangeConstraintAttribute(string propName)

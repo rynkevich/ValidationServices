@@ -18,14 +18,14 @@ namespace ValidationServiceTests.TestEntities
         public string LargeNotOk2 { get; } = "AL";
 
         [RangeConstraint(Max = 77)]
-        public int Ok3 { get; } = 11;
+        public uint Ok3 { get; } = 11;
         [RangeConstraint(Max = 77)]
-        public int NotOk3 { get; } = 999;
+        public uint NotOk3 { get; } = 999;
 
         [RangeConstraint(Min = 5.56)]
         public double Ok4 { get; } = 5.91;
         [RangeConstraint(Min = 5.56)]
-        public double NotOk4 { get; } = 4.99;
+        public double NotOk4 { get; } = -4.99;
 
         [RangeConstraint]
         public string NotOk5 { get; }

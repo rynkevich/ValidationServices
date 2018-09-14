@@ -10,7 +10,7 @@ namespace ValidationServiceTests
     public class AttributeBasedValidationServiceTest
     {
         [Fact]
-        public void ValidObjectNonRecursiveValidation()
+        public void ValidObjectIsValidWithNonRecursiveValidationTest()
         {
             ValidationServiceTestEntity obj = new ValidationServiceTestEntity(
                 digit: 1, negativeInteger: -5, oneCharString: "a",
@@ -21,7 +21,7 @@ namespace ValidationServiceTests
         }
 
         [Fact]
-        public void ValidObjectRecursiveValidation()
+        public void ValidObjectIsValidWithRecursiveValidationTest()
         {
             ValidationServiceTestEntity obj = new ValidationServiceTestEntity(
                 digit: 1, negativeInteger: -5, oneCharString: "a",
@@ -35,7 +35,7 @@ namespace ValidationServiceTests
         }
 
         [Fact]
-        public void ValidObjectWithRecursiveReference()
+        public void ValidObjectWithRecursiveReferenceIsValidTest()
         {
             ValidationServiceTestEntity obj = new ValidationServiceTestEntity(
                digit: 1, negativeInteger: -5, oneCharString: "a",
@@ -47,7 +47,7 @@ namespace ValidationServiceTests
         }
 
         [Fact]
-        public void InvalidObjectNonRecursiveValidation()
+        public void InvalidObjectIsInvalidWithNonRecursiveValidationTest()
         {
             ValidationServiceTestEntity obj = new ValidationServiceTestEntity(
                 digit: 25, negativeInteger: 5, oneCharString: "abc",
@@ -58,7 +58,7 @@ namespace ValidationServiceTests
         }
 
         [Fact]
-        public void InvalidObjectRecursiveValidation()
+        public void InvalidObjectIsInvalidWithRecursiveValidationTest()
         {
             ValidationServiceTestEntity obj = new ValidationServiceTestEntity(
                digit: 1, negativeInteger: -5, oneCharString: "a",
@@ -72,7 +72,7 @@ namespace ValidationServiceTests
         }
 
         [Fact]
-        public void ValidationConclusionHasAllDetailsNonRecursiveValidation()
+        public void ValidationConclusionHasAllDetailsWithNonRecursiveValidationTest()
         {
             const int ENTRIES_EXPECTED = 5;
 
@@ -85,7 +85,7 @@ namespace ValidationServiceTests
         }
 
         [Fact]
-        public void ValidationConclusionHasAllDetailsRecursiveValidation()
+        public void ValidationConclusionHasAllDetailsWithRecursiveValidationTest()
         {
             const int ENTRIES_EXPECTED = 10;
 
@@ -101,14 +101,14 @@ namespace ValidationServiceTests
         }
 
         [Fact]
-        public void NullIsValid()
+        public void NullIsValidTest()
         {
             AttributeBasedValidationService service = new AttributeBasedValidationService(true);
             Assert.True(service.Validate<ValidationServiceTestEntity>(null).IsValid);
         }
 
         [Fact]
-        public void ObjectWithoutValidationAttributesIsValid()
+        public void ObjectWithoutValidationAttributesIsValidTest()
         {
             AttributeBasedValidationService service = new AttributeBasedValidationService(true);
             Assert.True(service.Validate(new SortedSet<int>()).IsValid);

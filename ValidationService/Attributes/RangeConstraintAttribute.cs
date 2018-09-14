@@ -36,12 +36,33 @@ namespace ValidationService.Attributes
                 throw new ArgumentException("Range constraints are not compatible");
             }
 
+            bool isValid = true;
             try
             {
-                if ((this.Min != null && ((IComparable)this.Min).CompareTo(obj) > 0) ||
-                    (this.Max != null && ((IComparable)this.Max).CompareTo(obj) < 0))
+                if (obj is byte)
                 {
-                    return new ElementaryConclusion(isValid: false, this.FailureMessage);
+                    isValid = !((this.Min != null) && ((byte)(sbyte)this.Min > (byte)obj) ||
+                        (this.Max != null) && ((byte)(sbyte)this.Max < (byte)obj));
+                }
+                else if (obj is ushort)
+                {
+                    isValid = !((this.Min != null) && ((ushort)(short)this.Min > (ushort)obj) ||
+                        (this.Max != null) && ((ushort)(short)this.Max < (ushort)obj));
+                }
+                else if (obj is uint)
+                {
+                    isValid = !((this.Min != null) && ((uint)(int)this.Min > (uint)obj) ||
+                        (this.Max != null) && ((uint)(int)this.Max < (uint)obj));
+                }
+                else if (obj is ulong)
+                {
+                    isValid = !((this.Min != null) && ((ulong)(long)this.Min > (ulong)obj) ||
+                        (this.Max != null) && ((ulong)(long)this.Max < (ulong)obj));
+                }
+                else
+                {
+                    isValid = !((this.Min != null && ((IComparable)obj).CompareTo(this.Min) < 0) ||
+                        (this.Max != null && ((IComparable)obj).CompareTo(this.Max) > 0));
                 }
             }
             catch
@@ -49,7 +70,8 @@ namespace ValidationService.Attributes
                 throw new ArgumentException("Range constraints and validated object are not compatible");
             }
 
-            return new ElementaryConclusion(isValid: true);
+            return isValid ? new ElementaryConclusion(isValid: true) : 
+                new ElementaryConclusion(isValid: false, this.FailureMessage);
         }
     }
 }

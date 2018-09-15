@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ValidationService.Logger
+﻿namespace ValidationService.Logger
 {
     /// <summary>
     /// Enum that contains possible log levels for ILogger. 

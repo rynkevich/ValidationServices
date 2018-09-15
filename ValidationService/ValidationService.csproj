@@ -53,10 +53,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Service\Exceptions\LoggingFailedException.cs" />
+    <Compile Include="Logger\LogLevel.cs" />
     <Compile Include="Logger\ILogger.cs" />
     <Compile Include="Logger\NLogLogger.cs" />
     <Compile Include="Service\LoggingValidationService.cs" />
-    <Compile Include="Service\AttributeBasedValidationService.cs" />
+    <Compile Include="Service\ValidationService.cs" />
     <Compile Include="Attributes\RangeConstraintAttribute.cs" />
     <Compile Include="Attributes\RequiredPropertyAttribute.cs" />
     <Compile Include="Attributes\StringLengthConstraintAttribute.cs" />
@@ -66,7 +68,7 @@
     <Compile Include="Results\ElementaryConclusion.cs" />
     <Compile Include="Results\GeneralConclusion.cs" />
     <Compile Include="Results\ValidationConclusion.cs" />
-    <Compile Include="Service\ValidationService.cs" />
+    <Compile Include="Service\BaseValidationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="NLog.config">

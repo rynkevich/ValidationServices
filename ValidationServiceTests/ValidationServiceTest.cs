@@ -1,14 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.Reflection;
 using Xunit;
-using ValidationService.Service;
 using ValidationService.Attributes;
 using ValidationServiceTests.TestEntities;
 using System;
 
 namespace ValidationServiceTests
 {
-    public class AttributeBasedValidationServiceTest
+    public class ValidationServiceTest
     {
         [Fact]
         public void ValidObjectIsValidWithNonRecursiveValidationTest()
@@ -113,6 +111,19 @@ namespace ValidationServiceTests
         {
             ValidationService.Service.ValidationService service = new ValidationService.Service.ValidationService(true);
             Assert.True(service.Validate(new SortedSet<int>()).IsValid);
+        }
+
+        [Fact]
+        public void NullRootNameMeansEmptyRootNameTest()
+        {
+            ValidationServiceTestEntity obj = new ValidationServiceTestEntity(
+                digit: 25, negativeInteger: 5, oneCharString: "abc",
+                requiredObject: null, notEmptyString: null, someObject: null);
+
+            string rangeConstraintDefaultFailureMessage = new RangeConstraintAttribute().FailureMessage;
+            ValidationService.Service.ValidationService service = new ValidationService.Service.ValidationService(false);
+            Assert.Equal($".Digit: {rangeConstraintDefaultFailureMessage}",
+                service.Validate(obj, null).Details[0]);
         }
     }
 }

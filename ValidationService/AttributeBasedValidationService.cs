@@ -28,7 +28,7 @@ namespace ValidationService
         }
 
         /// <summary>
-        /// Override of <see cref="ValidationService.Validate{T}(T, string))"/>
+        /// Override of <see cref="ValidationService.Validate{T}(T, string)"/>
         /// </summary>
         /// <typeparam name="T">The type of object to be validated</typeparam>
         /// <param name="obj">The object to validate</param>
@@ -51,7 +51,7 @@ namespace ValidationService
 
         /// <summary>
         /// Internal logic of object validation.
-        /// Is called recursively if <see cref="ValidationService.isRecursiveValidation"/> equals <c>true</c>
+        /// Is called recursively if <see cref="ValidationService.IsRecursiveValidation"/> equals <c>true</c>
         /// </summary>
         /// <typeparam name="T">The type of object to be validated</typeparam>
         /// <param name="obj">The object to validate</param>

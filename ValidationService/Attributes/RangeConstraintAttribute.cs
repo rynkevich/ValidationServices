@@ -21,7 +21,7 @@ namespace ValidationService.Attributes
 
         /// <summary>
         /// Gets or sets a message that will be returned by <see cref="RangeConstraintAttribute.Validate(object)"/>
-        /// in <see cref="ElementaryConclusion.Details"/></c>
+        /// in <see cref="ElementaryConclusion.Details"/>
         /// </summary>
         public string FailureMessage { get; set; } = "Property value must satisfy specified constraints";
 

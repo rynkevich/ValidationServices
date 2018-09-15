@@ -18,7 +18,7 @@ namespace ValidationService.Attributes
 
         /// <summary>
         /// Gets or sets a message that will be returned by <see cref="RequiredPropertyAttribute.Validate(object)"/>
-        /// in <see cref="ElementaryConclusion.Details"/></c>
+        /// in <see cref="ElementaryConclusion.Details"/>
         /// </summary>
         public string FailureMessage { get; set; } = "Required property must be initialized with valid value";
 

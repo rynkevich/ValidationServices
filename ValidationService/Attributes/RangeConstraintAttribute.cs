@@ -23,7 +23,7 @@ namespace ValidationService.Attributes
         /// Gets or sets a message that will be returned by <see cref="RangeConstraintAttribute.Validate(object)"/>
         /// in <see cref="ElementaryConclusion.Details"/>
         /// </summary>
-        public string FailureMessage { get; set; } = "Property value must satisfy specified constraints";
+        public string FailureMessage { get; set; } = Resources.Attributes.RangeConstraintDefaultFailureMessage;
 
         /// <summary>
         /// Override of <see cref="ValidationAttribute.Validate(object)"/>
@@ -34,13 +34,12 @@ namespace ValidationService.Attributes
         /// if the value falls between min and max, inclusive. Otherwise, the flag is set to <c>false</c> and
         /// <see cref="ElementaryConclusion.Details"/> contains <see cref="FailureMessage"/>
         /// </returns>
-        /// <exception cref="ArgumentNullException">Thrown if the current attribute is ill-formed.</exception>
         /// <exception cref="ArgumentException">Thrown if the current attribute is ill-formed.</exception>
         public override ElementaryConclusion Validate(object obj)
         {
             if (this.Min == null && this.Max == null)
             {
-                throw new ArgumentNullException("Constraint is not specified");
+                throw new ArgumentException(Resources.Attributes.ArgumentExceptionConstraintNotSpecified);
             }
 
             if (obj == null)
@@ -52,12 +51,12 @@ namespace ValidationService.Attributes
             {
                 if (this.Min != null && this.Max != null && ((IComparable)this.Min).CompareTo(this.Max) > 0)
                 {
-                    throw new ArgumentException("Lower constraint exceeds upper constraint");
+                    throw new ArgumentException(Resources.Attributes.ArgumentExceptionInvalidConstraints);
                 }
             }
             catch
             {
-                throw new ArgumentException("Range constraints are not compatible");
+                throw new ArgumentException(Resources.Attributes.ArgumentExceptionIncompatibleConstraints);
             }
 
             bool isValid = true;
@@ -96,7 +95,7 @@ namespace ValidationService.Attributes
             }
             catch
             {
-                throw new ArgumentException("Range constraints and validated object are not compatible");
+                throw new ArgumentException(Resources.Attributes.ArgumentExceptionIncompatibleConstraintsAndObject);
             }
 
             return isValid ? new ElementaryConclusion(isValid: true) : 

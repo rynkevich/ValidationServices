@@ -49,7 +49,7 @@ namespace ValidationService.Service
         {
             if (obj == null)
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(Resources.Service.ArgumentNullExceptionValidatedObjectIsNull);
             }
 
             return this.ValidateObject(obj, objName);

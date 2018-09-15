@@ -77,7 +77,7 @@ namespace ValidationService.Service
                 }
                 catch (Exception ex)
                 {
-                    throw new LoggingFailedException("Can not call Log method of configured logger", ex);
+                    throw new LoggingFailedException(Resources.Service.LoggingFailedExceptionCantLog, ex);
                 }
             }
 

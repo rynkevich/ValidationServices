@@ -33,7 +33,7 @@ namespace ValidationService.Attributes
         /// Gets or sets a message that will be returned by <see cref="StringLengthConstraintAttribute.Validate(object)"/>
         /// in <see cref="ElementaryConclusion.Details"/>
         /// </summary>
-        public string FailureMessage { get; set; } = "Length of a string must satisfy specified constraints";
+        public string FailureMessage { get; set; } = Resources.Attributes.StringLengthDefaultFailureMessage;
 
         /// <summary>
         /// Override of <see cref="ValidationAttribute.Validate(object)"/>
@@ -53,11 +53,11 @@ namespace ValidationService.Attributes
         {
             if (this.Min == DEFAULT_MIN && this.Max == DEFAULT_MAX)
             {
-                throw new ArgumentException("Constraint is not specified");
+                throw new ArgumentException(Resources.Attributes.ArgumentExceptionConstraintNotSpecified);
             }
             if (this.Min > this.Max)
             {
-                throw new ArgumentException("Lower constraint exceeds upper constraint");
+                throw new ArgumentException(Resources.Attributes.ArgumentExceptionInvalidConstraints);
             }
 
             if (obj == null)
@@ -72,7 +72,7 @@ namespace ValidationService.Attributes
             }
             catch
             {
-                throw new ArgumentException("Validation argument is not a string");
+                throw new ArgumentException(Resources.Attributes.ArgumentExceptionArgumentIsNotAString);
             }
 
             if ((length < this.Min) || (this.Max != 0 && length > this.Max))

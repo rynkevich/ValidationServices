@@ -28,10 +28,10 @@ namespace ValidationService.Attributes
         /// <param name="obj">The object to validate</param>
         /// <returns>
         /// <see cref="ElementaryConclusion"/> with <c>IsValid</c> flag set to <c>true</c> 
-        /// if the <paramref name="obj"/> is null or an empty string. Otherwise, the flag is set to <c>false</c> and
+        /// if the <paramref name="obj"/> is <c>null</c> or an empty string. Otherwise, the flag is set to <c>false</c> and
         /// <see cref="ElementaryConclusion.Details"/> contains <see cref="FailureMessage"/>.
         /// If <see cref="RequiredPropertyAttribute.AllowEmptyStrings"/>
-        /// then <c>false</c> is returned in <c>IsValid</c> only if <paramref name="obj"/> is null.
+        /// then <c>false</c> is returned in <c>IsValid</c> only if <paramref name="obj"/> is <c>null</c>.
         /// </returns>
         public override ElementaryConclusion Validate(object obj)
         {

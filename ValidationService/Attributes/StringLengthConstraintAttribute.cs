@@ -39,8 +39,8 @@ namespace ValidationService.Attributes
         /// Override of <see cref="ValidationAttribute.Validate(object)"/>
         /// </summary>
         /// <remarks>
-        /// This method returns <c>true</c> if the <paramref name="obj"/> is null.  
-        /// It is assumed the <see cref="RequiredPropertyAttribute"/> is used if the value may not be null.
+        /// This method returns <c>true</c> if the <paramref name="obj"/> is <c>null</c>.  
+        /// It is assumed the <see cref="RequiredPropertyAttribute"/> is used if the value may not be <c>null</c>.
         /// </remarks>
         /// <param name="obj">The string to validate</param>
         /// <returns>

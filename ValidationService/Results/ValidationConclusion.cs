@@ -7,7 +7,7 @@
     public abstract class ValidationConclusion
     {
         /// <summary>
-        /// Get a validated object status.
+        /// Gets a validated object status.
         /// </summary>
         public bool IsValid { get; protected set; }
     }

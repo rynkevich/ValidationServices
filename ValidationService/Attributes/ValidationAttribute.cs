@@ -10,7 +10,7 @@ namespace ValidationService.Attributes
     public abstract class ValidationAttribute : Attribute, IValidator
     {
         /// <summary>
-        /// Gets the value indicating whether or not the specified <paramref name="obj"/> is valid
+        /// Gets the object indicating whether or not the specified <paramref name="obj"/> is valid
         /// with respect to the current validation attribute.
         /// </summary>
         /// <param name="obj">The object to validate</param>

@@ -10,7 +10,7 @@ namespace ValidationService.Results
     public class GeneralConclusion : ValidationConclusion
     {
         /// <summary>
-        /// Get a report on problems which led to invalid status of the validated object.
+        /// Gets a report on problems which led to invalid status of the validated object.
         /// </summary>
         public List<string> Details { get; protected set; }
 

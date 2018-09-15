@@ -6,7 +6,7 @@
     public class ElementaryConclusion : ValidationConclusion
     {
         /// <summary>
-        /// Get a problem report.
+        /// Gets a problem report.
         /// </summary>
         public string Details { get; protected set; }
 

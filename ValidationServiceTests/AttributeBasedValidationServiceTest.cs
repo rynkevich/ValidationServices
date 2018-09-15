@@ -4,6 +4,7 @@ using Xunit;
 using ValidationService.Service;
 using ValidationService.Attributes;
 using ValidationServiceTests.TestEntities;
+using System;
 
 namespace ValidationServiceTests
 {
@@ -16,7 +17,7 @@ namespace ValidationServiceTests
                 digit: 1, negativeInteger: -5, oneCharString: "a",
                 requiredObject: new List<int>(), notEmptyString: "string", someObject: null);
 
-            AttributeBasedValidationService service = new AttributeBasedValidationService(false);
+            ValidationService.Service.ValidationService service = new ValidationService.Service.ValidationService(false);
             Assert.True(service.Validate(obj, nameof(obj)).IsValid);
         }
 
@@ -30,7 +31,7 @@ namespace ValidationServiceTests
                 digit: 2, negativeInteger: -17, oneCharString: "b",
                 requiredObject: new List<int>(), notEmptyString: "str", someObject: null);
 
-            AttributeBasedValidationService service = new AttributeBasedValidationService(true);
+            ValidationService.Service.ValidationService service = new ValidationService.Service.ValidationService(true);
             Assert.True(service.Validate(obj, nameof(obj)).IsValid);
         }
 
@@ -42,7 +43,7 @@ namespace ValidationServiceTests
                requiredObject: null, notEmptyString: "string", someObject: null);
             obj.RequiredObject = obj;
 
-            AttributeBasedValidationService service = new AttributeBasedValidationService(true);
+            ValidationService.Service.ValidationService service = new ValidationService.Service.ValidationService(true);
             Assert.True(service.Validate(obj, nameof(obj)).IsValid);
         }
 
@@ -53,7 +54,7 @@ namespace ValidationServiceTests
                 digit: 25, negativeInteger: 5, oneCharString: "abc",
                 requiredObject: null, notEmptyString: null, someObject: null);
 
-            AttributeBasedValidationService service = new AttributeBasedValidationService(false);
+            ValidationService.Service.ValidationService service = new ValidationService.Service.ValidationService(false);
             Assert.False(service.Validate(obj, nameof(obj)).IsValid);
         }
 
@@ -67,7 +68,7 @@ namespace ValidationServiceTests
                 digit: 25, negativeInteger: 5, oneCharString: "abc",
                 requiredObject: null, notEmptyString: null, someObject: null);
 
-            AttributeBasedValidationService service = new AttributeBasedValidationService(true);
+            ValidationService.Service.ValidationService service = new ValidationService.Service.ValidationService(true);
             Assert.False(service.Validate(obj, nameof(obj)).IsValid);
         }
 
@@ -80,7 +81,7 @@ namespace ValidationServiceTests
                 digit: 25, negativeInteger: 5, oneCharString: "abc",
                 requiredObject: null, notEmptyString: "  ", someObject: null);
 
-            AttributeBasedValidationService service = new AttributeBasedValidationService(false);
+            ValidationService.Service.ValidationService service = new ValidationService.Service.ValidationService(false);
             Assert.Equal(ENTRIES_EXPECTED, service.Validate(obj, nameof(obj)).Details.Count);
         }
 
@@ -96,21 +97,21 @@ namespace ValidationServiceTests
                 digit: -23, negativeInteger: 0, oneCharString: "",
                 requiredObject: null, notEmptyString: "  ", someObject: null);
 
-            AttributeBasedValidationService service = new AttributeBasedValidationService(true);
+            ValidationService.Service.ValidationService service = new ValidationService.Service.ValidationService(true);
             Assert.Equal(ENTRIES_EXPECTED, service.Validate(obj, nameof(obj)).Details.Count);
         }
 
         [Fact]
-        public void NullIsValidTest()
+        public void OnNullThrowsArgumentNullExceptionTest()
         {
-            AttributeBasedValidationService service = new AttributeBasedValidationService(true);
-            Assert.True(service.Validate<ValidationServiceTestEntity>(null).IsValid);
+            ValidationService.Service.ValidationService service = new ValidationService.Service.ValidationService(true);
+            Assert.Throws<ArgumentNullException>(() => service.Validate<ValidationServiceTestEntity>(null).IsValid);
         }
 
         [Fact]
         public void ObjectWithoutValidationAttributesIsValidTest()
         {
-            AttributeBasedValidationService service = new AttributeBasedValidationService(true);
+            ValidationService.Service.ValidationService service = new ValidationService.Service.ValidationService(true);
             Assert.True(service.Validate(new SortedSet<int>()).IsValid);
         }
     }

@@ -6,12 +6,12 @@ namespace ValidationService.Service
     /// <summary>
     /// Decorator class for ValidationService that logs details after each validation act.
     /// </summary>
-    public sealed class LoggingValidationService : ValidationService
+    public sealed class LoggingValidationService : BaseValidationService
     {
         /// <summary>
         /// Actual service that performs validation.
         /// </summary>
-        private readonly ValidationService service;
+        private readonly BaseValidationService service;
 
         /// <summary>
         /// Utility to log validation details.
@@ -34,7 +34,7 @@ namespace ValidationService.Service
         /// <param name="service">The service that performs validation</param>
         /// <param name="logger">The utility to log validation details</param>
         /// <param name="logLevel">The log level for details</param>
-        public LoggingValidationService(ValidationService service, ILogger logger, 
+        public LoggingValidationService(BaseValidationService service, ILogger logger, 
             LogLevel logLevel = LogLevel.WARN)
         {
             this.service = service;
@@ -44,10 +44,10 @@ namespace ValidationService.Service
         }
 
         /// <summary>
-        /// Override of <see cref="ValidationService.Validate{T}(T, string)"/>
+        /// Override of <see cref="BaseValidationService.Validate{T}(T, string)"/>
         /// </summary>
         /// <remarks>
-        /// Validation is performed by <see cref="ValidationService"/> that is used to construct instance of this class.
+        /// Validation is performed by <see cref="BaseValidationService"/> that is used to construct instance of this class.
         /// Details for every invalid object, scanned with this method, will be logged.
         /// </remarks>
         /// <typeparam name="T">The type of object to be validated</typeparam>

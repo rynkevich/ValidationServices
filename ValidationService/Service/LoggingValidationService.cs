@@ -1,5 +1,7 @@
-﻿using ValidationService.Logger;
+﻿using System;
+using ValidationService.Logger;
 using ValidationService.Results;
+using ValidationService.Service.Exceptions;
 
 namespace ValidationService.Service
 {
@@ -59,15 +61,23 @@ namespace ValidationService.Service
         /// if the <paramref name="obj"/> is acceptable. Otherwise, the flag is set to <c>false</c> and
         /// <see cref="GeneralConclusion.Details"/> contains a report on problems.
         /// </returns>
+        /// <exception cref="LoggingFailedException">Thrown if <see cref="ILogger.Log(string, Logger.LogLevel)"/> fails</exception>
         public override GeneralConclusion Validate<T>(T obj, string objName = "")
         {
             GeneralConclusion conclusion = this.service.Validate(obj, objName);
 
             if (conclusion.Details != null)
             {
-                foreach (string detail in conclusion.Details)
+                try
                 {
-                    this.logger.Log(detail, this.logLevel);
+                    foreach (string detail in conclusion.Details)
+                    {
+                        this.logger.Log(detail, this.logLevel);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new LoggingFailedException("Can not call Log method of configured logger", ex);
                 }
             }
 

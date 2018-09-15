@@ -9,14 +9,19 @@ namespace ValidationService.Service
     public sealed class LoggingValidationService : ValidationService
     {
         /// <summary>
-        /// Actual service that performs validation
+        /// Actual service that performs validation.
         /// </summary>
         private readonly ValidationService service;
 
         /// <summary>
-        /// Utility to log validation details
+        /// Utility to log validation details.
         /// </summary>
         private readonly ILogger logger;
+        
+        /// <summary>
+        /// Required log level for details.
+        /// </summary>
+        private readonly LogLevel logLevel;
 
         /// <summary>
         /// Gets or sets a flag indicating whether the validation should be accomplished recursively.
@@ -28,11 +33,14 @@ namespace ValidationService.Service
 
         /// <param name="service">The service that performs validation</param>
         /// <param name="logger">The utility to log validation details</param>
-        public LoggingValidationService(ValidationService service, ILogger logger)
+        /// <param name="logLevel">The log level for details</param>
+        public LoggingValidationService(ValidationService service, ILogger logger, 
+            LogLevel logLevel = LogLevel.WARN)
         {
             this.service = service;
             this.IsRecursiveValidation = service.IsRecursiveValidation;
             this.logger = logger;
+            this.logLevel = logLevel;
         }
 
         /// <summary>
@@ -53,13 +61,13 @@ namespace ValidationService.Service
         /// </returns>
         public override GeneralConclusion Validate<T>(T obj, string objName = "")
         {
-            GeneralConclusion conclusion = this.service.Validate(obj);
+            GeneralConclusion conclusion = this.service.Validate(obj, objName);
 
             if (conclusion.Details != null)
             {
                 foreach (string detail in conclusion.Details)
                 {
-                    this.logger.Warn(detail);
+                    this.logger.Log(detail, this.logLevel);
                 }
             }
 

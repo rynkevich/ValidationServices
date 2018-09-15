@@ -17,48 +17,30 @@
         }
 
         /// <summary>
-        /// Log using "Debug" log level.
+        /// Log a message.
         /// </summary>
         /// <param name="message">The message to log</param>
-        public void Debug(string message)
+        /// <param name="logLevel">The required log level</param>
+        public void Log(string message, LogLevel logLevel)
         {
-            this.logger.Debug(message);
-        }
-
-        /// <summary>
-        /// Log using "Info" log level.
-        /// </summary>
-        /// <param name="message">The message to log</param>
-        public void Info(string message)
-        {
-            this.logger.Info(message);
-        }
-
-        /// <summary>
-        /// Log using "Warn" log level.
-        /// </summary>
-        /// <param name="message">The message to log</param>
-        public void Warn(string message)
-        {
-            this.logger.Warn(message);
-        }
-
-        /// <summary>
-        /// Log using "Error" log level.
-        /// </summary>
-        /// <param name="message">The message to log</param>
-        public void Error(string message)
-        {
-            this.logger.Error(message);
-        }
-
-        /// <summary>
-        /// Log using "Fatal" log level.
-        /// </summary>
-        /// <param name="message">The message to log</param>
-        public void Fatal(string message)
-        {
-            this.logger.Fatal(message);
+            switch (logLevel)
+            {
+                case LogLevel.INFO:
+                    this.logger.Info(message);
+                    break;
+                case LogLevel.WARN:
+                    this.logger.Warn(message);
+                    break;
+                case LogLevel.ERROR:
+                    this.logger.Error(message);
+                    break;
+                case LogLevel.FATAL:
+                    this.logger.Fatal(message);
+                    break;
+                default:
+                    this.logger.Debug(message);
+                    break;
+            }
         }
     }
 }

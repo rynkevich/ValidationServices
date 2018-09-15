@@ -1,6 +1,6 @@
 ﻿using ValidationService.Results;
 
-namespace ValidationService
+namespace ValidationService.Service
 {
     /// <summary>
     /// Base class for services of object validation

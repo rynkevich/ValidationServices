@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Reflection;
 using ValidationService.Results;
 using ValidationService.Attributes;
 
-namespace ValidationService
+namespace ValidationService.Service
 {
     /// <summary>
     /// Attribute based service of object validation.

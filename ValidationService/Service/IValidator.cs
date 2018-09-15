@@ -1,6 +1,6 @@
 ﻿using ValidationService.Results;
 
-namespace ValidationService
+namespace ValidationService.Service
 {
     /// <summary>
     /// Interface to be implemented by any class that provides object validation.

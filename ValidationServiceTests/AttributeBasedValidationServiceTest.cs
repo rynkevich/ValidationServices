@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 using Xunit;
-using ValidationService;
+using ValidationService.Service;
 using ValidationService.Attributes;
 using ValidationServiceTests.TestEntities;
 

@@ -45,17 +45,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AttributeBasedValidationService.cs" />
+    <Compile Include="Service\AttributeBasedValidationService.cs" />
     <Compile Include="Attributes\RangeConstraintAttribute.cs" />
     <Compile Include="Attributes\RequiredPropertyAttribute.cs" />
     <Compile Include="Attributes\StringLengthConstraintAttribute.cs" />
     <Compile Include="Attributes\ValidationAttribute.cs" />
-    <Compile Include="IValidator.cs" />
+    <Compile Include="Service\IValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Results\ElementaryConclusion.cs" />
     <Compile Include="Results\GeneralConclusion.cs" />
     <Compile Include="Results\ValidationConclusion.cs" />
-    <Compile Include="ValidationService.cs" />
+    <Compile Include="Service\ValidationService.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

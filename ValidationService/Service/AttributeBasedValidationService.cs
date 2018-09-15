@@ -17,6 +17,11 @@ namespace ValidationService.Service
         private readonly Stack<object> trace;
 
         /// <summary>
+        /// Gets or sets a flag indicating whether the validation should be accomplished recursively.
+        /// </summary>
+        public override bool IsRecursiveValidation { get; set; }
+
+        /// <summary>
         /// Service constructor.
         /// </summary>
         /// <param name="isRecursiveValidation">The flag indicating whether the validation should be accomplished recursively.</param>

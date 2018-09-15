@@ -1,5 +1,4 @@
 ﻿using System;
-using ValidationService.Service;
 using ValidationService.Results;
 
 namespace ValidationService.Attributes

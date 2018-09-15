@@ -3,7 +3,7 @@
 namespace ValidationService.Service
 {
     /// <summary>
-    /// Base class for services of object validation
+    /// Base class for object validation services
     /// <para><see cref="Validate{T}(T, string)"/> should be overridden to implement validation logic.</para>
     /// </summary>
     public abstract class ValidationService
@@ -11,7 +11,7 @@ namespace ValidationService.Service
         /// <summary>
         /// Gets or sets a flag indicating whether the validation should be accomplished recursively.
         /// </summary>
-        public bool IsRecursiveValidation { get; protected set; }
+        abstract public bool IsRecursiveValidation { get; set; }
 
         /// <summary>
         /// Gets the object indicating whether or not the specified <paramref name="obj"/> is valid

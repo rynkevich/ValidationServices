@@ -3,15 +3,39 @@ using ValidationService.Results;
 
 namespace ValidationService.Attributes
 {
+    /// <summary>
+    /// Validation attribute to specify a range constraint.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
     public class RangeConstraintAttribute : ValidationAttribute
     {
+        /// <summary>
+        /// Gets or sets the minimum value for the range.
+        /// </summary>
         public object Min { get; set; }
+
+        /// <summary>
+        /// Gets or sets the maximum value for the range.
+        /// </summary>
         public object Max { get; set; }
+
+        /// <summary>
+        /// Gets or sets a message that will be returned by <see cref="RangeConstraintAttribute.Validate(object)"/>
+        /// in <see cref="ElementaryConclusion.Details"/></c>
+        /// </summary>
         public string FailureMessage { get; set; } = "Property value must satisfy specified constraints";
 
-        public RangeConstraintAttribute() { }
-
+        /// <summary>
+        /// Override of <see cref="ValidationAttribute.Validate(object)"/>
+        /// </summary>
+        /// <param name="obj">The object to validate</param>
+        /// <returns>
+        /// <see cref="ElementaryConclusion"/> with <c>IsValid</c> flag set to <c>true</c> 
+        /// if the value falls between min and max, inclusive. Otherwise, the flag is set to <c>false</c> and
+        /// <see cref="ElementaryConclusion.Details"/> contains <see cref="FailureMessage"/>
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Thrown if the current attribute is ill-formed.</exception>
+        /// <exception cref="ArgumentException">Thrown if the current attribute is ill-formed.</exception>
         public override ElementaryConclusion Validate(object obj)
         {
             if (this.Min == null && this.Max == null)
@@ -39,6 +63,11 @@ namespace ValidationService.Attributes
             bool isValid = true;
             try
             {
+                /* 
+                    In case of unsigned values, Min and Max are to be casted to signed first:
+                    these properties have object type and are set by integer literals, which are always signed;
+                    variable of object type, that contains signed value, cant not be directly casted to unsigned.
+                */
                 if (obj is byte)
                 {
                     isValid = !((this.Min != null) && ((byte)(sbyte)this.Min > (byte)obj) ||

@@ -11,10 +11,10 @@ namespace ValidationServiceTests
         private readonly RangeConstraintTestEntity obj = new RangeConstraintTestEntity();
 
         [Fact]
-        public void OnNoConstraintsThrowsArgumentNullExceptionTest()
+        public void OnNoConstraintsThrowsArgumentExceptionTest()
         {
             RangeConstraintAttribute attr = GetRangeConstraintAttribute(nameof(this.obj.NotOk5));
-            Assert.Throws<ArgumentNullException>(() => { attr.Validate(this.obj.NotOk5); });
+            Assert.Throws<ArgumentException>(() => { attr.Validate(this.obj.NotOk5); });
         }
 
         [Fact]

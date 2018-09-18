@@ -5,6 +5,7 @@ using ValidationService.Logger;
 using ValidationServiceTests.TestEntities;
 using ValidationService.Results;
 using ValidationService.Service.Exceptions;
+using System.IO;
 
 namespace ValidationServiceTests
 {
@@ -31,7 +32,7 @@ namespace ValidationServiceTests
         public void OnLoggerErrorThrowsLoggingFailedExceptionTest()
         {
             Mock<ILogger> loggerMock = new Mock<ILogger>();
-            loggerMock.Setup(validator => validator.Log(It.IsAny<string>(), It.IsAny<LogLevel>())).Throws<LoggingFailedException>();
+            loggerMock.Setup(validator => validator.Log(It.IsAny<string>(), It.IsAny<LogLevel>())).Throws<IOException>();
 
             BaseValidationService service = new ValidationService.Service.ValidationService(true);
             LoggingValidationService loggingService = new LoggingValidationService(service, loggerMock.Object, LogLevel.WARN);

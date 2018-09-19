@@ -1,4 +1,4 @@
-# ValidationService
+# ValidationServices
 Modern Programming Frameworks, lab #1
 
 ## Task Scheme

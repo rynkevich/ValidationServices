@@ -7,7 +7,7 @@ namespace ValidationServices.Attributes
     /// Base class for all validation attributes.
     /// <para><see cref="Validate(object)"/> should be overridden to implement validation logic.</para>
     /// </summary>
-    public abstract class ValidationAttribute : Attribute, IValidator
+    public abstract class ValidationAttribute : Attribute
     {
         /// <summary>
         /// Gets the object indicating whether or not the specified <paramref name="obj"/> is valid

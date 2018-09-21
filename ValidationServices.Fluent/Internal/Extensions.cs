@@ -8,5 +8,10 @@ namespace ValidationServices.Fluent.Internal
         {
             return x => function((T)x);
         }
+
+        public static Func<object, object> CoerceToNonGeneric<T, K>(this Func<T, K> function)
+        {
+            return x => function((T)x);
+        }
     }
 }

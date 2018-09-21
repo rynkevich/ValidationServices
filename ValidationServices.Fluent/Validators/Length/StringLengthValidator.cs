@@ -41,7 +41,7 @@ namespace ValidationServices.Fluent.Validators.Length
             {
                 throw new ArgumentOutOfRangeException(nameof(min), "Lower length constraint must be a zero or a positive number");
             }
-            if (max > 0)
+            if (max < 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(max), "Upper length constraint must be a zero or a positive number");
             }

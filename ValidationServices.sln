@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ValidationServices.UnitTest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValidationServices", "ValidationServices\ValidationServices.csproj", "{9DEE61C7-2169-4E36-A04D-2B80F22A182D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValidationServices.Fluent", "ValidationServices.Fluent\ValidationServices.Fluent.csproj", "{2F7AED91-A42F-4650-B682-D283DFD712AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValidationServices.Fluent.UnitTests", "ValidationServices.Fluent.UnitTests\ValidationServices.Fluent.UnitTests.csproj", "{67ADA499-AFA4-4FC0-9F03-7F2638B4A8F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{9DEE61C7-2169-4E36-A04D-2B80F22A182D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DEE61C7-2169-4E36-A04D-2B80F22A182D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DEE61C7-2169-4E36-A04D-2B80F22A182D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F7AED91-A42F-4650-B682-D283DFD712AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F7AED91-A42F-4650-B682-D283DFD712AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F7AED91-A42F-4650-B682-D283DFD712AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F7AED91-A42F-4650-B682-D283DFD712AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67ADA499-AFA4-4FC0-9F03-7F2638B4A8F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67ADA499-AFA4-4FC0-9F03-7F2638B4A8F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67ADA499-AFA4-4FC0-9F03-7F2638B4A8F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67ADA499-AFA4-4FC0-9F03-7F2638B4A8F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

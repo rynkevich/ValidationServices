@@ -1,4 +1,5 @@
 ﻿using System;
+using ValidationServices.Fluent.Internal;
 using ValidationServices.Results;
 
 namespace ValidationServices.Fluent.Validators.Comparison
@@ -12,12 +13,14 @@ namespace ValidationServices.Fluent.Validators.Comparison
 
         public AbstractComparisonValidator(object comparisonValue)
         {
-            this.comparisonValue = comparisonValue ?? throw new ArgumentNullException(nameof(comparisonValue));
+            comparisonValue.Guard(nameof(comparisonValue));
+            this.comparisonValue = comparisonValue;
         }
 
         protected AbstractComparisonValidator(Func<object, object> comparisonValueFunc)
         {
-            this.comparisonValueFunc = comparisonValueFunc ?? throw new ArgumentNullException(nameof(comparisonValueFunc));
+            comparisonValueFunc.Guard(nameof(comparisonValueFunc));
+            this.comparisonValueFunc = comparisonValueFunc;
         }
 
         public abstract ElementaryConclusion Validate(PropertyValidatorContext context);

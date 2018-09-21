@@ -1,4 +1,4 @@
-﻿using System;
+﻿using ValidationServices.Fluent.Internal;
 
 namespace ValidationServices.Fluent.Validators
 {
@@ -9,7 +9,8 @@ namespace ValidationServices.Fluent.Validators
 
         public PropertyValidatorContext(object objectToValidate, object propertyToValidate)
         {
-            this.ObjectToValidate = objectToValidate ?? throw new ArgumentNullException(nameof(objectToValidate));
+            objectToValidate.Guard(nameof(objectToValidate));
+            this.ObjectToValidate = objectToValidate;
             this.PropertyToValidate = propertyToValidate;
         }
     }

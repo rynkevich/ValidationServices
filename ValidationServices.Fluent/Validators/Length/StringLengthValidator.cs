@@ -45,8 +45,10 @@ namespace ValidationServices.Fluent.Validators.Length
 
         public StringLengthValidator(Func<object, int> minFunc, Func<object, int> maxFunc)
         {
-            this.minFunc = minFunc ?? throw new ArgumentNullException(nameof(minFunc));
-            this.maxFunc = maxFunc ?? throw new ArgumentNullException(nameof(maxFunc));
+            minFunc.Guard(nameof(minFunc));
+            maxFunc.Guard(nameof(maxFunc));
+            this.minFunc = minFunc;
+            this.maxFunc = maxFunc;
         }
 
         public ElementaryConclusion Validate(PropertyValidatorContext context)

@@ -5,6 +5,7 @@ using ValidationServices.Service;
 using ValidationServices.Results;
 using ValidationServices.Fluent.Rules;
 using ValidationServices.Fluent.Validators;
+using ValidationServices.Fluent.Internal;
 
 namespace ValidationServices.Fluent.Service
 {
@@ -32,18 +33,9 @@ namespace ValidationServices.Fluent.Service
         public void SetRule(Type validationTarget, 
             string propertyName, IPropertyValidationRule newPropertyValidationRule)
         {
-            if (validationTarget == null)
-            {
-                throw new ArgumentNullException(nameof(validationTarget));
-            }
-            if (propertyName == null)
-            {
-                throw new ArgumentNullException(nameof(propertyName));
-            }
-            if (newPropertyValidationRule == null)
-            {
-                throw new ArgumentNullException(nameof(newPropertyValidationRule));
-            }
+            validationTarget.Guard(nameof(validationTarget));
+            propertyName.Guard(nameof(propertyName));
+            newPropertyValidationRule.Guard(nameof(newPropertyValidationRule));
 
             if (this.typesToValidate.TryGetValue(validationTarget, out TypeValidationRule typeValidationRule))
             {

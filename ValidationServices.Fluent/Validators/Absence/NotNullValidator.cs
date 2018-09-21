@@ -1,5 +1,4 @@
-﻿using System;
-using ValidationServices.Fluent.Rules;
+﻿using ValidationServices.Fluent.Rules;
 using ValidationServices.Results;
 
 namespace ValidationServices.Fluent.Validators.Absence
@@ -20,12 +19,9 @@ namespace ValidationServices.Fluent.Validators.Absence
 
         public ElementaryConclusion Validate(PropertyValidatorContext context)
         {
-            if (context.PropertyToValidate == null)
-            {
-                return new ElementaryConclusion(isValid: false, this.FailureMessage);
-            }
-
-            return new ElementaryConclusion(isValid: true);
+            return context.PropertyToValidate == null ? 
+                new ElementaryConclusion(isValid: false, this.FailureMessage) :
+                new ElementaryConclusion(isValid: true);
         }
     }
 }

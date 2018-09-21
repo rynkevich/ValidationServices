@@ -55,11 +55,11 @@
     <Compile Include="Validators\State\NotNullValidator.cs" />
     <Compile Include="Validators\State\NullValidator.cs" />
     <Compile Include="Validators\State\StateValidationRoutines.cs" />
-    <Compile Include="Validators\StringLength\ExactLengthValidator.cs" />
+    <Compile Include="Validators\Length\ExactStringLengthValidator.cs" />
     <Compile Include="Validators\IPropertyValidator.cs" />
-    <Compile Include="Validators\StringLength\LengthValidator.cs" />
-    <Compile Include="Validators\StringLength\MaxLengthValidator.cs" />
-    <Compile Include="Validators\StringLength\MinLengthValidator.cs" />
+    <Compile Include="Validators\Length\StringLengthValidator.cs" />
+    <Compile Include="Validators\Length\MaxStringLengthValidator.cs" />
+    <Compile Include="Validators\Length\MinStringLengthValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ValidationServices\ValidationServices.csproj">

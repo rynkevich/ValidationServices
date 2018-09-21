@@ -1,7 +1,7 @@
 ﻿using System;
 using ValidationServices.Fluent.Internal;
 using ValidationServices.Fluent.Validators.State;
-using ValidationServices.Fluent.Validators.StringLength;
+using ValidationServices.Fluent.Validators.Length;
 
 namespace ValidationServices.Fluent.Rules
 {
@@ -38,56 +38,56 @@ namespace ValidationServices.Fluent.Rules
         public static PropertyValidationRule<TOwner, string> Length<TOwner>(
             this PropertyValidationRule<TOwner, string> rule, int min, int max)
         {
-            rule.SetPropertyValidator(new LengthValidator(min, max));
+            rule.SetPropertyValidator(new StringLengthValidator(min, max));
             return rule;
         }
 
         public static PropertyValidationRule<TOwner, string> Length<TOwner>(
             this PropertyValidationRule<TOwner, string> rule, Func<TOwner, int> min, Func<TOwner, int> max)
         {
-            rule.SetPropertyValidator(new LengthValidator(min.CoerceToNonGeneric(), max.CoerceToNonGeneric()));
+            rule.SetPropertyValidator(new StringLengthValidator(min.CoerceToNonGeneric(), max.CoerceToNonGeneric()));
             return rule;
         }
 
         public static PropertyValidationRule<TOwner, string> Length<TOwner>(
             this PropertyValidationRule<TOwner, string> rule, int exactLength)
         {
-            rule.SetPropertyValidator(new ExactLengthValidator(exactLength));
+            rule.SetPropertyValidator(new ExactStringLengthValidator(exactLength));
             return rule;
         }
 
         public static PropertyValidationRule<TOwner, string> Length<TOwner>(
             this PropertyValidationRule<TOwner, string> rule, Func<TOwner, int> exactLength)
         {
-            rule.SetPropertyValidator(new ExactLengthValidator(exactLength.CoerceToNonGeneric()));
+            rule.SetPropertyValidator(new ExactStringLengthValidator(exactLength.CoerceToNonGeneric()));
             return rule;
         }
 
         public static PropertyValidationRule<TOwner, string> MaxLength<TOwner>(
             this PropertyValidationRule<TOwner, string> rule, int max)
         {
-            rule.SetPropertyValidator(new MaxLengthValidator(max));
+            rule.SetPropertyValidator(new MaxStringLengthValidator(max));
             return rule;
         }
 
         public static PropertyValidationRule<TOwner, string> MaxLength<TOwner>(
             this PropertyValidationRule<TOwner, string> rule, Func<TOwner, int> max)
         {
-            rule.SetPropertyValidator(new MaxLengthValidator(max.CoerceToNonGeneric()));
+            rule.SetPropertyValidator(new MaxStringLengthValidator(max.CoerceToNonGeneric()));
             return rule;
         }
 
         public static PropertyValidationRule<TOwner, string> MinLength<TOwner>(
             this PropertyValidationRule<TOwner, string> rule, int min)
         {
-            rule.SetPropertyValidator(new MinLengthValidator(min));
+            rule.SetPropertyValidator(new MinStringLengthValidator(min));
             return rule;
         }
 
         public static PropertyValidationRule<TOwner, string> MinLength<TOwner>(
             this PropertyValidationRule<TOwner, string> rule, Func<TOwner, int> min)
         {
-            rule.SetPropertyValidator(new MinLengthValidator(min.CoerceToNonGeneric()));
+            rule.SetPropertyValidator(new MinStringLengthValidator(min.CoerceToNonGeneric()));
             return rule;
         }
 

@@ -1,9 +1,9 @@
 ﻿using System;
 using ValidationServices.Results;
 
-namespace ValidationServices.Fluent.Validators.StringLength
+namespace ValidationServices.Fluent.Validators.Length
 {
-    public class LengthValidator : IPropertyValidator
+    public class StringLengthValidator : IPropertyValidator
     {
         private readonly int min;
         private readonly int max;
@@ -13,7 +13,7 @@ namespace ValidationServices.Fluent.Validators.StringLength
 
         public string FailureMessage { get; set; } = "Length of a string must satisfy specified constraints";
 
-        public LengthValidator(int min, int max)
+        public StringLengthValidator(int min, int max)
         {
             this.min = min;
             this.max = max;
@@ -24,7 +24,7 @@ namespace ValidationServices.Fluent.Validators.StringLength
             }
         }
 
-        public LengthValidator(Func<object, int> minFunc, Func<object, int> maxFunc)
+        public StringLengthValidator(Func<object, int> minFunc, Func<object, int> maxFunc)
         {
             this.minFunc = minFunc ?? throw new ArgumentNullException(nameof(minFunc));
             this.maxFunc = maxFunc ?? throw new ArgumentNullException(nameof(maxFunc));

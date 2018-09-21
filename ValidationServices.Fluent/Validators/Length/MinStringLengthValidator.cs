@@ -8,7 +8,7 @@ namespace ValidationServices.Fluent.Validators.Length
         {
         }
 
-        public MinStringLengthValidator(Func<object, int> min) : base(min, obj => MAX_NOT_SPECIFIED)
+        public MinStringLengthValidator(Func<object, int> minFunc) : base(minFunc, obj => MAX_NOT_SPECIFIED)
         {
         }
     }

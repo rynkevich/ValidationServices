@@ -8,7 +8,7 @@ namespace ValidationServices.Fluent.Validators.Length
         {
         }
 
-        public MaxStringLengthValidator(Func<object, int> max) : base(obj => 0, max)
+        public MaxStringLengthValidator(Func<object, int> maxFunc) : base(obj => 0, maxFunc)
         {
         }
     }

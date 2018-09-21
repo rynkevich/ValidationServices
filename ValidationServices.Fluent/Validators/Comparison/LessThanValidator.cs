@@ -1,8 +1,29 @@
 ﻿using System;
+using ValidationServices.Fluent.Internal;
+using ValidationServices.Fluent.Rules;
 using ValidationServices.Results;
 
 namespace ValidationServices.Fluent.Validators.Comparison
 {
+    public static class LessThanRuleExtension
+    {
+        public static PropertyValidationRule<TOwner, TProperty> LessThan<TOwner, TProperty>(
+            this PropertyValidationRule<TOwner, TProperty> rule, TProperty valueToCompare)
+            where TProperty : IComparable<TProperty>, IComparable
+        {
+            rule.SetPropertyValidator(new LessThanValidator(valueToCompare));
+            return rule;
+        }
+
+        public static PropertyValidationRule<TOwner, TProperty> LessThan<TOwner, TProperty>(
+            this PropertyValidationRule<TOwner, TProperty> rule, Func<TOwner, TProperty> valueToCompare)
+            where TProperty : IComparable<TProperty>, IComparable
+        {
+            rule.SetPropertyValidator(new LessThanValidator(valueToCompare.CoerceToNonGeneric()));
+            return rule;
+        }
+    }
+
     public class LessThanValidator : AbstractComparisonValidator
     {
         private static readonly string DEFAULT_FAILURE_MESSAGE = "This value must be less than ";

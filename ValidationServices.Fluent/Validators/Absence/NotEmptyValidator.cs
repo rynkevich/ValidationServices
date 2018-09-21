@@ -1,8 +1,19 @@
 ﻿using System;
+using ValidationServices.Fluent.Rules;
 using ValidationServices.Results;
 
 namespace ValidationServices.Fluent.Validators.Absence
 {
+    public static class NotEmptyRuleExtension
+    {
+        public static PropertyValidationRule<TOwner, TProperty> NotEmpty<TOwner, TProperty>(
+            this PropertyValidationRule<TOwner, TProperty> rule)
+        {
+            rule.SetPropertyValidator(new NotEmptyValidator(default(TProperty)));
+            return rule;
+        }
+    }
+
     public class NotEmptyValidator : IPropertyValidator
     {
         private readonly object defaultValueForType;

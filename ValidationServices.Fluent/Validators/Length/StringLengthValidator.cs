@@ -1,8 +1,27 @@
 ﻿using System;
+using ValidationServices.Fluent.Internal;
+using ValidationServices.Fluent.Rules;
 using ValidationServices.Results;
 
 namespace ValidationServices.Fluent.Validators.Length
 {
+    public static class StringLengthRuleExtension
+    {
+        public static PropertyValidationRule<TOwner, string> Length<TOwner>(
+            this PropertyValidationRule<TOwner, string> rule, int min, int max)
+        {
+            rule.SetPropertyValidator(new StringLengthValidator(min, max));
+            return rule;
+        }
+
+        public static PropertyValidationRule<TOwner, string> Length<TOwner>(
+            this PropertyValidationRule<TOwner, string> rule, Func<TOwner, int> min, Func<TOwner, int> max)
+        {
+            rule.SetPropertyValidator(new StringLengthValidator(min.CoerceToNonGeneric(), max.CoerceToNonGeneric()));
+            return rule;
+        }
+    }
+
     public class StringLengthValidator : IPropertyValidator
     {
         private readonly int min;

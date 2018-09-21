@@ -1,9 +1,29 @@
 ﻿using System;
 using System.Collections;
+using ValidationServices.Fluent.Rules;
 using ValidationServices.Results;
 
 namespace ValidationServices.Fluent.Validators.Comparison
 {
+    public static class NotEqualRuleExtension
+    {
+        public static PropertyValidationRule<TOwner, TProperty> NotEqual<TOwner, TProperty>(
+            this PropertyValidationRule<TOwner, TProperty> rule, TProperty valueToCompare,
+            IComparer equalityComparer = null)
+        {
+            rule.SetPropertyValidator(new NotEqualValidator(valueToCompare, equalityComparer));
+            return rule;
+        }
+
+        public static PropertyValidationRule<TOwner, TProperty> NotEqual<TOwner, TProperty>(
+            this PropertyValidationRule<TOwner, TProperty> rule, Func<TOwner, TProperty> valueToCompare,
+            IComparer equalityComparer = null)
+        {
+            rule.SetPropertyValidator(new NotEqualValidator(valueToCompare, equalityComparer));
+            return rule;
+        }
+    }
+
     public class NotEqualValidator : AbstractEqualValidator
     {
         private static readonly string DEFAULT_FAILURE_MESSAGE = "This value must not be equal to ";

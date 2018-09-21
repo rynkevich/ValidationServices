@@ -28,7 +28,7 @@ namespace ValidationServices.Fluent.Validators.Length
         private readonly int max;
         private readonly Func<object, int> minFunc;
         private readonly Func<object, int> maxFunc;
-        protected static readonly int MAX_NOT_SPECIFIED = -1;
+        protected static readonly int MAX_NOT_SPECIFIED = int.MaxValue;
 
         public string FailureMessage { get; set; } = "Length of a string must satisfy specified constraints";
 
@@ -37,7 +37,16 @@ namespace ValidationServices.Fluent.Validators.Length
             this.min = min;
             this.max = max;
 
-            if (max != MAX_NOT_SPECIFIED && min > max)
+            if (min < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(min), "Lower length constraint must be a zero or a positive number");
+            }
+            if (max > 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(max), "Upper length constraint must be a zero or a positive number");
+            }
+
+            if (min > max)
             {
                 throw new ArgumentOutOfRangeException(nameof(max), "Max should be larger than min");
             }

@@ -2,7 +2,7 @@
 
 namespace ValidationServices.Fluent.Internal
 {
-    internal static class Extensions
+    public static class Extensions
     {
         public static Func<object, int> CoerceToNonGeneric<T>(this Func<T, int> function)
         {
@@ -14,7 +14,7 @@ namespace ValidationServices.Fluent.Internal
             return x => function((T)x);
         }
 
-        public static void Guard(this object obj, string paramName, string message = null)
+        internal static void Guard(this object obj, string paramName, string message = null)
         {
             if (obj == null)
             {

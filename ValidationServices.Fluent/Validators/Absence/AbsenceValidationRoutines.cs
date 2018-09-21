@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Linq;
 
-namespace ValidationServices.Fluent.Validators.State
+namespace ValidationServices.Fluent.Validators.Absence
 {
-    static class StateValidationRoutines
+    static class AbsenceValidationRoutines
     {
         public static bool IsEmptyString(object value)
         {

@@ -1,6 +1,6 @@
 ﻿using ValidationServices.Results;
 
-namespace ValidationServices.Fluent.Validators.State
+namespace ValidationServices.Fluent.Validators.Absence
 {
     public class EmptyValidator : IPropertyValidator
     {
@@ -16,8 +16,8 @@ namespace ValidationServices.Fluent.Validators.State
         public ElementaryConclusion Validate(object objectToValidate)
         {
             if (!(objectToValidate == null
-                || StateValidationRoutines.IsEmptyString(objectToValidate)
-                || StateValidationRoutines.IsEmptyCollection(objectToValidate)
+                || AbsenceValidationRoutines.IsEmptyString(objectToValidate)
+                || AbsenceValidationRoutines.IsEmptyCollection(objectToValidate)
                 || Equals(objectToValidate, this.defaultValueForType)))
             {
                 return new ElementaryConclusion(isValid: false, this.FailureMessage);

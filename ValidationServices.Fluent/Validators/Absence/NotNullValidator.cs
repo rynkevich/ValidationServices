@@ -1,14 +1,14 @@
 ﻿using ValidationServices.Results;
 
-namespace ValidationServices.Fluent.Validators.State
+namespace ValidationServices.Fluent.Validators.Absence
 {
-    public class NullValidator : IPropertyValidator
+    public class NotNullValidator : IPropertyValidator
     {
-        public string FailureMessage { get; set; } = "This property must be null";
+        public string FailureMessage { get; set; } = "This property must not be null";
 
         public ElementaryConclusion Validate(object objectToValidate)
         {
-            if (objectToValidate != null)
+            if (objectToValidate == null)
             {
                 return new ElementaryConclusion(isValid: false, this.FailureMessage);
             }

@@ -50,11 +50,11 @@
     <Compile Include="Service\ValidationServiceBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rules\RuleExtensions.cs" />
-    <Compile Include="Validators\State\EmptyValidator.cs" />
-    <Compile Include="Validators\State\NotEmptyValidator.cs" />
-    <Compile Include="Validators\State\NotNullValidator.cs" />
-    <Compile Include="Validators\State\NullValidator.cs" />
-    <Compile Include="Validators\State\StateValidationRoutines.cs" />
+    <Compile Include="Validators\Absence\EmptyValidator.cs" />
+    <Compile Include="Validators\Absence\NotEmptyValidator.cs" />
+    <Compile Include="Validators\Absence\NotNullValidator.cs" />
+    <Compile Include="Validators\Absence\NullValidator.cs" />
+    <Compile Include="Validators\Absence\AbsenceValidationRoutines.cs" />
     <Compile Include="Validators\Length\ExactStringLengthValidator.cs" />
     <Compile Include="Validators\IPropertyValidator.cs" />
     <Compile Include="Validators\Length\StringLengthValidator.cs" />
@@ -68,7 +68,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Validators\Range\" />
+    <Folder Include="Validators\Comparison\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

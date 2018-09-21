@@ -8,28 +8,28 @@ namespace ValidationServices.Fluent.Rules
     public static class RuleExtensions
     {
         public static PropertyValidationRule<TOwner, TProperty> Null<TOwner, TProperty>(
-            this PropertyValidationRule<TOwner, TProperty> rule, bool allowEmptyStrings = false)
+            this PropertyValidationRule<TOwner, TProperty> rule)
         {
             rule.SetPropertyValidator(new NullValidator());
             return rule;
         }
 
         public static PropertyValidationRule<TOwner, TProperty> NotNull<TOwner, TProperty>(
-            this PropertyValidationRule<TOwner, TProperty> rule, bool allowEmptyStrings = false)
+            this PropertyValidationRule<TOwner, TProperty> rule)
         {
             rule.SetPropertyValidator(new NotNullValidator());
             return rule;
         }
 
         public static PropertyValidationRule<TOwner, TProperty> Empty<TOwner, TProperty>(
-            this PropertyValidationRule<TOwner, TProperty> rule, bool allowEmptyStrings = false)
+            this PropertyValidationRule<TOwner, TProperty> rule)
         {
             rule.SetPropertyValidator(new EmptyValidator(default(TProperty)));
             return rule;
         }
 
         public static PropertyValidationRule<TOwner, TProperty> NotEmpty<TOwner, TProperty>(
-            this PropertyValidationRule<TOwner, TProperty> rule, bool allowEmptyStrings = false)
+            this PropertyValidationRule<TOwner, TProperty> rule)
         {
             rule.SetPropertyValidator(new NotEmptyValidator(default(TProperty)));
             return rule;

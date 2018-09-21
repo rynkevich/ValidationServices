@@ -18,14 +18,9 @@ namespace ValidationServices.Fluent.Validators.Absence
     {
         public string FailureMessage { get; set; } = "This property must be null";
 
-        public ElementaryConclusion Validate(object objectToValidate, object propertyToValidate)
+        public ElementaryConclusion Validate(PropertyValidatorContext context)
         {
-            if (objectToValidate == null)
-            {
-                throw new ArgumentNullException(nameof(objectToValidate));
-            }
-
-            if (propertyToValidate != null)
+            if (context.PropertyToValidate != null)
             {
                 return new ElementaryConclusion(isValid: false, this.FailureMessage);
             }

@@ -68,6 +68,7 @@
     <Compile Include="Validators\Length\StringLengthValidator.cs" />
     <Compile Include="Validators\Length\MaxStringLengthValidator.cs" />
     <Compile Include="Validators\Length\MinStringLengthValidator.cs" />
+    <Compile Include="Validators\PropertyValidatorContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ValidationServices\ValidationServices.csproj">

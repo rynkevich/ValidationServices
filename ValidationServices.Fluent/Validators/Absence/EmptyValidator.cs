@@ -25,17 +25,12 @@ namespace ValidationServices.Fluent.Validators.Absence
             this.defaultValueForType = defaultValueForType;
         }
 
-        public ElementaryConclusion Validate(object objectToValidate, object propertyToValidate)
+        public ElementaryConclusion Validate(PropertyValidatorContext context)
         {
-            if (objectToValidate == null)
-            {
-                throw new ArgumentNullException(nameof(objectToValidate));
-            }
-
-            if (!(propertyToValidate == null
-                || AbsenceValidationRoutines.IsEmptyString(propertyToValidate)
-                || AbsenceValidationRoutines.IsEmptyCollection(propertyToValidate)
-                || Equals(propertyToValidate, this.defaultValueForType)))
+            if (!(context.PropertyToValidate == null
+                || AbsenceValidationRoutines.IsEmptyString(context.PropertyToValidate)
+                || AbsenceValidationRoutines.IsEmptyCollection(context.PropertyToValidate)
+                || Equals(context.PropertyToValidate, this.defaultValueForType)))
             {
                 return new ElementaryConclusion(isValid: false, this.FailureMessage);
             }

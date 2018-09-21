@@ -49,21 +49,17 @@ namespace ValidationServices.Fluent.Validators.Length
             this.maxFunc = maxFunc ?? throw new ArgumentNullException(nameof(maxFunc));
         }
 
-        public ElementaryConclusion Validate(object objectToValidate, object propertyToValidate)
+        public ElementaryConclusion Validate(PropertyValidatorContext context)
         {
-            if (objectToValidate == null)
-            {
-                throw new ArgumentNullException(nameof(objectToValidate));
-            }
-            if (propertyToValidate == null)
+            if (context.PropertyToValidate == null)
             {
                 return new ElementaryConclusion(isValid: false, this.FailureMessage);
             }
 
-            int min = this.minFunc != null ? this.minFunc(objectToValidate) : this.min;
-            int max = this.maxFunc != null ? this.maxFunc(objectToValidate) : this.max;
+            int min = this.minFunc != null ? this.minFunc(context.ObjectToValidate) : this.min;
+            int max = this.maxFunc != null ? this.maxFunc(context.ObjectToValidate) : this.max;
 
-            int length = propertyToValidate.ToString().Length;
+            int length = context.PropertyToValidate.ToString().Length;
 
             if (length < min || (length > max && max != MAX_NOT_SPECIFIED))
             {

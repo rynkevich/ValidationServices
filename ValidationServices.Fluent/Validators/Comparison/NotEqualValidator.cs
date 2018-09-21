@@ -36,17 +36,12 @@ namespace ValidationServices.Fluent.Validators.Comparison
         {
         }
 
-        public override ElementaryConclusion Validate(object objectToValidate, object propertyToValidate)
+        public override ElementaryConclusion Validate(PropertyValidatorContext context)
         {
-            if (objectToValidate == null)
-            {
-                throw new ArgumentNullException(nameof(objectToValidate));
-            }
-
             object comparisonValue = this.comparisonValueFunc == null ?
-                this.comparisonValue : this.comparisonValueFunc(objectToValidate);
+                this.comparisonValue : this.comparisonValueFunc(context.ObjectToValidate);
 
-            return !this.IsEqual(propertyToValidate, comparisonValue) ?
+            return !this.IsEqual(context.PropertyToValidate, comparisonValue) ?
                 new ElementaryConclusion(isValid: true) : new ElementaryConclusion(isValid: false,
                     this.FailureMessage ?? DEFAULT_FAILURE_MESSAGE + comparisonValue);
         }

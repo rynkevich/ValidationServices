@@ -14,11 +14,11 @@ namespace ValidationServices.Fluent.Rules
             this.validators = new List<IPropertyValidator>();
         }
 
-        public GeneralConclusion Validate(object objectToValidate, object propertyToValidate)
+        public GeneralConclusion Validate(PropertyValidatorContext context)
         {
             GeneralConclusion conclusion = new GeneralConclusion(isValid: true);
             foreach (IPropertyValidationRule validator in this.validators) {
-                conclusion += validator.Validate(objectToValidate, propertyToValidate);
+                conclusion += validator.Validate(context);
             }
 
             return conclusion;

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using ValidationServices.Service;
 using ValidationServices.Results;
 using ValidationServices.Fluent.Rules;
+using ValidationServices.Fluent.Validators;
 
 namespace ValidationServices.Fluent.Service
 {
@@ -78,7 +79,7 @@ namespace ValidationServices.Fluent.Service
             {
                 if (typeValidationRule.TryGetValue(property.Name, out IPropertyValidationRule rule))
                 {
-                    conclusion += rule.Validate(objectToValidate, property.GetValue(objectToValidate));
+                    conclusion += rule.Validate(new PropertyValidatorContext(objectToValidate, property.GetValue(objectToValidate)));
                 }
             }
 

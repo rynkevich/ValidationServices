@@ -36,22 +36,17 @@ namespace ValidationServices.Fluent.Validators.Comparison
         {
         }
 
-        public override ElementaryConclusion Validate(object objectToValidate, object propertyToValidate)
+        public override ElementaryConclusion Validate(PropertyValidatorContext context)
         {
-            if (objectToValidate == null)
-            {
-                throw new ArgumentNullException(nameof(objectToValidate));
-            }
-
-            if (!(propertyToValidate is IComparable))
+            if (!(context.PropertyToValidate is IComparable))
             {
                 throw new ArgumentException("Object to validate must implement IComparable interface");
             }
 
             object comparisonValue = this.comparisonValueFunc == null ?
-                this.comparisonValue : this.comparisonValueFunc(objectToValidate);
+                this.comparisonValue : this.comparisonValueFunc(context.ObjectToValidate);
 
-            return this.IsLessThan(propertyToValidate as IComparable, comparisonValue as IComparable) ?
+            return this.IsLessThan(context.PropertyToValidate as IComparable, comparisonValue as IComparable) ?
                 new ElementaryConclusion(isValid: true) :
                 new ElementaryConclusion(isValid: false, this.FailureMessage ?? DEFAULT_FAILURE_MESSAGE + comparisonValue);
         }

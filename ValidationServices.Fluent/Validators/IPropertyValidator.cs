@@ -5,6 +5,6 @@ namespace ValidationServices.Fluent.Validators
     public interface IPropertyValidator
     {
         string FailureMessage { get; set; }
-        ElementaryConclusion Validate(object objectToValidate, object propertyToValidate);
+        ElementaryConclusion Validate(PropertyValidatorContext context);
     }
 }

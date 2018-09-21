@@ -20,6 +20,6 @@ namespace ValidationServices.Fluent.Validators.Comparison
             this.comparisonValueFunc = comparisonValueFunc ?? throw new ArgumentNullException(nameof(comparisonValueFunc));
         }
 
-        public abstract ElementaryConclusion Validate(object objectToValidate, object propertyToValidate);
+        public abstract ElementaryConclusion Validate(PropertyValidatorContext context);
     }
 }

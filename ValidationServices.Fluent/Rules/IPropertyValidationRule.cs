@@ -5,7 +5,7 @@ namespace ValidationServices.Fluent.Rules
 {
     public interface IPropertyValidationRule
     {
-        GeneralConclusion Validate(object objectToValidate, object propertyToValidate);
+        GeneralConclusion Validate(PropertyValidatorContext context);
         void SetPropertyValidator(IPropertyValidator propertyValidator);
         void SetLastValidatorFailureMessage(string message);
     }

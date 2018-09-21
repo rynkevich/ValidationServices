@@ -1,4 +1,5 @@
-﻿using ValidationServices.Results;
+﻿using System;
+using ValidationServices.Results;
 
 namespace ValidationServices.Fluent.Validators.Absence
 {
@@ -6,9 +7,14 @@ namespace ValidationServices.Fluent.Validators.Absence
     {
         public string FailureMessage { get; set; } = "This property must be null";
 
-        public ElementaryConclusion Validate(object objectToValidate)
+        public ElementaryConclusion Validate(object objectToValidate, object propertyToValidate)
         {
-            if (objectToValidate != null)
+            if (objectToValidate == null)
+            {
+                throw new ArgumentNullException(nameof(objectToValidate));
+            }
+
+            if (propertyToValidate != null)
             {
                 return new ElementaryConclusion(isValid: false, this.FailureMessage);
             }

@@ -1,4 +1,5 @@
-﻿using ValidationServices.Results;
+﻿using System;
+using ValidationServices.Results;
 
 namespace ValidationServices.Fluent.Validators.Absence
 {
@@ -13,12 +14,17 @@ namespace ValidationServices.Fluent.Validators.Absence
             this.defaultValueForType = defaultValueForType;
         }
 
-        public ElementaryConclusion Validate(object objectToValidate)
+        public ElementaryConclusion Validate(object objectToValidate, object propertyToValidate)
         {
-            if (!(objectToValidate == null
-                || AbsenceValidationRoutines.IsEmptyString(objectToValidate)
-                || AbsenceValidationRoutines.IsEmptyCollection(objectToValidate)
-                || Equals(objectToValidate, this.defaultValueForType)))
+            if (objectToValidate == null)
+            {
+                throw new ArgumentNullException(nameof(objectToValidate));
+            }
+
+            if (!(propertyToValidate == null
+                || AbsenceValidationRoutines.IsEmptyString(propertyToValidate)
+                || AbsenceValidationRoutines.IsEmptyCollection(propertyToValidate)
+                || Equals(propertyToValidate, this.defaultValueForType)))
             {
                 return new ElementaryConclusion(isValid: false, this.FailureMessage);
             }

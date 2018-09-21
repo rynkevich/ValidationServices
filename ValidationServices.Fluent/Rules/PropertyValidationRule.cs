@@ -14,11 +14,11 @@ namespace ValidationServices.Fluent.Rules
             this.validators = new List<IPropertyValidator>();
         }
 
-        public GeneralConclusion Validate(object objectToValidate)
+        public GeneralConclusion Validate(object objectToValidate, object propertyToValidate)
         {
             GeneralConclusion conclusion = new GeneralConclusion(isValid: true);
             foreach (IPropertyValidationRule validator in this.validators) {
-                conclusion += validator.Validate(objectToValidate);
+                conclusion += validator.Validate(objectToValidate, propertyToValidate);
             }
 
             return conclusion;
@@ -26,10 +26,6 @@ namespace ValidationServices.Fluent.Rules
 
         public void SetPropertyValidator(IPropertyValidator propertyValidator)
         {
-            if (this.validators.Exists(validator => validator.GetType() == propertyValidator.GetType()))
-            {
-                throw new InvalidOperationException($"Validator of type '{propertyValidator.GetType()}' is already set in specified rule");
-            }
             this.validators.Add(propertyValidator);
         }
 

@@ -55,6 +55,14 @@
     <Compile Include="Validators\Absence\NotNullValidator.cs" />
     <Compile Include="Validators\Absence\NullValidator.cs" />
     <Compile Include="Validators\Absence\AbsenceValidationRoutines.cs" />
+    <Compile Include="Validators\Comparison\AbstractComparisonValidator.cs" />
+    <Compile Include="Validators\Comparison\AbstractEqualValidator.cs" />
+    <Compile Include="Validators\Comparison\EqualValidator.cs" />
+    <Compile Include="Validators\Comparison\GreaterThanOrEqual.cs" />
+    <Compile Include="Validators\Comparison\GreaterThanValidator.cs" />
+    <Compile Include="Validators\Comparison\LessThanOrEqualValidator.cs" />
+    <Compile Include="Validators\Comparison\LessThanValidator.cs" />
+    <Compile Include="Validators\Comparison\NotEqualValidator.cs" />
     <Compile Include="Validators\Length\ExactStringLengthValidator.cs" />
     <Compile Include="Validators\IPropertyValidator.cs" />
     <Compile Include="Validators\Length\StringLengthValidator.cs" />
@@ -67,8 +75,6 @@
       <Name>ValidationServices</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Validators\Comparison\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

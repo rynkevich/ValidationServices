@@ -27,7 +27,9 @@ namespace ValidationServices.Fluent.Service
 
         public override GeneralConclusion Validate<T>(T objectToValidate, string objName = "")
         {
-            throw new NotImplementedException();
+            objectToValidate.Guard(nameof(objectToValidate));
+
+            return this.ValidateObject(objectToValidate, objName);
         }
 
         public void SetRule(Type validationTarget, 

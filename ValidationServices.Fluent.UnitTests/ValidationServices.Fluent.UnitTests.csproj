@@ -17,8 +17,4 @@
     <ProjectReference Include="..\ValidationServices.Fluent\ValidationServices.Fluent.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Validators\Comparison\" />
-  </ItemGroup>
-
 </Project>

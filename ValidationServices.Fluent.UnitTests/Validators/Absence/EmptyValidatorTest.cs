@@ -2,17 +2,17 @@ using Xunit;
 using System.Collections.Generic;
 using ValidationServices.Fluent.Validators;
 using ValidationServices.Fluent.Validators.Absence;
-using ValidationServices.Fluent.UnitTests.TestEntities.Validators;
+using ValidationServices.Fluent.UnitTests.TestEntities;
 
 namespace ValidationServices.Fluent.UnitTests.Validators.Absence
 {
     public class EmptyValidatorTest
     {
-        private readonly AbsenceValidatorsTestEntity testEntity;
+        private readonly ValidatorsTestEntity testEntity;
 
         public EmptyValidatorTest()
         {
-            this.testEntity = new AbsenceValidatorsTestEntity();
+            this.testEntity = new ValidatorsTestEntity();
         }
 
         [Fact]

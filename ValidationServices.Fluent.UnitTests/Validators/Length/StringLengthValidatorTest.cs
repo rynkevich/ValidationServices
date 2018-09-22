@@ -3,17 +3,17 @@ using System;
 using ValidationServices.Fluent.Internal;
 using ValidationServices.Fluent.Validators;
 using ValidationServices.Fluent.Validators.Length;
-using ValidationServices.Fluent.UnitTests.TestEntities.Validators;
+using ValidationServices.Fluent.UnitTests.TestEntities;
 
 namespace ValidationServices.Fluent.UnitTests.Validators.Length
 {
     public class StringLengthValidatorTest
     {
-        private readonly StringLengthValidatorsTestEntity testEntity;
+        private readonly ValidatorsTestEntity testEntity;
 
         public StringLengthValidatorTest()
         {
-            this.testEntity = new StringLengthValidatorsTestEntity();
+            this.testEntity = new ValidatorsTestEntity();
         }
 
         [Fact]
@@ -37,8 +37,7 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Length
         [Fact]
         public void OnNullMinFuncThrowsArgumentNullExceptionTest()
         {
-            Func<StringLengthValidatorsTestEntity, int> maxFunc =
-                (StringLengthValidatorsTestEntity entity) => entity.Ten;
+            Func<ValidatorsTestEntity, int> maxFunc = (ValidatorsTestEntity entity) => entity.Ten;
             Assert.Throws<ArgumentNullException>(() => new StringLengthValidator(null, 
                 maxFunc.CoerceToNonGeneric()));
         }
@@ -46,8 +45,7 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Length
         [Fact]
         public void OnNullMaxFuncThrowsArgumentNullExceptionTest()
         {
-            Func<StringLengthValidatorsTestEntity, int> minFunc =
-                (StringLengthValidatorsTestEntity entity) => entity.Five;
+            Func<ValidatorsTestEntity, int> minFunc = (ValidatorsTestEntity entity) => entity.Five;
             Assert.Throws<ArgumentNullException>(() => new StringLengthValidator(null,
                 minFunc.CoerceToNonGeneric()));
         }
@@ -76,10 +74,8 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Length
         [Fact]
         public void MinFuncMaxFuncConstraintedStringIsValidTest()
         {
-            Func<StringLengthValidatorsTestEntity, int> minFunc =
-                (StringLengthValidatorsTestEntity entity) => entity.Five;
-            Func<StringLengthValidatorsTestEntity, int> maxFunc =
-                (StringLengthValidatorsTestEntity entity) => entity.Ten;
+            Func<ValidatorsTestEntity, int> minFunc = (ValidatorsTestEntity entity) => entity.Five;
+            Func<ValidatorsTestEntity, int> maxFunc = (ValidatorsTestEntity entity) => entity.Ten;
             Assert.True(new StringLengthValidator(
                 minFunc.CoerceToNonGeneric(), maxFunc.CoerceToNonGeneric()).Validate(
                 new PropertyValidatorContext(this.testEntity, this.testEntity.EightCharString)).IsValid);
@@ -88,10 +84,8 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Length
         [Fact]
         public void MinFuncMaxFuncConstraintViolatingStringIsInvalidTest()
         {
-            Func<StringLengthValidatorsTestEntity, int> minFunc =
-                (StringLengthValidatorsTestEntity entity) => entity.Nine;
-            Func<StringLengthValidatorsTestEntity, int> maxFunc =
-                (StringLengthValidatorsTestEntity entity) => entity.Ten;
+            Func<ValidatorsTestEntity, int> minFunc = (ValidatorsTestEntity entity) => entity.Nine;
+            Func<ValidatorsTestEntity, int> maxFunc = (ValidatorsTestEntity entity) => entity.Ten;
             Assert.False(new StringLengthValidator(
                 minFunc.CoerceToNonGeneric(), maxFunc.CoerceToNonGeneric()).Validate(
                 new PropertyValidatorContext(this.testEntity, this.testEntity.EightCharString)).IsValid);

@@ -1,17 +1,17 @@
 ﻿using Xunit;
 using ValidationServices.Fluent.Validators;
 using ValidationServices.Fluent.Validators.Comparison;
-using ValidationServices.Fluent.UnitTests.TestEntities.Validators;
+using ValidationServices.Fluent.UnitTests.TestEntities;
 
 namespace ValidationServices.Fluent.UnitTests.Validators.Comparison
 {
     public class NotEqualValidatorTest
     {
-        private readonly ComparisonValidatorsTestEntity testEntity;
+        private readonly ValidatorsTestEntity testEntity;
 
         public NotEqualValidatorTest()
         {
-            this.testEntity = new ComparisonValidatorsTestEntity();
+            this.testEntity = new ValidatorsTestEntity();
         }
 
         [Fact]

@@ -3,17 +3,17 @@ using System;
 using ValidationServices.Fluent.Internal;
 using ValidationServices.Fluent.Validators;
 using ValidationServices.Fluent.Validators.Comparison;
-using ValidationServices.Fluent.UnitTests.TestEntities.Validators;
+using ValidationServices.Fluent.UnitTests.TestEntities;
 
 namespace ValidationServices.Fluent.UnitTests.Validators.Comparison
 {
     public class GreaterThanValidatorTest
     {
-        private readonly ComparisonValidatorsTestEntity testEntity;
+        private readonly ValidatorsTestEntity testEntity;
 
         public GreaterThanValidatorTest()
         {
-            this.testEntity = new ComparisonValidatorsTestEntity();
+            this.testEntity = new ValidatorsTestEntity();
         }
 
         [Fact]
@@ -40,8 +40,7 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Comparison
         [Fact]
         public void GreaterValueWithLambdaIsValidTest()
         {
-            Func<ComparisonValidatorsTestEntity, object> propertyFunc =
-               (entity) => entity.Nine;
+            Func<ValidatorsTestEntity, object> propertyFunc = (entity) => entity.Nine;
             Assert.True(new GreaterThanValidator(propertyFunc.CoerceToNonGeneric()).Validate(
                 new PropertyValidatorContext(this.testEntity, this.testEntity.Ten)).IsValid);
         }
@@ -49,8 +48,7 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Comparison
         [Fact]
         public void LesserValueWithLambdaIsInvalidTest()
         {
-            Func<ComparisonValidatorsTestEntity, object> propertyFunc =
-               (entity) => entity.Nine;
+            Func<ValidatorsTestEntity, object> propertyFunc = (entity) => entity.Nine;
             Assert.False(new GreaterThanValidator(propertyFunc.CoerceToNonGeneric()).Validate(
                 new PropertyValidatorContext(this.testEntity, this.testEntity.Eight)).IsValid);
         }

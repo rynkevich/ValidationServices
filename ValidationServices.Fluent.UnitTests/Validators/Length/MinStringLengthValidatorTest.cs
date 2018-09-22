@@ -3,17 +3,17 @@ using System;
 using ValidationServices.Fluent.Internal;
 using ValidationServices.Fluent.Validators;
 using ValidationServices.Fluent.Validators.Length;
-using ValidationServices.Fluent.UnitTests.TestEntities.Validators;
+using ValidationServices.Fluent.UnitTests.TestEntities;
 
 namespace ValidationServices.Fluent.UnitTests.Validators.Length
 {
     public class MinStringLengthValidatorTest
     {
-        private readonly StringLengthValidatorsTestEntity testEntity;
+        private readonly ValidatorsTestEntity testEntity;
 
         public MinStringLengthValidatorTest()
         {
-            this.testEntity = new StringLengthValidatorsTestEntity();
+            this.testEntity = new ValidatorsTestEntity();
         }
 
         [Fact]
@@ -33,8 +33,7 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Length
         [Fact]
         public void MinFuncConstraintedStringIsValidTest()
         {
-            Func<StringLengthValidatorsTestEntity, int> minFunc =
-                (StringLengthValidatorsTestEntity entity) => entity.Five;
+            Func<ValidatorsTestEntity, int> minFunc = (ValidatorsTestEntity entity) => entity.Five;
             Assert.True(new MinStringLengthValidator(
                 minFunc.CoerceToNonGeneric()).Validate(
                 new PropertyValidatorContext(this.testEntity, this.testEntity.EightCharString)).IsValid);
@@ -43,8 +42,7 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Length
         [Fact]
         public void MinFuncConstraintViolatingStringIsInvalidTest()
         {
-            Func<StringLengthValidatorsTestEntity, int> minFunc =
-                (StringLengthValidatorsTestEntity entity) => entity.Nine;
+            Func<ValidatorsTestEntity, int> minFunc = (ValidatorsTestEntity entity) => entity.Nine;
             Assert.False(new MinStringLengthValidator(
                 minFunc.CoerceToNonGeneric()).Validate(
                 new PropertyValidatorContext(this.testEntity, this.testEntity.EightCharString)).IsValid);

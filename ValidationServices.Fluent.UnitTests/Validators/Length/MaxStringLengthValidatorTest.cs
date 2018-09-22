@@ -3,17 +3,17 @@ using System;
 using ValidationServices.Fluent.Internal;
 using ValidationServices.Fluent.Validators;
 using ValidationServices.Fluent.Validators.Length;
-using ValidationServices.Fluent.UnitTests.TestEntities.Validators;
+using ValidationServices.Fluent.UnitTests.TestEntities;
 
 namespace ValidationServices.Fluent.UnitTests.Validators.Length
 {
     public class MaxStringLengthValidatorTest
     {
-        private readonly StringLengthValidatorsTestEntity testEntity;
+        private readonly ValidatorsTestEntity testEntity;
 
         public MaxStringLengthValidatorTest()
         {
-            this.testEntity = new StringLengthValidatorsTestEntity();
+            this.testEntity = new ValidatorsTestEntity();
         }
 
         [Fact]
@@ -33,8 +33,7 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Length
         [Fact]
         public void MaxFuncConstraintedStringIsValidTest()
         {
-            Func<StringLengthValidatorsTestEntity, int> maxFunc =
-                (StringLengthValidatorsTestEntity entity) => entity.Nine;
+            Func<ValidatorsTestEntity, int> maxFunc = (ValidatorsTestEntity entity) => entity.Nine;
             Assert.True(new MaxStringLengthValidator(
                 maxFunc.CoerceToNonGeneric()).Validate(
                 new PropertyValidatorContext(this.testEntity, this.testEntity.EightCharString)).IsValid);
@@ -43,8 +42,7 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Length
         [Fact]
         public void MaxFuncConstraintViolatingStringIsInvalidTest()
         {
-            Func<StringLengthValidatorsTestEntity, int> maxFunc =
-                (StringLengthValidatorsTestEntity entity) => entity.Five;
+            Func<ValidatorsTestEntity, int> maxFunc = (ValidatorsTestEntity entity) => entity.Five;
             Assert.False(new MaxStringLengthValidator(
                 maxFunc.CoerceToNonGeneric()).Validate(
                 new PropertyValidatorContext(this.testEntity, this.testEntity.EightCharString)).IsValid);

@@ -3,17 +3,17 @@ using System;
 using ValidationServices.Fluent.Internal;
 using ValidationServices.Fluent.Validators;
 using ValidationServices.Fluent.Validators.Length;
-using ValidationServices.Fluent.UnitTests.TestEntities.Validators;
+using ValidationServices.Fluent.UnitTests.TestEntities;
 
 namespace ValidationServices.Fluent.UnitTests.Validators.Length
 {
     public class ExactStringLengthValidatorTest
     {
-        private readonly StringLengthValidatorsTestEntity testEntity;
+        private readonly ValidatorsTestEntity testEntity;
 
         public ExactStringLengthValidatorTest()
         {
-            this.testEntity = new StringLengthValidatorsTestEntity();
+            this.testEntity = new ValidatorsTestEntity();
         }
 
         [Fact]
@@ -33,8 +33,7 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Length
         [Fact]
         public void ExactFuncConstraintedStringIsValidTest()
         {
-            Func<StringLengthValidatorsTestEntity, int> lengthFunc =
-                (StringLengthValidatorsTestEntity entity) => entity.Eight;
+            Func<ValidatorsTestEntity, int> lengthFunc = (ValidatorsTestEntity entity) => entity.Eight;
             Assert.True(new ExactStringLengthValidator(
                 lengthFunc.CoerceToNonGeneric()).Validate(
                 new PropertyValidatorContext(this.testEntity, this.testEntity.EightCharString)).IsValid);
@@ -43,8 +42,7 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Length
         [Fact]
         public void ExactFuncConstraintViolatingStringIsInvalidTest()
         {
-            Func<StringLengthValidatorsTestEntity, int> lengthFunc =
-                (StringLengthValidatorsTestEntity entity) => entity.Five;
+            Func<ValidatorsTestEntity, int> lengthFunc = (ValidatorsTestEntity entity) => entity.Five;
             Assert.False(new ExactStringLengthValidator(
                 lengthFunc.CoerceToNonGeneric()).Validate(
                 new PropertyValidatorContext(this.testEntity, this.testEntity.EightCharString)).IsValid);

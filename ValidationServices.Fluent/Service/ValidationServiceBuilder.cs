@@ -27,7 +27,7 @@ namespace ValidationServices.Fluent.Service
             {
                 throw new ArgumentException($"Expression '{propertyLambda.ToString()}' refers to a field, not a property");
             }
-            if (memberExpression.Expression != null)
+            if (memberExpression.Expression is MemberExpression)
             {
                 throw new ArgumentException($"Expression '{propertyLambda.ToString()}' does not refer to a property of an argument");
             }

@@ -11,7 +11,7 @@ namespace ValidationServices.Fluent.Validators.Comparison
 
         public string FailureMessage { get; set; }
 
-        public AbstractComparisonValidator(object comparisonValue)
+        protected AbstractComparisonValidator(object comparisonValue)
         {
             comparisonValue.Guard(nameof(comparisonValue));
             this.comparisonValue = comparisonValue;

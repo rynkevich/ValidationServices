@@ -4,7 +4,7 @@ using ValidationServices.Fluent.Validators;
 using ValidationServices.Fluent.Validators.Absence;
 using ValidationServices.Fluent.UnitTests.TestEntities.Validators;
 
-namespace ValidationServices.Fluent.UnitTests.Validators
+namespace ValidationServices.Fluent.UnitTests.Validators.Absence
 {
     public class EmptyValidatorTest
     {

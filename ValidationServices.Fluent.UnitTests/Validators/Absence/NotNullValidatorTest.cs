@@ -3,28 +3,28 @@ using ValidationServices.Fluent.Validators;
 using ValidationServices.Fluent.Validators.Absence;
 using ValidationServices.Fluent.UnitTests.TestEntities.Validators;
 
-namespace ValidationServices.Fluent.UnitTests.Validators
+namespace ValidationServices.Fluent.UnitTests.Validators.Absence
 {
-    public class NullValidatorTest
+    public class NotNullValidatorTest
     {
         private readonly AbsenceValidatorsTestEntity testEntity;
 
-        public NullValidatorTest()
+        public NotNullValidatorTest()
         {
             this.testEntity = new AbsenceValidatorsTestEntity();
         }
 
         [Fact]
-        public void NullIsValidTest()
+        public void NullIsInvalidTest()
         {
-            Assert.True(new NullValidator().Validate(new PropertyValidatorContext(
+            Assert.False(new NotNullValidator().Validate(new PropertyValidatorContext(
                 this.testEntity, this.testEntity.NullObject)).IsValid);
         }
 
         [Fact]
-        public void NullIsInvalidTest()
+        public void NotNullIsValidTest()
         {
-            Assert.False(new NullValidator().Validate(new PropertyValidatorContext(
+            Assert.True(new NotNullValidator().Validate(new PropertyValidatorContext(
                 this.testEntity, this.testEntity.NotEmptyString)).IsValid);
         }
     }

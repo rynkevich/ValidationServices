@@ -5,7 +5,7 @@ using ValidationServices.Fluent.Validators;
 using ValidationServices.Fluent.Validators.Length;
 using ValidationServices.Fluent.UnitTests.TestEntities.Validators;
 
-namespace ValidationServices.Fluent.UnitTests.Validators
+namespace ValidationServices.Fluent.UnitTests.Validators.Length
 {
     public class MaxStringLengthValidatorTest
     {

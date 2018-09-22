@@ -5,7 +5,7 @@ using ValidationServices.Fluent.Validators;
 using ValidationServices.Fluent.Validators.Comparison;
 using ValidationServices.Fluent.UnitTests.TestEntities.Validators;
 
-namespace ValidationServices.Fluent.UnitTests.Validators.Absence
+namespace ValidationServices.Fluent.UnitTests.Validators.Comparison
 {
     public class GreaterThanValidatorTest
     {

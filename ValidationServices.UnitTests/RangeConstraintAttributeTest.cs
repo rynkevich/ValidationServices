@@ -4,7 +4,7 @@ using Xunit;
 using ValidationServices.Attributes;
 using ValidationServices.UnitTests.TestEntities;
 
-namespace ValidationServicesUnitTests
+namespace ValidationServices.UnitTests
 {
     public class RangeConstraintAttributeTest
     {

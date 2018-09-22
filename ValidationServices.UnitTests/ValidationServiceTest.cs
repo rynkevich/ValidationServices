@@ -5,7 +5,7 @@ using ValidationServices.Attributes;
 using ValidationServices.UnitTests.TestEntities;
 using System;
 
-namespace ValidationServicesUnitTests
+namespace ValidationServices.UnitTests
 {
     public class ValidationServiceTest
     {

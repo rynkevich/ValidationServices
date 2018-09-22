@@ -5,7 +5,7 @@ using ValidationServices.Fluent.UnitTests.TestEntities.Validators;
 using System;
 using System.Collections.Generic;
 
-namespace ValidationServices.Fluent.UnitTests.Validators.Absence
+namespace ValidationServices.Fluent.UnitTests.Validators.Comparison
 {
     public class EqualValidatorTest
     {

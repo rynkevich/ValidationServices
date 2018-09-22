@@ -5,6 +5,7 @@
         public string NullString { get; } = null;
         public string FooString { get; } = "Foo";
 
+        public object NullObject = null;
         public static object SomeObject { get; } = 47;
         public object SameObject { get; } = SomeObject;
 

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace ValidationServices.Fluent.UnitTests.TestEntities
+﻿namespace ValidationServices.Fluent.UnitTests.TestEntities
 {
     public class ServiceTestEntity
     {
@@ -15,6 +13,7 @@ namespace ValidationServices.Fluent.UnitTests.TestEntities
         public int Eight { get; } = 8;
         public int Nine { get; } = 9;
         public int Ten { get; } = 10;
+        public int AnotherTen { get; } = 10;
 
         public int GetFive()
         {

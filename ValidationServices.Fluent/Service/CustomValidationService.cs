@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 using System.Collections.Generic;
 using ValidationServices.Service;
 using ValidationServices.Results;
@@ -11,13 +10,33 @@ namespace ValidationServices.Fluent.Service
 {
     using TypeValidationRule = Dictionary<string, IPropertyValidationRule>;
 
+    /// <summary>
+    /// Validation service with custom validation rules.
+    /// </summary>
+    /// <remarks>Use <see cref="ValidationServiceBuilder"/> to get instance of this class</remarks>
     public class CustomValidationService : BaseValidationService
     {
+        /// <summary>
+        /// Stack of objects that are validating at the moment.
+        /// Is maintained to avoid loops.
+        /// </summary>
         private readonly Stack<object> _trace;
+
+        /// <summary>
+        /// Dictionary with types and corresponding validation rules.
+        /// </summary>
         private readonly Dictionary<Type, TypeValidationRule> _typesToValidate;
 
+        /// <summary>
+        /// Gets or sets a flag indicating whether the validation should be accomplished recursively.
+        /// </summary>
         public override bool IsRecursiveValidation { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="CustomValidationService"/> class.
+        /// </summary>
+        /// <remarks>Use <see cref="ValidationServiceBuilder"/> to get instance of this class</remarks>
+        /// <param name="isRecursiveValidation">The flag indicating whether the validation should be accomplished recursively</param>
         public CustomValidationService(bool isRecursiveValidation = true)
         {
             this.IsRecursiveValidation = isRecursiveValidation;
@@ -25,13 +44,34 @@ namespace ValidationServices.Fluent.Service
             this._typesToValidate = new Dictionary<Type, TypeValidationRule>();
         }
 
-        public override ServiceConclusion Validate<T>(T objectToValidate, string objName = "")
+        /// <summary>
+        /// Override of <see cref="BaseValidationService.Validate{T}(T, string)"/>
+        /// </summary>
+        /// <typeparam name="T">The type of the object to be validated</typeparam>
+        /// <param name="objectToValidate">The object to validate</param>
+        /// <param name="objectName">The object name. 
+        /// Used to print full qualified property names to <see cref="ServiceConclusion.Details"/></param>
+        /// <returns>
+        /// <see cref="ServiceConclusion"/> with <c>IsValid</c> flag set to <c>true</c> 
+        /// if the <paramref name="objectToValidate"/> is acceptable. Otherwise, the flag is set to <c>false</c> and
+        /// <see cref="ServiceConclusion.Details"/> contains a report on problems.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="objectToValidate"/> is null</exception>
+        public override ServiceConclusion Validate<T>(T objectToValidate, string objectName = "")
         {
             objectToValidate.Guard(nameof(objectToValidate));
 
-            return this.ValidateObject(objectToValidate, objName);
+            return this.ValidateObject(objectToValidate, objectName);
         }
 
+        /// <summary>
+        /// Sets new validation rule for specified type and property.
+        /// </summary>
+        /// <remarks>Use extension methods to create and set rules</remarks>
+        /// <param name="validationTarget">The type that contains the property to validate</param>
+        /// <param name="propertyName">The property to validate</param>
+        /// <param name="newPropertyValidationRule">The validation rule for specified property</param>
+        /// <exception cref="InvalidOperationException">Thrown if rule for specified property is already set</exception>
         public void SetRule(Type validationTarget, 
             string propertyName, IPropertyValidationRule newPropertyValidationRule)
         {
@@ -58,6 +98,18 @@ namespace ValidationServices.Fluent.Service
             }
         }
 
+        /// <summary>
+        /// Internal logic of object validation.
+        /// Is called recursively if <see cref="BaseValidationService.IsRecursiveValidation"/> equals <c>true</c>
+        /// </summary>
+        /// <typeparam name="T">The type of the object to be validated</typeparam>
+        /// <param name="objectToValidate">The object to validate</param>
+        /// <param name="fullName">The full object name</param>
+        /// <returns>
+        /// <see cref="ServiceConclusion"/> with <c>IsValid</c> flag set to <c>true</c> 
+        /// if the <paramref name="objectToValidate"/> is acceptable. Otherwise, the flag is set to <c>false</c> and
+        /// <see cref="ServiceConclusion.Details"/> contains a report on problems.
+        /// </returns>
         private ServiceConclusion ValidateObject<T>(T objectToValidate, string fullName)
         {
             if (this.IsRecursiveValidation)

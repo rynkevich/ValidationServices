@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Linq.Expressions;
+using ValidationServices.Fluent.Internal;
 using ValidationServices.Fluent.Rules;
 using ValidationServices.Results;
 
@@ -16,24 +18,30 @@ namespace ValidationServices.Fluent.Validators.Comparison
         }
 
         public static PropertyValidationRule<TOwner, TProperty> NotEqual<TOwner, TProperty>(
-            this PropertyValidationRule<TOwner, TProperty> rule, Func<TOwner, TProperty> valueToCompare,
+            this PropertyValidationRule<TOwner, TProperty> rule, Expression<Func<TOwner, TProperty>> valueToCompare,
             IComparer equalityComparer = null)
         {
-            rule.SetPropertyValidator(new NotEqualValidator(valueToCompare, equalityComparer));
+            valueToCompare.Guard(nameof(valueToCompare));
+            rule.SetPropertyValidator(new NotEqualValidator(valueToCompare.Compile().CoerceToNonGeneric(), 
+                valueToCompare.Body.ToString(), equalityComparer));
             return rule;
         }
     }
 
     public class NotEqualValidator : AbstractEqualValidator
     {
-        private static readonly string DEFAULT_FAILURE_MESSAGE = "This value must not be equal to ";
+        private readonly string funcBodyString;
+
+        public static string DefaultFailureMessage { get; } = "This value must not be equal to ";
 
         public NotEqualValidator(object comparisonValue, IComparer comparer = null) : base(comparisonValue, comparer)
         {
         }
 
-        public NotEqualValidator(Func<object, object> comparisonValueFunc, IComparer comparer = null) : base(comparisonValueFunc, comparer)
+        public NotEqualValidator(Func<object, object> comparisonValueFunc, string funcBodyString, 
+            IComparer comparer = null) : base(comparisonValueFunc, comparer)
         {
+            this.funcBodyString = funcBodyString;
         }
 
         public override ElementaryConclusion Validate(PropertyValidatorContext context)
@@ -43,7 +51,8 @@ namespace ValidationServices.Fluent.Validators.Comparison
 
             return !this.IsEqual(context.PropertyToValidate, comparisonValue) ?
                 new ElementaryConclusion(isValid: true) : new ElementaryConclusion(isValid: false,
-                    this.FailureMessage ?? DEFAULT_FAILURE_MESSAGE + comparisonValue);
+                    this.FailureMessage ?? DefaultFailureMessage +
+                    (this.comparisonValueFunc != null ? this.funcBodyString : comparisonValue.ToString()));
         }
     }
 }

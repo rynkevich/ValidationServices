@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 using ValidationServices.Fluent.Internal;
 using ValidationServices.Fluent.Rules;
 using ValidationServices.Results;
@@ -16,24 +17,30 @@ namespace ValidationServices.Fluent.Validators.Comparison
         }
 
         public static PropertyValidationRule<TOwner, TProperty> LessThanOrEqual<TOwner, TProperty>(
-            this PropertyValidationRule<TOwner, TProperty> rule, Func<TOwner, TProperty> valueToCompare)
+            this PropertyValidationRule<TOwner, TProperty> rule, Expression<Func<TOwner, TProperty>> valueToCompare)
             where TProperty : IComparable<TProperty>, IComparable
         {
-            rule.SetPropertyValidator(new LessThanOrEqualValidator(valueToCompare.CoerceToNonGeneric()));
+            valueToCompare.Guard(nameof(valueToCompare));
+            rule.SetPropertyValidator(new LessThanOrEqualValidator(valueToCompare.Compile().CoerceToNonGeneric(),
+                valueToCompare.Body.ToString()));
             return rule;
         }
     }
 
     public class LessThanOrEqualValidator : AbstractComparisonValidator
     {
-        private static readonly string DEFAULT_FAILURE_MESSAGE = "This value must be less than or equal ";
+        private readonly string funcBodyString;
+
+        public static string DefaultFailureMessage { get; } = "This value must be less than or equal ";
 
         public LessThanOrEqualValidator(IComparable comparisonValue) : base(comparisonValue)
         {
         }
 
-        public LessThanOrEqualValidator(Func<object, object> comparisonValueFunc) : base(comparisonValueFunc)
+        public LessThanOrEqualValidator(Func<object, object> comparisonValueFunc, string funcBodyString) 
+            : base(comparisonValueFunc)
         {
+            this.funcBodyString = funcBodyString;
         }
 
         public override ElementaryConclusion Validate(PropertyValidatorContext context)
@@ -47,8 +54,9 @@ namespace ValidationServices.Fluent.Validators.Comparison
                 this.comparisonValue : this.comparisonValueFunc(context.ObjectToValidate);
 
             return this.IsLessThanOrEqual(context.PropertyToValidate as IComparable, comparisonValue as IComparable) ?
-                new ElementaryConclusion(isValid: true) :
-                new ElementaryConclusion(isValid: false, this.FailureMessage ?? DEFAULT_FAILURE_MESSAGE + comparisonValue);
+                new ElementaryConclusion(isValid: true) : new ElementaryConclusion(isValid: false,
+                    this.FailureMessage ?? DefaultFailureMessage +
+                    (this.comparisonValueFunc != null ? this.funcBodyString : comparisonValue.ToString()));
         }
 
         private bool IsLessThanOrEqual(IComparable objectToValidate, IComparable comparisonValue)

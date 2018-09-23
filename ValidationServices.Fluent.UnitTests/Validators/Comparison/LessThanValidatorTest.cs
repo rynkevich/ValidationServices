@@ -1,5 +1,6 @@
 ﻿using Xunit;
 using System;
+using System.Linq.Expressions;
 using ValidationServices.Fluent.Internal;
 using ValidationServices.Fluent.Validators;
 using ValidationServices.Fluent.Validators.Comparison;
@@ -40,17 +41,19 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Comparison
         [Fact]
         public void GreaterValueWithLambdaIsInvalidTest()
         {
-            Func<ValidatorsTestEntity, object> propertyFunc = (entity) => entity.Nine;
-            Assert.False(new LessThanValidator(propertyFunc.CoerceToNonGeneric()).Validate(
-                new PropertyValidatorContext(this.testEntity, this.testEntity.Ten)).IsValid);
+            Expression<Func<ValidatorsTestEntity, object>> propertyExpression = (entity) => entity.Nine;
+            string funcBodyString = propertyExpression.Body.ToString();
+            Assert.False(new LessThanValidator(propertyExpression.Compile().CoerceToNonGeneric(), funcBodyString)
+                .Validate(new PropertyValidatorContext(this.testEntity, this.testEntity.Ten)).IsValid);
         }
 
         [Fact]
         public void LesserValueWithLambdaIsValidTest()
         {
-            Func<ValidatorsTestEntity, object> propertyFunc = (entity) => entity.Nine;
-            Assert.True(new LessThanValidator(propertyFunc.CoerceToNonGeneric()).Validate(
-                new PropertyValidatorContext(this.testEntity, this.testEntity.Eight)).IsValid);
+            Expression<Func<ValidatorsTestEntity, object>> propertyExpression = (entity) => entity.Nine;
+            string funcBodyString = propertyExpression.Body.ToString();
+            Assert.True(new LessThanValidator(propertyExpression.Compile().CoerceToNonGeneric(), funcBodyString)
+                .Validate(new PropertyValidatorContext(this.testEntity, this.testEntity.Eight)).IsValid);
         }
     }
 }

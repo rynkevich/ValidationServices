@@ -19,16 +19,19 @@ namespace ValidationServices.Fluent.Service
         {
             if (!(propertyLambda.Body is MemberExpression memberExpression))
             {
-                throw new ArgumentException($"Expression '{propertyLambda.ToString()}' does not refer to a property");
+                throw new ArgumentException(
+                    Resources.Service.ArgumentExceptionNotAProperty.Replace("{expression}", propertyLambda.ToString()));
             }
             var propertyInfo = memberExpression.Member as PropertyInfo;
             if (propertyInfo == null)
             {
-                throw new ArgumentException($"Expression '{propertyLambda.ToString()}' refers to a field, not a property");
+                throw new ArgumentException(
+                    Resources.Service.ArgumentExceptionIsAField.Replace("{expression}", propertyLambda.ToString()));
             }
             if (memberExpression.Expression is MemberExpression)
             {
-                throw new ArgumentException($"Expression '{propertyLambda.ToString()}' does not refer to a property of an argument");
+                throw new ArgumentException(
+                    Resources.Service.ArgumentExceptionAlienProperty.Replace("{expression}", propertyLambda.ToString()));
             }
 
             var validationRule = new PropertyValidationRule<TOwner, TProperty>();

@@ -4,7 +4,7 @@ namespace ValidationServices.Fluent.Validators.Absence
 {
     public class NullValidator : IPropertyValidator
     {
-        public string FailureMessage { get; set; } = "This property must be null";
+        public string FailureMessage { get; set; } = Resources.Validators.NullValidatorDefaultFailureMessage;
 
         public ElementaryConclusion Validate(PropertyValidatorContext context)
         {

@@ -12,7 +12,7 @@ namespace ValidationServices.Fluent.Validators.Length
         private readonly Func<object, int> _maxFunc;
         protected static readonly int MAX_NOT_SPECIFIED = int.MaxValue;
 
-        public string FailureMessage { get; set; } = "Length of a string must satisfy specified constraints";
+        public string FailureMessage { get; set; } = Resources.Validators.StringLengthValidatorDefaultFailureMessage;
 
         public StringLengthValidator(int min, int max)
         {
@@ -21,16 +21,19 @@ namespace ValidationServices.Fluent.Validators.Length
 
             if (min < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(min), "Lower length constraint must be a zero or a positive number");
+                throw new ArgumentOutOfRangeException(nameof(min), 
+                    Resources.Validators.ArgumentOutOfRangeExceptionInvalidLowerLengthConstraint);
             }
             if (max < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(max), "Upper length constraint must be a zero or a positive number");
+                throw new ArgumentOutOfRangeException(nameof(max), 
+                    Resources.Validators.ArgumentOutOfRangeExceptionInvalidUpperLengthConstraint);
             }
 
             if (min > max)
             {
-                throw new ArgumentOutOfRangeException(nameof(max), "Max should be larger than _min");
+                throw new ArgumentOutOfRangeException(nameof(max), 
+                    Resources.Validators.ArgumentOutOfRangeExceptionMinExceedsMax);
             }
         }
 

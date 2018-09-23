@@ -6,7 +6,7 @@ namespace ValidationServices.Fluent.Validators.Absence
     {
         private readonly object _defaultValueForType;
 
-        public string FailureMessage { get; set; } = "This property must not be empty";
+        public string FailureMessage { get; set; } = Resources.Validators.NotEmptyValidatorDefaultFailureMessage;
 
         public NotEmptyValidator(object defaultValueForType)
         {

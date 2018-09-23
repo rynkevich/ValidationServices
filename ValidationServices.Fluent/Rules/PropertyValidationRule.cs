@@ -33,7 +33,7 @@ namespace ValidationServices.Fluent.Rules
         {
             if (this._validators.Count == 0)
             {
-                throw new InvalidOperationException("There is no validator in rule to set failure message");
+                throw new InvalidOperationException(Resources.Rules.InvalidOperationExceptionNoValidators);
             }
 
             this._validators[this._validators.Count - 1].FailureMessage = message;

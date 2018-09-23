@@ -44,6 +44,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Internal\Extensions.cs" />
+    <Compile Include="Resources\Rules.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Rules.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Service.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Service.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Validators.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Validators.resx</DependentUpon>
+    </Compile>
     <Compile Include="Rules\IPropertyValidationRule.cs" />
     <Compile Include="Rules\PropertyValidationRule.cs" />
     <Compile Include="Service\CustomValidationService.cs" />
@@ -76,6 +91,19 @@
       <Name>ValidationServices</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Rules.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Rules.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Service.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Service.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Validators.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Validators.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

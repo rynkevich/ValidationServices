@@ -9,7 +9,7 @@ namespace ValidationServices.Fluent.Validators.Comparison
     {
         private readonly string _funcBodyString;
 
-        public static string DefaultFailureMessage { get; } = "This value must not be equal to ";
+        public static string DefaultFailureMessage { get; } = Resources.Validators.NotEqualValidatorDefaultFailureMessage;
 
         public NotEqualValidator(object comparisonValue, IComparer comparer = null) : base(comparisonValue, comparer)
         {

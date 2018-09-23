@@ -43,7 +43,8 @@ namespace ValidationServices.Fluent.Service
             {
                 if (typeValidationRule.ContainsKey(propertyName))
                 {
-                    throw new InvalidOperationException($"Validation rule for property '{propertyName}' is already set");
+                    throw new InvalidOperationException(
+                        Resources.Service.InvalidOperationExceptionRuleAlreadySet.Replace("{propertyName}", propertyName));
                 }
                 typeValidationRule.Add(propertyName, newPropertyValidationRule);
             }

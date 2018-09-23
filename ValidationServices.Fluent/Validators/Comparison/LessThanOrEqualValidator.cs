@@ -7,7 +7,7 @@ namespace ValidationServices.Fluent.Validators.Comparison
     {
         private readonly string _funcBodyString;
 
-        public static string DefaultFailureMessage { get; } = "This value must be less than or equal ";
+        public static string DefaultFailureMessage { get; } = Resources.Validators.LessThanOrEqualValidatorDefaultFailureMessage;
 
         public LessThanOrEqualValidator(IComparable comparisonValue) : base(comparisonValue)
         {
@@ -23,7 +23,7 @@ namespace ValidationServices.Fluent.Validators.Comparison
         {
             if (!(context.PropertyToValidate is IComparable))
             {
-                throw new ArgumentException("Object to validate must implement IComparable interface");
+                throw new ArgumentException(Resources.Validators.ArgumentExceptionMustImplementIComparable);
             }
 
            var comparisonValue = this.comparisonValueFunc == null ?

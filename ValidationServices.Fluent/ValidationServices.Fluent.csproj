@@ -49,7 +49,7 @@
     <Compile Include="Service\CustomValidationService.cs" />
     <Compile Include="Service\ValidationServiceBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\DefaultRuleExtensions.cs" />
+    <Compile Include="Service\RuleExtensions.cs" />
     <Compile Include="Validators\Absence\EmptyValidator.cs" />
     <Compile Include="Validators\Absence\NotEmptyValidator.cs" />
     <Compile Include="Validators\Absence\NotNullValidator.cs" />

@@ -1,32 +1,8 @@
 ﻿using System;
-using System.Linq.Expressions;
-using ValidationServices.Fluent.Internal;
-using ValidationServices.Fluent.Rules;
 using ValidationServices.Results;
 
 namespace ValidationServices.Fluent.Validators.Comparison
 {
-    public static class LessThanRuleExtension
-    {
-        public static PropertyValidationRule<TOwner, TProperty> LessThan<TOwner, TProperty>(
-            this PropertyValidationRule<TOwner, TProperty> rule, TProperty valueToCompare)
-            where TProperty : IComparable<TProperty>, IComparable
-        {
-            rule.SetPropertyValidator(new LessThanValidator(valueToCompare));
-            return rule;
-        }
-
-        public static PropertyValidationRule<TOwner, TProperty> LessThan<TOwner, TProperty>(
-            this PropertyValidationRule<TOwner, TProperty> rule, Expression<Func<TOwner, TProperty>> valueToCompare)
-            where TProperty : IComparable<TProperty>, IComparable
-        {
-            valueToCompare.Guard(nameof(valueToCompare));
-            rule.SetPropertyValidator(new LessThanValidator(valueToCompare.Compile().CoerceToNonGeneric(),
-                valueToCompare.Body.ToString()));
-            return rule;
-        }
-    }
-
     public class LessThanValidator : AbstractComparisonValidator
     {
         private readonly string funcBodyString;

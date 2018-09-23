@@ -1,19 +1,7 @@
-﻿using System;
-using ValidationServices.Fluent.Rules;
-using ValidationServices.Results;
+﻿using ValidationServices.Results;
 
 namespace ValidationServices.Fluent.Validators.Absence
 {
-    public static class EmptyRuleExtension
-    {
-        public static PropertyValidationRule<TOwner, TProperty> Empty<TOwner, TProperty>(
-            this PropertyValidationRule<TOwner, TProperty> rule)
-        {
-            rule.SetPropertyValidator(new EmptyValidator(default(TProperty)));
-            return rule;
-        }
-    }
-
     public class EmptyValidator : IPropertyValidator
     {
         private readonly object defaultValueForType;

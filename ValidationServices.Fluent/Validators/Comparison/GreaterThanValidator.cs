@@ -1,32 +1,8 @@
 ﻿using System;
-using System.Linq.Expressions;
-using ValidationServices.Fluent.Internal;
-using ValidationServices.Fluent.Rules;
 using ValidationServices.Results;
 
 namespace ValidationServices.Fluent.Validators.Comparison
 {
-    public static class GreaterThanRuleExtension
-    {
-        public static PropertyValidationRule<TOwner, TProperty> GreaterThan<TOwner, TProperty>(
-            this PropertyValidationRule<TOwner, TProperty> rule, TProperty valueToCompare)
-            where TProperty : IComparable<TProperty>, IComparable
-        {
-            rule.SetPropertyValidator(new GreaterThanValidator(valueToCompare));
-            return rule;
-        }
-
-        public static PropertyValidationRule<TOwner, TProperty> GreaterThan<TOwner, TProperty>(
-            this PropertyValidationRule<TOwner, TProperty> rule, Expression<Func<TOwner, TProperty>> valueToCompare)
-            where TProperty : IComparable<TProperty>, IComparable
-        {
-            valueToCompare.Guard(nameof(valueToCompare));
-            rule.SetPropertyValidator(new GreaterThanValidator(valueToCompare.Compile().CoerceToNonGeneric(),
-                valueToCompare.Body.ToString()));
-            return rule;
-        }
-    }
-
     public class GreaterThanValidator : AbstractComparisonValidator
     {
         private readonly string funcBodyString;

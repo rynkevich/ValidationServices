@@ -4,16 +4,47 @@ using ValidationServices.Results;
 
 namespace ValidationServices.Fluent.Validators.Length
 {
+    /// <summary>
+    /// Validator that verifies that string property is inside the specified range.
+    /// </summary>
     public class StringLengthValidator : IPropertyValidator
     {
+        /// <summary>
+        /// The lower length constraint.
+        /// </summary>
         private readonly int _min;
+
+        /// <summary>
+        /// The upper length constraint.
+        /// </summary>
         private readonly int _max;
+
+        /// <summary>
+        /// The lambda expression that provides the lower length constraint.
+        /// </summary>
         private readonly Func<object, int> _minFunc;
+
+        /// <summary>
+        /// The lambda expression that provides the upper length constraint.
+        /// </summary>
         private readonly Func<object, int> _maxFunc;
+
+        /// <summary>
+        /// The value for <see cref="_max"/> if max constraint is not specified.
+        /// </summary>
         protected static readonly int MAX_NOT_SPECIFIED = int.MaxValue;
 
+        /// <summary>
+        /// Gets or sets message to be returned in <see cref="ElementaryConclusion.Details"/> if validation fails.
+        /// </summary>
         public string FailureMessage { get; set; } = Resources.Validators.StringLengthValidatorDefaultFailureMessage;
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="StringLengthValidator"/> class.
+        /// </summary>
+        /// <param name="min">The lower length constraint</param>
+        /// <param name="max">The upper length constraint</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if at least one of specified constraints is invalid</exception>
         public StringLengthValidator(int min, int max)
         {
             this._min = min;
@@ -37,6 +68,12 @@ namespace ValidationServices.Fluent.Validators.Length
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="StringLengthValidator"/> class.
+        /// </summary>
+        /// <param name="minFunc">The lambda expression that provides the lower length constraint</param>
+        /// <param name="maxFunc">The lambda expression that provides the upper length constraint</param>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="minFunc"/> or <paramref name="maxFunc"/> is null</exception>
         public StringLengthValidator(Func<object, int> minFunc, Func<object, int> maxFunc)
         {
             minFunc.Guard(nameof(minFunc));
@@ -45,6 +82,11 @@ namespace ValidationServices.Fluent.Validators.Length
             this._maxFunc = maxFunc;
         }
 
+        /// <summary>
+        /// Validates specified context.
+        /// </summary>
+        /// <param name="context">The object with info that is required for validation</param>
+        /// <returns><see cref="ElementaryConclusion"/> with validation results</returns>
         public ElementaryConclusion Validate(PropertyValidatorContext context)
         {
             if (context.PropertyToValidate == null)

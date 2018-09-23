@@ -17,7 +17,7 @@ namespace ValidationServices.Fluent.Rules
         public GeneralConclusion Validate(PropertyValidatorContext context)
         {
             GeneralConclusion conclusion = new GeneralConclusion(isValid: true);
-            foreach (IPropertyValidationRule validator in this.validators) {
+            foreach (IPropertyValidator validator in this.validators) {
                 conclusion += validator.Validate(context);
             }
 

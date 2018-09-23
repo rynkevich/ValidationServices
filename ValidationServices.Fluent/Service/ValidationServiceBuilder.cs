@@ -7,22 +7,21 @@ namespace ValidationServices.Fluent.Service
 {
     public class ValidationServiceBuilder
     {
-        private readonly CustomValidationService service;
+        private readonly CustomValidationService _service;
 
         public ValidationServiceBuilder(bool isRecursiveValidationService = true)
         {
-            this.service = new CustomValidationService(isRecursiveValidationService);
+            this._service = new CustomValidationService(isRecursiveValidationService);
         }
 
         public PropertyValidationRule<TOwner, TProperty> RuleFor<TOwner, TProperty>(
             Expression<Func<TOwner, TProperty>> propertyLambda) where TOwner : class
         {
-            MemberExpression memberExpression = propertyLambda.Body as MemberExpression;
-            if (memberExpression == null)
+            if (!(propertyLambda.Body is MemberExpression memberExpression))
             {
                 throw new ArgumentException($"Expression '{propertyLambda.ToString()}' does not refer to a property");
             }
-            PropertyInfo propertyInfo = memberExpression.Member as PropertyInfo;
+            var propertyInfo = memberExpression.Member as PropertyInfo;
             if (propertyInfo == null)
             {
                 throw new ArgumentException($"Expression '{propertyLambda.ToString()}' refers to a field, not a property");
@@ -32,15 +31,15 @@ namespace ValidationServices.Fluent.Service
                 throw new ArgumentException($"Expression '{propertyLambda.ToString()}' does not refer to a property of an argument");
             }
 
-            PropertyValidationRule<TOwner, TProperty> validationRule = new PropertyValidationRule<TOwner, TProperty>();
-            this.service.SetRule(typeof(TOwner), propertyInfo.Name, validationRule);
+            var validationRule = new PropertyValidationRule<TOwner, TProperty>();
+            this._service.SetRule(typeof(TOwner), propertyInfo.Name, validationRule);
 
             return validationRule;
         }
 
         public CustomValidationService Build()
         {
-            return this.service;
+            return this._service;
         }
     }
 }

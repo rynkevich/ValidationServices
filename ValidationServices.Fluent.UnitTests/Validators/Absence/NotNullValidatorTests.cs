@@ -5,27 +5,27 @@ using ValidationServices.Fluent.UnitTests.TestEntities;
 
 namespace ValidationServices.Fluent.UnitTests.Validators.Absence
 {
-    public class NotNullValidatorTest
+    public class NotNullValidatorTests
     {
-        private readonly ValidatorsTestEntity testEntity;
+        private readonly ValidatorsTestEntity _testEntity;
 
-        public NotNullValidatorTest()
+        public NotNullValidatorTests()
         {
-            this.testEntity = new ValidatorsTestEntity();
+            this._testEntity = new ValidatorsTestEntity();
         }
 
         [Fact]
         public void NullIsInvalidTest()
         {
             Assert.False(new NotNullValidator().Validate(new PropertyValidatorContext(
-                this.testEntity, this.testEntity.NullObject)).IsValid);
+                this._testEntity, this._testEntity.NullObject)).IsValid);
         }
 
         [Fact]
         public void NotNullIsValidTest()
         {
             Assert.True(new NotNullValidator().Validate(new PropertyValidatorContext(
-                this.testEntity, this.testEntity.NotEmptyString)).IsValid);
+                this._testEntity, this._testEntity.NotEmptyString)).IsValid);
         }
     }
 }

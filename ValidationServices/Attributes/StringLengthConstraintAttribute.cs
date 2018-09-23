@@ -39,17 +39,17 @@ namespace ValidationServices.Attributes
         /// Override of <see cref="ValidationAttribute.Validate(object)"/>
         /// </summary>
         /// <remarks>
-        /// This method returns <c>true</c> if the <paramref name="obj"/> is <c>null</c>.  
+        /// This method returns <c>true</c> if the <paramref name="objectToValidate"/> is <c>null</c>.  
         /// It is assumed the <see cref="RequiredPropertyAttribute"/> is used if the value may not be <c>null</c>.
         /// </remarks>
-        /// <param name="obj">The string to validate</param>
+        /// <param name="objectToValidate">The string to validate</param>
         /// <returns>
         /// <see cref="ElementaryConclusion"/> with <c>IsValid</c> flag set to <c>true</c> 
         /// if the string length falls between min and max, inclusive. Otherwise, the flag is set to <c>false</c> and
         /// <see cref="ElementaryConclusion.Details"/> contains <see cref="FailureMessage"/>
         /// </returns>
         /// <exception cref="ArgumentException">Thrown if the current attribute is ill-formed.</exception>
-        public override ElementaryConclusion Validate(object obj)
+        public override ElementaryConclusion Validate(object objectToValidate)
         {
             if (this.Min == DEFAULT_MIN && this.Max == DEFAULT_MAX)
             {
@@ -60,7 +60,7 @@ namespace ValidationServices.Attributes
                 throw new ArgumentException(Resources.Attributes.ArgumentExceptionInvalidConstraints);
             }
 
-            if (obj == null)
+            if (objectToValidate == null)
             {
                 return new ElementaryConclusion(isValid: true);
             }
@@ -68,7 +68,7 @@ namespace ValidationServices.Attributes
             int length;
             try
             {
-                length = ((string)obj).Length;
+                length = ((string)objectToValidate).Length;
             }
             catch
             {

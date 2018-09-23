@@ -5,7 +5,7 @@ namespace ValidationServices.Fluent.Validators.Comparison
 {
     public class LessThanOrEqualValidator : AbstractComparisonValidator
     {
-        private readonly string funcBodyString;
+        private readonly string _funcBodyString;
 
         public static string DefaultFailureMessage { get; } = "This value must be less than or equal ";
 
@@ -16,7 +16,7 @@ namespace ValidationServices.Fluent.Validators.Comparison
         public LessThanOrEqualValidator(Func<object, object> comparisonValueFunc, string funcBodyString) 
             : base(comparisonValueFunc)
         {
-            this.funcBodyString = funcBodyString;
+            this._funcBodyString = funcBodyString;
         }
 
         public override ElementaryConclusion Validate(PropertyValidatorContext context)
@@ -26,13 +26,13 @@ namespace ValidationServices.Fluent.Validators.Comparison
                 throw new ArgumentException("Object to validate must implement IComparable interface");
             }
 
-            object comparisonValue = this.comparisonValueFunc == null ?
+           var comparisonValue = this.comparisonValueFunc == null ?
                 this.comparisonValue : this.comparisonValueFunc(context.ObjectToValidate);
 
             return this.IsLessThanOrEqual(context.PropertyToValidate as IComparable, comparisonValue as IComparable) ?
                 new ElementaryConclusion(isValid: true) : new ElementaryConclusion(isValid: false,
                     this.FailureMessage ?? DefaultFailureMessage +
-                    (this.comparisonValueFunc != null ? this.funcBodyString : comparisonValue.ToString()));
+                    (this.comparisonValueFunc != null ? this._funcBodyString : comparisonValue.ToString()));
         }
 
         private bool IsLessThanOrEqual(IComparable objectToValidate, IComparable comparisonValue)

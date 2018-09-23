@@ -4,13 +4,13 @@ namespace ValidationServices.Fluent.Validators.Absence
 {
     public class NotEmptyValidator : IPropertyValidator
     {
-        private readonly object defaultValueForType;
+        private readonly object _defaultValueForType;
 
         public string FailureMessage { get; set; } = "This property must not be empty";
 
         public NotEmptyValidator(object defaultValueForType)
         {
-            this.defaultValueForType = defaultValueForType;
+            this._defaultValueForType = defaultValueForType;
         }
 
         public ElementaryConclusion Validate(PropertyValidatorContext context)
@@ -18,7 +18,7 @@ namespace ValidationServices.Fluent.Validators.Absence
             if (context.PropertyToValidate == null
                 || AbsenceValidationRoutines.IsEmptyString(context.PropertyToValidate)
                 || AbsenceValidationRoutines.IsEmptyCollection(context.PropertyToValidate)
-                || Equals(context.PropertyToValidate, this.defaultValueForType))
+                || Equals(context.PropertyToValidate, this._defaultValueForType))
             {
                 return new ElementaryConclusion(isValid: false, this.FailureMessage);
             }

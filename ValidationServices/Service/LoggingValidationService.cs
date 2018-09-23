@@ -13,24 +13,24 @@ namespace ValidationServices.Service
         /// <summary>
         /// Actual service that performs validation.
         /// </summary>
-        private readonly BaseValidationService service;
+        private readonly BaseValidationService _service;
 
         /// <summary>
         /// Utility to log validation details.
         /// </summary>
-        private readonly ILogger logger;
+        private readonly ILogger _logger;
         
         /// <summary>
         /// Required log level for details.
         /// </summary>
-        private readonly LogLevel logLevel;
+        private readonly LogLevel _logLevel;
 
         /// <summary>
         /// Gets or sets a flag indicating whether the validation should be accomplished recursively.
         /// </summary>
         public override bool IsRecursiveValidation {
-            get => this.service.IsRecursiveValidation;
-            set => this.service.IsRecursiveValidation = value;
+            get => this._service.IsRecursiveValidation;
+            set => this._service.IsRecursiveValidation = value;
         }
 
         /// <param name="service">The service that performs validation</param>
@@ -39,10 +39,10 @@ namespace ValidationServices.Service
         public LoggingValidationService(BaseValidationService service, ILogger logger, 
             LogLevel logLevel = LogLevel.WARN)
         {
-            this.service = service;
+            this._service = service;
             this.IsRecursiveValidation = service.IsRecursiveValidation;
-            this.logger = logger;
-            this.logLevel = logLevel;
+            this._logger = logger;
+            this._logLevel = logLevel;
         }
 
         /// <summary>
@@ -53,26 +53,26 @@ namespace ValidationServices.Service
         /// Details for every invalid object, scanned with this method, will be logged.
         /// </remarks>
         /// <typeparam name="T">The type of object to be validated</typeparam>
-        /// <param name="obj">The object to validate</param>
-        /// <param name="objName">The object name. 
-        /// Used to print full qualified property names to <see cref="GeneralConclusion.Details"/></param>
+        /// <param name="objectToValidate">The object to validate</param>
+        /// <param name="objectName">The object name. 
+        /// Used to print full qualified property names to <see cref="ServiceConclusion.Details"/></param>
         /// <returns>
-        /// <see cref="GeneralConclusion"/> with <c>IsValid</c> flag set to <c>true</c> 
-        /// if the <paramref name="obj"/> is acceptable. Otherwise, the flag is set to <c>false</c> and
-        /// <see cref="GeneralConclusion.Details"/> contains a report on problems.
+        /// <see cref="ServiceConclusion"/> with <c>IsValid</c> flag set to <c>true</c> 
+        /// if the <paramref name="objectToValidate"/> is acceptable. Otherwise, the flag is set to <c>false</c> and
+        /// <see cref="ServiceConclusion.Details"/> contains a report on problems.
         /// </returns>
         /// <exception cref="LoggingFailedException">Thrown if <see cref="ILogger.Log(string, Logger.LogLevel)"/> fails</exception>
-        public override GeneralConclusion Validate<T>(T obj, string objName = "")
+        public override ServiceConclusion Validate<T>(T objectToValidate, string objectName = "")
         {
-            GeneralConclusion conclusion = this.service.Validate(obj, objName);
+            ServiceConclusion conclusion = this._service.Validate(objectToValidate, objectName);
 
             if (conclusion.Details != null)
             {
                 try
                 {
-                    foreach (string detail in conclusion.Details)
+                    foreach (var detail in conclusion.Details)
                     {
-                        this.logger.Log(detail, this.logLevel);
+                        this._logger.Log(detail, this._logLevel);
                     }
                 }
                 catch (Exception ex)

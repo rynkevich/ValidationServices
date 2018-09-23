@@ -8,11 +8,11 @@ using ValidationServices.Fluent.Validators.Absence;
 
 namespace ValidationServices.Fluent.UnitTests.Service
 {
-    public class ValidationServiceTest
+    public class ValidationServiceTests
     {
         private readonly ServiceTestEntity testEntity;
 
-        public ValidationServiceTest()
+        public ValidationServiceTests()
         {
             this.testEntity = new ServiceTestEntity();
         }
@@ -26,7 +26,7 @@ namespace ValidationServices.Fluent.UnitTests.Service
         [Fact]
         public void OnRepeatingRuleForCallForSamePropertyThrowsInvalidOperationExceptionTest()
         {
-            ValidationServiceBuilder serviceBuilder = new ValidationServiceBuilder();
+            var serviceBuilder = new ValidationServiceBuilder();
             serviceBuilder.RuleFor((ServiceTestEntity entity) => entity.EightCharString).MaxLength(10);
             Assert.Throws<InvalidOperationException>(() => serviceBuilder.RuleFor(
                 (ServiceTestEntity entity) => entity.EightCharString).MinLength(5));
@@ -35,7 +35,7 @@ namespace ValidationServices.Fluent.UnitTests.Service
         [Fact]
         public void OnTryValidateNullExpressionThrowsArgumentExceptionTest()
         {
-            ValidationServiceBuilder serviceBuilder = new ValidationServiceBuilder();
+            var serviceBuilder = new ValidationServiceBuilder();
             Assert.Throws<ArgumentException>(
                 () => serviceBuilder.RuleFor<ServiceTestEntity, object>(entity => null).Null());
         }
@@ -43,7 +43,7 @@ namespace ValidationServices.Fluent.UnitTests.Service
         [Fact]
         public void OnTryValidateFieldThrowsArgumentExceptionTest()
         {
-            ValidationServiceBuilder serviceBuilder = new ValidationServiceBuilder();
+            var serviceBuilder = new ValidationServiceBuilder();
             Assert.Throws<ArgumentException>(() => serviceBuilder.RuleFor(
                 (ServiceTestEntity entity) => entity.StringField).NotNull());
         }
@@ -51,7 +51,7 @@ namespace ValidationServices.Fluent.UnitTests.Service
         [Fact]
         public void OnTryValidateMethodResultThrowsArgumentExceptionTest()
         {
-            ValidationServiceBuilder serviceBuilder = new ValidationServiceBuilder();
+            var serviceBuilder = new ValidationServiceBuilder();
             Assert.Throws<ArgumentException>(() => serviceBuilder.RuleFor(
                 (ServiceTestEntity entity) => entity.GetFive()).Equal(5));
         }

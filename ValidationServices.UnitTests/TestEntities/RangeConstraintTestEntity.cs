@@ -4,7 +4,6 @@ namespace ValidationServices.UnitTests.TestEntities
 {
     public class RangeConstraintTestEntity
     {
-
         [RangeConstraint(Min = "AC", Max = "AG")]
         public string Ok1 { get; }
 

@@ -7,17 +7,17 @@ namespace ValidationServices.Fluent.Rules
 {
     public class PropertyValidationRule<TOwner, TProperty> : IPropertyValidationRule
     {
-        private readonly List<IPropertyValidator> validators;
+        private readonly List<IPropertyValidator> _validators;
 
         public PropertyValidationRule()
         {
-            this.validators = new List<IPropertyValidator>();
+            this._validators = new List<IPropertyValidator>();
         }
 
-        public GeneralConclusion Validate(PropertyValidatorContext context)
+        public ServiceConclusion Validate(PropertyValidatorContext context)
         {
-            GeneralConclusion conclusion = new GeneralConclusion(isValid: true);
-            foreach (IPropertyValidator validator in this.validators) {
+            var conclusion = new ServiceConclusion(isValid: true);
+            foreach (var validator in this._validators) {
                 conclusion += validator.Validate(context);
             }
 
@@ -26,17 +26,17 @@ namespace ValidationServices.Fluent.Rules
 
         public void SetPropertyValidator(IPropertyValidator propertyValidator)
         {
-            this.validators.Add(propertyValidator);
+            this._validators.Add(propertyValidator);
         }
 
         public void SetLastValidatorFailureMessage(string message)
         {
-            if (this.validators.Count == 0)
+            if (this._validators.Count == 0)
             {
                 throw new InvalidOperationException("There is no validator in rule to set failure message");
             }
 
-            this.validators[this.validators.Count - 1].FailureMessage = message;
+            this._validators[this._validators.Count - 1].FailureMessage = message;
         }
     }
 }

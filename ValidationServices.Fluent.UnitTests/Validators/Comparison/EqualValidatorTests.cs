@@ -9,19 +9,19 @@ using System.Linq.Expressions;
 
 namespace ValidationServices.Fluent.UnitTests.Validators.Comparison
 {
-    public class EqualValidatorTest
+    public class EqualValidatorTests
     {
-        private readonly ValidatorsTestEntity testEntity;
+        private readonly ValidatorsTestEntity _testEntity;
 
-        public EqualValidatorTest()
+        public EqualValidatorTests()
         {
-            this.testEntity = new ValidatorsTestEntity();
+            this._testEntity = new ValidatorsTestEntity();
         }
 
         [Fact]
         public void OnNullComparisonValueThrowsArgumentNullExceptionTest()
         {
-            Assert.Throws<ArgumentNullException>(() => new EqualValidator(this.testEntity.NullString));
+            Assert.Throws<ArgumentNullException>(() => new EqualValidator(this._testEntity.NullString));
         }
 
         [Fact]
@@ -35,7 +35,7 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Comparison
         [Fact]
         public void OnNotNullComparisonValueCreatesInstanceOfValidatorTest()
         {
-            Assert.NotNull(new EqualValidator(this.testEntity.EightCharString));
+            Assert.NotNull(new EqualValidator(this._testEntity.EightCharString));
         }
 
         [Fact]
@@ -50,14 +50,14 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Comparison
         public void EqualComparablesAreValidTest()
         {
             Assert.True(new EqualValidator(8).Validate(
-                new PropertyValidatorContext(this.testEntity, this.testEntity.Eight)).IsValid);
+                new PropertyValidatorContext(this._testEntity, this._testEntity.Eight)).IsValid);
         }
 
         [Fact]
         public void NotEqualComparablesAreInvalidTest()
         {
             Assert.False(new EqualValidator(5).Validate(
-                new PropertyValidatorContext(this.testEntity, this.testEntity.Eight)).IsValid);
+                new PropertyValidatorContext(this._testEntity, this._testEntity.Eight)).IsValid);
         }
 
         [Fact]
@@ -66,7 +66,7 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Comparison
             Expression<Func<ValidatorsTestEntity, object>> comparisonValueExpression = (entity) => entity.AnotherTen;
             string funcBodyString = comparisonValueExpression.Body.ToString();
             Assert.True(new EqualValidator(comparisonValueExpression.Compile().CoerceToNonGeneric(), funcBodyString)
-                .Validate(new PropertyValidatorContext(this.testEntity, this.testEntity.Ten)).IsValid);
+                .Validate(new PropertyValidatorContext(this._testEntity, this._testEntity.Ten)).IsValid);
         }
 
         [Fact]
@@ -75,35 +75,35 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Comparison
             Expression<Func<ValidatorsTestEntity, object>> comparisonValueExpression = (entity) => entity.Nine;
             string funcBodyString = comparisonValueExpression.Body.ToString();
             Assert.False(new EqualValidator(comparisonValueExpression.Compile().CoerceToNonGeneric(), funcBodyString)
-                .Validate(new PropertyValidatorContext(this.testEntity, this.testEntity.Ten)).IsValid);
+                .Validate(new PropertyValidatorContext(this._testEntity, this._testEntity.Ten)).IsValid);
         }
 
         [Fact]
         public void ComparerEqualValuesAreValidTest()
         {
             Assert.True(new EqualValidator(8, Comparer<int>.Create((x, y) => x - y)).Validate(
-                new PropertyValidatorContext(this.testEntity, this.testEntity.Eight)).IsValid);
+                new PropertyValidatorContext(this._testEntity, this._testEntity.Eight)).IsValid);
         }
 
         [Fact]
         public void NotComparerEqualValuesAreInvalidTest()
         {
             Assert.False(new EqualValidator(5, Comparer<int>.Create((x, y) => x - y)).Validate(
-                new PropertyValidatorContext(this.testEntity, this.testEntity.Eight)).IsValid);
+                new PropertyValidatorContext(this._testEntity, this._testEntity.Eight)).IsValid);
         }
         
         [Fact]
         public void ReferenceEqualValuesAreValidTest()
         {
             Assert.True(new EqualValidator(ValidatorsTestEntity.SomeObject).Validate(
-                new PropertyValidatorContext(this.testEntity, this.testEntity.SameObject)).IsValid);
+                new PropertyValidatorContext(this._testEntity, this._testEntity.SameObject)).IsValid);
         }
 
         [Fact]
         public void NotReferenceEqualValuesAreInvalidTest()
         {
             Assert.False(new EqualValidator(ValidatorsTestEntity.SomeObject).Validate(
-                new PropertyValidatorContext(this.testEntity, this.testEntity.Ten)).IsValid);
+                new PropertyValidatorContext(this._testEntity, this._testEntity.Ten)).IsValid);
         }
     }
 }

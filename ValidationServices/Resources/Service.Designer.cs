@@ -61,15 +61,6 @@ namespace ValidationServices.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;Object must not be null&quot;.
-        /// </summary>
-        internal static string ArgumentNullExceptionValidatedObjectIsNull {
-            get {
-                return ResourceManager.GetString("ArgumentNullExceptionValidatedObjectIsNull", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to &quot;Can not call Log method of configured logger&quot;.
         /// </summary>
         internal static string LoggingFailedExceptionCantLog {

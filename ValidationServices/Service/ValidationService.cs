@@ -15,7 +15,7 @@ namespace ValidationServices.Service
         /// Stack of objects that are validating at the moment.
         /// Is maintained to avoid loops.
         /// </summary>
-        private readonly Stack<object> trace;
+        private readonly Stack<object> _trace;
 
         /// <summary>
         /// Gets or sets a flag indicating whether the validation should be accomplished recursively.
@@ -28,7 +28,7 @@ namespace ValidationServices.Service
         /// <param name="isRecursiveValidation">The flag indicating whether the validation should be accomplished recursively.</param>
         public ValidationService(bool isRecursiveValidation = true)
         {
-            this.trace = new Stack<object>();
+            this._trace = new Stack<object>();
             this.IsRecursiveValidation = isRecursiveValidation;
         }
 
@@ -36,23 +36,23 @@ namespace ValidationServices.Service
         /// Override of <see cref="BaseValidationService.Validate{T}(T, string)"/>
         /// </summary>
         /// <typeparam name="T">The type of object to be validated</typeparam>
-        /// <param name="obj">The object to validate</param>
-        /// <param name="objName">The object name. 
-        /// Used to print full qualified property names to <see cref="GeneralConclusion.Details"/></param>
+        /// <param name="objectToValidate">The object to validate</param>
+        /// <param name="objectName">The object name. 
+        /// Used to print full qualified property names to <see cref="ServiceConclusion.Details"/></param>
         /// <returns>
-        /// <see cref="GeneralConclusion"/> with <c>IsValid</c> flag set to <c>true</c> 
-        /// if the <paramref name="obj"/> is acceptable. Otherwise, the flag is set to <c>false</c> and
-        /// <see cref="GeneralConclusion.Details"/> contains a report on problems.
+        /// <see cref="ServiceConclusion"/> with <c>IsValid</c> flag set to <c>true</c> 
+        /// if the <paramref name="objectToValidate"/> is acceptable. Otherwise, the flag is set to <c>false</c> and
+        /// <see cref="ServiceConclusion.Details"/> contains a report on problems.
         /// </returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="obj"/> is null</exception>
-        public override GeneralConclusion Validate<T>(T obj, string objName = "")
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="objectToValidate"/> is null</exception>
+        public override ServiceConclusion Validate<T>(T objectToValidate, string objectName = "")
         {
-            if (obj == null)
+            if (objectToValidate == null)
             {
-                throw new ArgumentNullException(Resources.Service.ArgumentNullExceptionValidatedObjectIsNull);
+                throw new ArgumentNullException(nameof(objectToValidate));
             }
 
-            return this.ValidateObject(obj, objName);
+            return this.ValidateObject(objectToValidate, objectName);
         }
 
         /// <summary>
@@ -60,49 +60,49 @@ namespace ValidationServices.Service
         /// Is called recursively if <see cref="BaseValidationService.IsRecursiveValidation"/> equals <c>true</c>
         /// </summary>
         /// <typeparam name="T">The type of object to be validated</typeparam>
-        /// <param name="obj">The object to validate</param>
+        /// <param name="objectToValidate">The object to validate</param>
         /// <param name="fullName">The full object name</param>
         /// <returns>
-        /// <see cref="GeneralConclusion"/> with <c>IsValid</c> flag set to <c>true</c> 
-        /// if the <paramref name="obj"/> is acceptable. Otherwise, the flag is set to <c>false</c> and
-        /// <see cref="GeneralConclusion.Details"/> contains a report on problems.
+        /// <see cref="ServiceConclusion"/> with <c>IsValid</c> flag set to <c>true</c> 
+        /// if the <paramref name="objectToValidate"/> is acceptable. Otherwise, the flag is set to <c>false</c> and
+        /// <see cref="ServiceConclusion.Details"/> contains a report on problems.
         /// </returns>
-        private GeneralConclusion ValidateObject<T>(T obj, string fullName) where T : class
+        private ServiceConclusion ValidateObject<T>(T objectToValidate, string fullName) where T : class
         {
             if (this.IsRecursiveValidation)
             {
-                this.trace.Push(obj);
+                this._trace.Push(objectToValidate);
             }
 
-            GeneralConclusion conclusion = new GeneralConclusion(isValid: true);
-            if (obj == null)
+            var conclusion = new ServiceConclusion(isValid: true);
+            if (objectToValidate == null)
             {
                 return conclusion;
             }
-            foreach (PropertyInfo prop in obj.GetType().GetProperties())
+            foreach (var property in objectToValidate.GetType().GetProperties())
             {
-                if (prop.GetIndexParameters().Length == 0)
+                if (property.GetIndexParameters().Length == 0)
                 {
-                    object value = prop.GetValue(obj);
+                    var value = property.GetValue(objectToValidate);
 
-                    if (this.IsRecursiveValidation && !this.trace.Contains(value))
+                    if (this.IsRecursiveValidation && !this._trace.Contains(value))
                     {
-                        conclusion += this.ValidateObject(value, $"{fullName}.{prop.Name}");
+                        conclusion += this.ValidateObject(value, $"{fullName}.{property.Name}");
                     }
 
-                    foreach (ValidationAttribute attr in prop.GetCustomAttributes<ValidationAttribute>())
+                    foreach (var attr in property.GetCustomAttributes<ValidationAttribute>())
                     {
                         ElementaryConclusion elemConclusion = attr.Validate(value);
                         conclusion += new ElementaryConclusion(elemConclusion.IsValid,
                             elemConclusion.Details != null ?
-                            $"{fullName}.{prop.Name}: {elemConclusion.Details}" : null);
+                            $"{fullName}.{property.Name}: {elemConclusion.Details}" : null);
                     }
                 }
             }
 
             if (this.IsRecursiveValidation)
             {
-                this.trace.Pop();
+                this._trace.Pop();
             }
             return conclusion;
         }

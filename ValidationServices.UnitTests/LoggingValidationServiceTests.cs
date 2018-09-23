@@ -1,28 +1,27 @@
 ﻿using Xunit;
 using Moq;
+using System.IO;
 using ValidationServices.Service;
 using ValidationServices.Logger;
 using ValidationServices.UnitTests.TestEntities;
-using ValidationServices.Results;
 using ValidationServices.Service.Exceptions;
-using System.IO;
 
 namespace ValidationServices.UnitTests
 {
-    public class LoggingValidationServiceTest
+    public class LoggingValidationServiceTests
     {
         [Fact]
-        public void ServiceLogsDetailsOnValidateTest()
+        public void ServiceLogsDetailsOnValidateTests()
         {
-            Mock<ILogger> loggerMock = new Mock<ILogger>();
+            var loggerMock = new Mock<ILogger>();
 
-            BaseValidationService service = new ValidationService(true);
-            LoggingValidationService loggingService = new LoggingValidationService(service, loggerMock.Object, LogLevel.WARN);
+            var service = new ValidationService(true);
+            var loggingService = new LoggingValidationService(service, loggerMock.Object, LogLevel.WARN);
 
-            ValidationServiceTestEntity invalidObject = new ValidationServiceTestEntity(
+            var invalidObject = new ValidationServiceTestEntity(
                 digit: 25, negativeInteger: 5, oneCharString: "abc",
                 requiredObject: null, notEmptyString: null, someObject: null);
-            GeneralConclusion conclusion =  loggingService.Validate(invalidObject);
+            var conclusion = loggingService.Validate(invalidObject);
 
             loggerMock.Verify(validator => validator.Log(It.IsAny<string>(), LogLevel.WARN), 
                 Times.Exactly(conclusion.Details.Count));
@@ -31,13 +30,13 @@ namespace ValidationServices.UnitTests
         [Fact]
         public void OnLoggerErrorThrowsLoggingFailedExceptionTest()
         {
-            Mock<ILogger> loggerMock = new Mock<ILogger>();
+            var loggerMock = new Mock<ILogger>();
             loggerMock.Setup(validator => validator.Log(It.IsAny<string>(), It.IsAny<LogLevel>())).Throws<IOException>();
 
-            BaseValidationService service = new ValidationService(true);
-            LoggingValidationService loggingService = new LoggingValidationService(service, loggerMock.Object, LogLevel.WARN);
+            var service = new ValidationService(true);
+            var loggingService = new LoggingValidationService(service, loggerMock.Object, LogLevel.WARN);
 
-            ValidationServiceTestEntity invalidObject = new ValidationServiceTestEntity(
+            var invalidObject = new ValidationServiceTestEntity(
                 digit: 25, negativeInteger: 5, oneCharString: "abc",
                 requiredObject: null, notEmptyString: null, someObject: null);
 

@@ -7,27 +7,27 @@ using ValidationServices.Fluent.UnitTests.TestEntities;
 
 namespace ValidationServices.Fluent.UnitTests.Validators.Length
 {
-    public class ExactStringLengthValidatorTest
+    public class ExactStringLengthValidatorTests
     {
-        private readonly ValidatorsTestEntity testEntity;
+        private readonly ValidatorsTestEntity _testEntity;
 
-        public ExactStringLengthValidatorTest()
+        public ExactStringLengthValidatorTests()
         {
-            this.testEntity = new ValidatorsTestEntity();
+            this._testEntity = new ValidatorsTestEntity();
         }
 
         [Fact]
         public void ExactConstraintedStringIsValidTest()
         {
             Assert.True(new ExactStringLengthValidator(8).Validate(
-                new PropertyValidatorContext(this.testEntity, this.testEntity.EightCharString)).IsValid);
+                new PropertyValidatorContext(this._testEntity, this._testEntity.EightCharString)).IsValid);
         }
 
         [Fact]
         public void ExactConstraintViolatingStringIsInvalidTest()
         {
             Assert.False(new ExactStringLengthValidator(5).Validate(
-                new PropertyValidatorContext(this.testEntity, this.testEntity.EightCharString)).IsValid);
+                new PropertyValidatorContext(this._testEntity, this._testEntity.EightCharString)).IsValid);
         }
 
         [Fact]
@@ -36,7 +36,7 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Length
             Func<ValidatorsTestEntity, int> lengthFunc = (ValidatorsTestEntity entity) => entity.Eight;
             Assert.True(new ExactStringLengthValidator(
                 lengthFunc.CoerceToNonGeneric()).Validate(
-                new PropertyValidatorContext(this.testEntity, this.testEntity.EightCharString)).IsValid);
+                new PropertyValidatorContext(this._testEntity, this._testEntity.EightCharString)).IsValid);
         }
 
         [Fact]
@@ -45,7 +45,7 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Length
             Func<ValidatorsTestEntity, int> lengthFunc = (ValidatorsTestEntity entity) => entity.Five;
             Assert.False(new ExactStringLengthValidator(
                 lengthFunc.CoerceToNonGeneric()).Validate(
-                new PropertyValidatorContext(this.testEntity, this.testEntity.EightCharString)).IsValid);
+                new PropertyValidatorContext(this._testEntity, this._testEntity.EightCharString)).IsValid);
         }
     }
 }

@@ -8,34 +8,34 @@ using ValidationServices.Fluent.UnitTests.TestEntities;
 
 namespace ValidationServices.Fluent.UnitTests.Validators.Comparison
 {
-    public class GreaterThanValidatorTest
+    public class GreaterThanValidatorTests
     {
-        private readonly ValidatorsTestEntity testEntity;
+        private readonly ValidatorsTestEntity _testEntity;
 
-        public GreaterThanValidatorTest()
+        public GreaterThanValidatorTests()
         {
-            this.testEntity = new ValidatorsTestEntity();
+            this._testEntity = new ValidatorsTestEntity();
         }
 
         [Fact]
         public void OnNotComparableValueThrowsArgumentExceptionTest()
         {
             Assert.Throws<ArgumentException>(() => new GreaterThanValidator(8).Validate(
-                new PropertyValidatorContext(this.testEntity, this.testEntity.NullObject)));
+                new PropertyValidatorContext(this._testEntity, this._testEntity.NullObject)));
         }
 
         [Fact]
         public void GreaterValueIsValidTest()
         {
             Assert.True(new GreaterThanValidator(9).Validate(
-                new PropertyValidatorContext(this.testEntity, this.testEntity.Ten)).IsValid);
+                new PropertyValidatorContext(this._testEntity, this._testEntity.Ten)).IsValid);
         }
 
         [Fact]
         public void LesserValueIsInvalidTest()
         {
             Assert.False(new GreaterThanValidator(9).Validate(
-                new PropertyValidatorContext(this.testEntity, this.testEntity.Eight)).IsValid);
+                new PropertyValidatorContext(this._testEntity, this._testEntity.Eight)).IsValid);
         }
 
         [Fact]
@@ -44,7 +44,7 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Comparison
             Expression<Func<ValidatorsTestEntity, object>> propertyExpression = (entity) => entity.Nine;
             string funcBodyString = propertyExpression.Body.ToString();
             Assert.True(new GreaterThanValidator(propertyExpression.Compile().CoerceToNonGeneric(), funcBodyString)
-                .Validate(new PropertyValidatorContext(this.testEntity, this.testEntity.Ten)).IsValid);
+                .Validate(new PropertyValidatorContext(this._testEntity, this._testEntity.Ten)).IsValid);
         }
 
         [Fact]
@@ -53,7 +53,7 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Comparison
             Expression<Func<ValidatorsTestEntity, object>> propertyExpression = (entity) => entity.Nine;
             string funcBodyString = propertyExpression.Body.ToString();
             Assert.False(new GreaterThanValidator(propertyExpression.Compile().CoerceToNonGeneric(), funcBodyString)
-                .Validate(new PropertyValidatorContext(this.testEntity, this.testEntity.Eight)).IsValid);
+                .Validate(new PropertyValidatorContext(this._testEntity, this._testEntity.Eight)).IsValid);
         }
     }
 }

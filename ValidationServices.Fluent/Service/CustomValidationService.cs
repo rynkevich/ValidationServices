@@ -13,19 +13,19 @@ namespace ValidationServices.Fluent.Service
 
     public class CustomValidationService : BaseValidationService
     {
-        private readonly Stack<object> trace;
-        private readonly Dictionary<Type, TypeValidationRule> typesToValidate;
+        private readonly Stack<object> _trace;
+        private readonly Dictionary<Type, TypeValidationRule> _typesToValidate;
 
         public override bool IsRecursiveValidation { get; set; }
 
         public CustomValidationService(bool isRecursiveValidation = true)
         {
             this.IsRecursiveValidation = isRecursiveValidation;
-            this.trace = new Stack<object>();
-            this.typesToValidate = new Dictionary<Type, TypeValidationRule>();
+            this._trace = new Stack<object>();
+            this._typesToValidate = new Dictionary<Type, TypeValidationRule>();
         }
 
-        public override GeneralConclusion Validate<T>(T objectToValidate, string objName = "")
+        public override ServiceConclusion Validate<T>(T objectToValidate, string objName = "")
         {
             objectToValidate.Guard(nameof(objectToValidate));
 
@@ -39,7 +39,7 @@ namespace ValidationServices.Fluent.Service
             propertyName.Guard(nameof(propertyName));
             newPropertyValidationRule.Guard(nameof(newPropertyValidationRule));
 
-            if (this.typesToValidate.TryGetValue(validationTarget, out TypeValidationRule typeValidationRule))
+            if (this._typesToValidate.TryGetValue(validationTarget, out TypeValidationRule typeValidationRule))
             {
                 if (typeValidationRule.ContainsKey(propertyName))
                 {
@@ -49,27 +49,28 @@ namespace ValidationServices.Fluent.Service
             }
             else
             {
-                TypeValidationRule newTypeValidationRule = new TypeValidationRule();
-                newTypeValidationRule.Add(propertyName, newPropertyValidationRule);
-                this.typesToValidate.Add(validationTarget, newTypeValidationRule);
+                var newTypeValidationRule = new TypeValidationRule
+                {
+                    { propertyName, newPropertyValidationRule }
+                };
+                this._typesToValidate.Add(validationTarget, newTypeValidationRule);
             }
         }
 
-        private GeneralConclusion ValidateObject<T>(T objectToValidate, string fullName)
+        private ServiceConclusion ValidateObject<T>(T objectToValidate, string fullName)
         {
             if (this.IsRecursiveValidation)
             {
-                this.trace.Push(objectToValidate);
+                this._trace.Push(objectToValidate);
             }
 
-            GeneralConclusion conclusion = new GeneralConclusion(isValid: true);
-            TypeValidationRule typeValidationRule;
-            if (objectToValidate == null || !this.typesToValidate.TryGetValue(typeof(T), out typeValidationRule))
+            var conclusion = new ServiceConclusion(isValid: true);
+            if (objectToValidate == null || !this._typesToValidate.TryGetValue(typeof(T), out TypeValidationRule typeValidationRule))
             {
                 return conclusion;
             }
 
-            foreach (PropertyInfo property in objectToValidate.GetType().GetProperties())
+            foreach (var property in objectToValidate.GetType().GetProperties())
             {
                 if (typeValidationRule.TryGetValue(property.Name, out IPropertyValidationRule rule))
                 {
@@ -79,7 +80,7 @@ namespace ValidationServices.Fluent.Service
 
             if (this.IsRecursiveValidation)
             {
-                this.trace.Pop();
+                this._trace.Pop();
             }
             return conclusion;
         }

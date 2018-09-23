@@ -28,21 +28,21 @@ namespace ValidationServices.Attributes
         /// <summary>
         /// Override of <see cref="ValidationAttribute.Validate(object)"/>
         /// </summary>
-        /// <param name="obj">The object to validate</param>
+        /// <param name="objectToValidate">The object to validate</param>
         /// <returns>
         /// <see cref="ElementaryConclusion"/> with <c>IsValid</c> flag set to <c>true</c> 
         /// if the value falls between min and max, inclusive. Otherwise, the flag is set to <c>false</c> and
         /// <see cref="ElementaryConclusion.Details"/> contains <see cref="FailureMessage"/>
         /// </returns>
         /// <exception cref="ArgumentException">Thrown if the current attribute is ill-formed.</exception>
-        public override ElementaryConclusion Validate(object obj)
+        public override ElementaryConclusion Validate(object objectToValidate)
         {
             if (this.Min == null && this.Max == null)
             {
                 throw new ArgumentException(Resources.Attributes.ArgumentExceptionConstraintNotSpecified);
             }
 
-            if (obj == null)
+            if (objectToValidate == null)
             {
                 return new ElementaryConclusion(isValid: true);
             }
@@ -67,30 +67,30 @@ namespace ValidationServices.Attributes
                     these properties have object type and are set by integer literals, which are always signed;
                     variable of object type, that contains signed value, cant not be directly casted to unsigned.
                 */
-                if (obj is byte)
+                if (objectToValidate is byte)
                 {
-                    isValid = !((this.Min != null) && ((byte)(sbyte)this.Min > (byte)obj) ||
-                        (this.Max != null) && ((byte)(sbyte)this.Max < (byte)obj));
+                    isValid = !((this.Min != null) && ((byte)(sbyte)this.Min > (byte)objectToValidate) ||
+                        (this.Max != null) && ((byte)(sbyte)this.Max < (byte)objectToValidate));
                 }
-                else if (obj is ushort)
+                else if (objectToValidate is ushort)
                 {
-                    isValid = !((this.Min != null) && ((ushort)(short)this.Min > (ushort)obj) ||
-                        (this.Max != null) && ((ushort)(short)this.Max < (ushort)obj));
+                    isValid = !((this.Min != null) && ((ushort)(short)this.Min > (ushort)objectToValidate) ||
+                        (this.Max != null) && ((ushort)(short)this.Max < (ushort)objectToValidate));
                 }
-                else if (obj is uint)
+                else if (objectToValidate is uint)
                 {
-                    isValid = !((this.Min != null) && ((uint)(int)this.Min > (uint)obj) ||
-                        (this.Max != null) && ((uint)(int)this.Max < (uint)obj));
+                    isValid = !((this.Min != null) && ((uint)(int)this.Min > (uint)objectToValidate) ||
+                        (this.Max != null) && ((uint)(int)this.Max < (uint)objectToValidate));
                 }
-                else if (obj is ulong)
+                else if (objectToValidate is ulong)
                 {
-                    isValid = !((this.Min != null) && ((ulong)(long)this.Min > (ulong)obj) ||
-                        (this.Max != null) && ((ulong)(long)this.Max < (ulong)obj));
+                    isValid = !((this.Min != null) && ((ulong)(long)this.Min > (ulong)objectToValidate) ||
+                        (this.Max != null) && ((ulong)(long)this.Max < (ulong)objectToValidate));
                 }
                 else
                 {
-                    isValid = !((this.Min != null && ((IComparable)obj).CompareTo(this.Min) < 0) ||
-                        (this.Max != null && ((IComparable)obj).CompareTo(this.Max) > 0));
+                    isValid = !((this.Min != null && ((IComparable)objectToValidate).CompareTo(this.Min) < 0) ||
+                        (this.Max != null && ((IComparable)objectToValidate).CompareTo(this.Max) > 0));
                 }
             }
             catch

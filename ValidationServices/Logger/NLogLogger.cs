@@ -8,12 +8,12 @@
         /// <summary>
         /// Actual logger.
         /// </summary>
-        private readonly NLog.Logger logger;
+        private readonly NLog.Logger _logger;
 
         /// <param name="utility">The actual logger</param>
         public NLogLogger(NLog.Logger utility)
         {
-            this.logger = utility;
+            this._logger = utility;
         }
 
         /// <summary>
@@ -26,19 +26,19 @@
             switch (logLevel)
             {
                 case LogLevel.INFO:
-                    this.logger.Info(message);
+                    this._logger.Info(message);
                     break;
                 case LogLevel.WARN:
-                    this.logger.Warn(message);
+                    this._logger.Warn(message);
                     break;
                 case LogLevel.ERROR:
-                    this.logger.Error(message);
+                    this._logger.Error(message);
                     break;
                 case LogLevel.FATAL:
-                    this.logger.Fatal(message);
+                    this._logger.Fatal(message);
                     break;
                 default:
-                    this.logger.Debug(message);
+                    this._logger.Debug(message);
                     break;
             }
         }

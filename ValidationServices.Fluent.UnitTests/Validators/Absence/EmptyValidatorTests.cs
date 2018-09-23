@@ -6,13 +6,13 @@ using ValidationServices.Fluent.UnitTests.TestEntities;
 
 namespace ValidationServices.Fluent.UnitTests.Validators.Absence
 {
-    public class EmptyValidatorTest
+    public class EmptyValidatorTests
     {
-        private readonly ValidatorsTestEntity testEntity;
+        private readonly ValidatorsTestEntity _testEntity;
 
-        public EmptyValidatorTest()
+        public EmptyValidatorTests()
         {
-            this.testEntity = new ValidatorsTestEntity();
+            this._testEntity = new ValidatorsTestEntity();
         }
 
         [Fact]
@@ -20,7 +20,7 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Absence
         {
             var validator = new EmptyValidator(default(object));
             Assert.True(validator.Validate(new PropertyValidatorContext(
-                this.testEntity, this.testEntity.NullObject)).IsValid);
+                this._testEntity, this._testEntity.NullObject)).IsValid);
         }
 
         [Fact]
@@ -28,7 +28,7 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Absence
         {
             var validator = new EmptyValidator(default(string));
             Assert.True(validator.Validate(new PropertyValidatorContext(
-                this.testEntity, this.testEntity.EmptyString)).IsValid);
+                this._testEntity, this._testEntity.EmptyString)).IsValid);
         }
 
         [Fact]
@@ -36,7 +36,7 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Absence
         {
             var validator = new EmptyValidator(default(string));
             Assert.True(validator.Validate(new PropertyValidatorContext(
-                this.testEntity, this.testEntity.WhitespaceString)).IsValid);
+                this._testEntity, this._testEntity.WhitespaceString)).IsValid);
         }
 
         [Fact]
@@ -44,7 +44,7 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Absence
         {
             var validator = new EmptyValidator(default(List<int>));
             Assert.True(validator.Validate(new PropertyValidatorContext(
-                this.testEntity, this.testEntity.EmptyList)).IsValid);
+                this._testEntity, this._testEntity.EmptyList)).IsValid);
         }
 
         [Fact]
@@ -52,7 +52,7 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Absence
         {
             var validator = new EmptyValidator(default(string));
             Assert.False(validator.Validate(new PropertyValidatorContext(
-                this.testEntity, this.testEntity.NotEmptyString)).IsValid);
+                this._testEntity, this._testEntity.NotEmptyString)).IsValid);
         }
 
         [Fact]
@@ -60,7 +60,7 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Absence
         {
             var validator = new EmptyValidator(default(List<int>));
             Assert.False(validator.Validate(new PropertyValidatorContext(
-                this.testEntity, this.testEntity.NotEmptyList)).IsValid);
+                this._testEntity, this._testEntity.NotEmptyList)).IsValid);
         }
     }
 }

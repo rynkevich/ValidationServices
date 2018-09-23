@@ -6,18 +6,18 @@ namespace ValidationServices.Fluent.Validators.Length
 {
     public class StringLengthValidator : IPropertyValidator
     {
-        private readonly int min;
-        private readonly int max;
-        private readonly Func<object, int> minFunc;
-        private readonly Func<object, int> maxFunc;
+        private readonly int _min;
+        private readonly int _max;
+        private readonly Func<object, int> _minFunc;
+        private readonly Func<object, int> _maxFunc;
         protected static readonly int MAX_NOT_SPECIFIED = int.MaxValue;
 
         public string FailureMessage { get; set; } = "Length of a string must satisfy specified constraints";
 
         public StringLengthValidator(int min, int max)
         {
-            this.min = min;
-            this.max = max;
+            this._min = min;
+            this._max = max;
 
             if (min < 0)
             {
@@ -30,7 +30,7 @@ namespace ValidationServices.Fluent.Validators.Length
 
             if (min > max)
             {
-                throw new ArgumentOutOfRangeException(nameof(max), "Max should be larger than min");
+                throw new ArgumentOutOfRangeException(nameof(max), "Max should be larger than _min");
             }
         }
 
@@ -38,8 +38,8 @@ namespace ValidationServices.Fluent.Validators.Length
         {
             minFunc.Guard(nameof(minFunc));
             maxFunc.Guard(nameof(maxFunc));
-            this.minFunc = minFunc;
-            this.maxFunc = maxFunc;
+            this._minFunc = minFunc;
+            this._maxFunc = maxFunc;
         }
 
         public ElementaryConclusion Validate(PropertyValidatorContext context)
@@ -49,12 +49,12 @@ namespace ValidationServices.Fluent.Validators.Length
                 return new ElementaryConclusion(isValid: false, this.FailureMessage);
             }
 
-            int min = this.minFunc != null ? this.minFunc(context.ObjectToValidate) : this.min;
-            int max = this.maxFunc != null ? this.maxFunc(context.ObjectToValidate) : this.max;
+            int _min = this._minFunc != null ? this._minFunc(context.ObjectToValidate) : this._min;
+            int _max = this._maxFunc != null ? this._maxFunc(context.ObjectToValidate) : this._max;
 
             int length = context.PropertyToValidate.ToString().Length;
 
-            if (length < min || (length > max && max != MAX_NOT_SPECIFIED))
+            if (length < _min || (length > _max && _max != MAX_NOT_SPECIFIED))
             {
                 return new ElementaryConclusion(isValid: false, this.FailureMessage);
             }

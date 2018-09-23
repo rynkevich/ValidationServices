@@ -7,13 +7,13 @@ using ValidationServices.Fluent.UnitTests.TestEntities;
 
 namespace ValidationServices.Fluent.UnitTests.Validators.Length
 {
-    public class StringLengthValidatorTest
+    public class StringLengthValidatorTests
     {
-        private readonly ValidatorsTestEntity testEntity;
+        private readonly ValidatorsTestEntity _testEntity;
 
-        public StringLengthValidatorTest()
+        public StringLengthValidatorTests()
         {
-            this.testEntity = new ValidatorsTestEntity();
+            this._testEntity = new ValidatorsTestEntity();
         }
 
         [Fact]
@@ -54,21 +54,21 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Length
         public void NullStringIsInvalidTest()
         {
             Assert.False(new StringLengthValidator(0, 10).Validate(
-                new PropertyValidatorContext(this.testEntity, this.testEntity.NullString)).IsValid);
+                new PropertyValidatorContext(this._testEntity, this._testEntity.NullString)).IsValid);
         }
 
         [Fact]
         public void MinMaxConstraintedStringIsValidTest()
         {
             Assert.True(new StringLengthValidator(0, 10).Validate(
-                new PropertyValidatorContext(this.testEntity, this.testEntity.EightCharString)).IsValid);
+                new PropertyValidatorContext(this._testEntity, this._testEntity.EightCharString)).IsValid);
         }
 
         [Fact]
         public void MinMaxConstraintViolatingStringIsInvalidTest()
         {
             Assert.False(new StringLengthValidator(10, 15).Validate(
-                new PropertyValidatorContext(this.testEntity, this.testEntity.EightCharString)).IsValid);
+                new PropertyValidatorContext(this._testEntity, this._testEntity.EightCharString)).IsValid);
         }
 
         [Fact]
@@ -78,7 +78,7 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Length
             Func<ValidatorsTestEntity, int> maxFunc = (ValidatorsTestEntity entity) => entity.Ten;
             Assert.True(new StringLengthValidator(
                 minFunc.CoerceToNonGeneric(), maxFunc.CoerceToNonGeneric()).Validate(
-                new PropertyValidatorContext(this.testEntity, this.testEntity.EightCharString)).IsValid);
+                new PropertyValidatorContext(this._testEntity, this._testEntity.EightCharString)).IsValid);
         }
 
         [Fact]
@@ -88,7 +88,7 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Length
             Func<ValidatorsTestEntity, int> maxFunc = (ValidatorsTestEntity entity) => entity.Ten;
             Assert.False(new StringLengthValidator(
                 minFunc.CoerceToNonGeneric(), maxFunc.CoerceToNonGeneric()).Validate(
-                new PropertyValidatorContext(this.testEntity, this.testEntity.EightCharString)).IsValid);
+                new PropertyValidatorContext(this._testEntity, this._testEntity.EightCharString)).IsValid);
         }
     }
 }

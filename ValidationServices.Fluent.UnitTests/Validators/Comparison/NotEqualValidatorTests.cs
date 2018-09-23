@@ -8,27 +8,27 @@ using ValidationServices.Fluent.UnitTests.TestEntities;
 
 namespace ValidationServices.Fluent.UnitTests.Validators.Comparison
 {
-    public class NotEqualValidatorTest
+    public class NotEqualValidatorTests
     {
-        private readonly ValidatorsTestEntity testEntity;
+        private readonly ValidatorsTestEntity _testEntity;
 
-        public NotEqualValidatorTest()
+        public NotEqualValidatorTests()
         {
-            this.testEntity = new ValidatorsTestEntity();
+            this._testEntity = new ValidatorsTestEntity();
         }
 
         [Fact]
         public void EqualValuesAreInvalidTest()
         {
             Assert.False(new NotEqualValidator(8).Validate(
-                new PropertyValidatorContext(this.testEntity, this.testEntity.Eight)).IsValid);
+                new PropertyValidatorContext(this._testEntity, this._testEntity.Eight)).IsValid);
         }
 
         [Fact]
         public void NotEqualValuesAreValidTest()
         {
             Assert.True(new NotEqualValidator(5).Validate(
-                new PropertyValidatorContext(this.testEntity, this.testEntity.Eight)).IsValid);
+                new PropertyValidatorContext(this._testEntity, this._testEntity.Eight)).IsValid);
         }
 
         [Fact]
@@ -37,7 +37,7 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Comparison
             Expression<Func<ValidatorsTestEntity, object>> comparisonValueExpression = (entity) => entity.AnotherTen;
             string funcBodyString = comparisonValueExpression.Body.ToString();
             Assert.False(new NotEqualValidator(comparisonValueExpression.Compile().CoerceToNonGeneric(), funcBodyString)
-                .Validate(new PropertyValidatorContext(this.testEntity, this.testEntity.Ten)).IsValid);
+                .Validate(new PropertyValidatorContext(this._testEntity, this._testEntity.Ten)).IsValid);
         }
 
         [Fact]
@@ -46,7 +46,7 @@ namespace ValidationServices.Fluent.UnitTests.Validators.Comparison
             Expression<Func<ValidatorsTestEntity, object>> comparisonValueExpression = (entity) => entity.Nine;
             string funcBodyString = comparisonValueExpression.Body.ToString();
             Assert.True(new NotEqualValidator(comparisonValueExpression.Compile().CoerceToNonGeneric(), funcBodyString)
-                .Validate(new PropertyValidatorContext(this.testEntity, this.testEntity.Ten)).IsValid);
+                .Validate(new PropertyValidatorContext(this._testEntity, this._testEntity.Ten)).IsValid);
         }
     }   
 }
